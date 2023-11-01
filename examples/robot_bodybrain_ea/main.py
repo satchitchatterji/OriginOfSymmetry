@@ -31,6 +31,27 @@ from revolve2.ci_group.logging import setup_logging
 from revolve2.ci_group.rng import make_rng_time_seed
 from revolve2.experimentation.optimization.ea import population_management, selection
 
+from statistics import mean 
+from numpy import *
+import math
+import matplotlib.pyplot as plt
+
+import datetime
+
+
+# # test plot saving
+# plt.plot([1,2,3,4])
+# plt.ylabel('some numbers')
+
+# # save plot as png file with name of the current time
+# now = datetime.datetime.now()
+# date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
+# file_name = 'graph'+date_time+'.png'
+# print("graph saved in "+ file_name)
+# plt.savefig(file_name)
+# plt.close()
+# # quit program
+# quit()
 
 def select_parents(
     rng: np.random.Generator,
@@ -110,10 +131,20 @@ def find_best_robot(
     :returns: The best individual.
     """
     return max(
-        population + [] if current_best is None else [current_best],
+        population + [] if current_best is None else [current_best] + population,
         key=lambda x: x.fitness,
     )
+def find_mean_fitness(
+        population: list[Individual]
+) -> Individual:
+    """
+    Return the mean fitness of the population.
 
+    :param population: The population.
+    :returns: The mean.
+    """
+    fitnesses = [individual.fitness for individual in population]
+    return mean(fitnesses)
 
 def main() -> None:
     """Run the program."""
@@ -123,7 +154,7 @@ def main() -> None:
     # Set up the random number generater.
     rng = make_rng_time_seed()
 
-    # Intialize the evaluator that will be used to evaluate robots.
+    # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
     evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS)
 
     # CPPN innovation databases.
@@ -160,6 +191,10 @@ def main() -> None:
 
     # Set the current generation to 0.
     generation_index = 0
+
+    # list to store the fitness values
+    max_fitness_values = []
+    mean_fitness_values = []
 
     # Start the actual optimization process.
     logging.info("Start optimization process.")
@@ -198,11 +233,34 @@ def main() -> None:
         # Find the new best robot
         best_robot = find_best_robot(best_robot, population)
 
+        max_fitness_values.append(best_robot.fitness)
+        mean_fitness_values.append(find_mean_fitness(population))
+
         logging.info(f"Best robot until now: {best_robot.fitness}")
         logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
         # Increase the generation index counter.
         generation_index += 1
+    
+    # plot the fitness values
+    plt.plot(max_fitness_values, label='max fitness')
+    plt.plot(mean_fitness_values, label='mean fitness')
+    plt.xlabel('Generations')
+    plt.ylabel('Fitness')
+    plt.legend()
+    plt.title('Fitness over generations')
+    
+    # save plot as png file with name of the current time
+    now = datetime.datetime.now()
+
+
+
+    date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
+    file_name = 'graph'+date_time+'.png'
+    
+    plt.savefig(file_name)
+    print("graph saved in "+ file_name)
+    plt.close()
 
 
 if __name__ == "__main__":

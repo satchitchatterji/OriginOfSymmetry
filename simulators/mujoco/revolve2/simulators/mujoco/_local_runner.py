@@ -9,6 +9,8 @@ import mujoco_viewer
 import numpy as np
 import numpy.typing as npt
 
+from .revolve_vision.src.simulation import vision
+
 try:
     import logging
 
@@ -43,7 +45,9 @@ from revolve2.simulation.running import (
 )
 
 
+
 class LocalRunner(Runner):
+    
     """Runner for simulating using Mujoco."""
 
     _headless: bool
@@ -56,6 +60,7 @@ class LocalRunner(Runner):
         start_paused: bool = False,
         num_simulators: int = 1,
     ):
+        
         """
         Initialize this object.
 
@@ -89,10 +94,13 @@ class LocalRunner(Runner):
         simulation_timestep: float,
     ) -> EnvironmentResults:
         logging.info(f"Environment {env_index}")
+        logging.critical(f"Environment {env_index} started")
 
         model = cls._make_model(env_descr, simulation_timestep)
 
         data = mujoco.MjData(model)
+        logging.critical(f"Environment {env_index} model and data initialized")
+        
 
         initial_targets = [
             dof_state
@@ -114,6 +122,11 @@ class LocalRunner(Runner):
             )
             viewer._render_every_frame = False  # Private but functionality is not exposed and for now it breaks nothing.
             viewer._paused = start_paused
+        logging.critical(f"Environment {env_index} viewer initialized") 
+        # second camera
+        openGLVision = vision.OpenGLVision(model, (640, 480), headless)
+        #debug logging
+        logging.critical("OpenGLVision initialized")
 
         if record_settings is not None:
             video_step = 1 / record_settings.fps
@@ -173,6 +186,13 @@ class LocalRunner(Runner):
                 record_settings is not None and time >= last_video_time + video_step
             ):
                 viewer.render()
+
+            # second camera
+            img = openGLVision.process(model, data)
+            logging.info("OpenGLVision processed")
+            #save the image
+            cv2.imwrite(f"{record_settings.video_directory}/{env_index}_{time}.png", img)
+            logging.info("OpenGLVision saved")
 
             # capture video frame if it's time
             if record_settings is not None and time >= last_video_time + video_step:
@@ -242,6 +262,7 @@ class LocalRunner(Runner):
                 )
                 for env_index, env_descr in enumerate(batch.environments)
             ]
+
             results = BatchResults([future.result() for future in futures])
 
         logging.info("Finished batch.")
@@ -372,6 +393,21 @@ class LocalRunner(Runner):
                     kv=0.05,
                     joint=robot.find(namespace="joint", identifier=joint.name),
                 )
+
+            aabb = posed_actor.actor.calc_aabb()
+            fps_cam_pos = [
+                aabb.offset.x + aabb.size.x / 2,
+                aabb.offset.y,
+                aabb.offset.z
+            ]
+            robot.worldbody.add("camera", name="vision", mode="fixed", dclass=robot.full_identifier,
+                                pos=fps_cam_pos, xyaxes="0 -1 0 0 0 1")
+            robot.worldbody.add('site',
+                                name=robot.full_identifier[:-1] + "_camera",
+                                pos=fps_cam_pos, rgba=[0, 0, 1, 1],
+                                type="ellipsoid", size=[0.0001, 0.025, 0.025])
+            
+            
 
             attachment_frame = env_mjcf.attach(robot)
             attachment_frame.add("freejoint")

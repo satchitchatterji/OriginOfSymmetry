@@ -12,6 +12,7 @@ from ._create_batch_multiple_isolated_robots import (
 from ._create_batch_single_robot import create_batch_single_robot
 from ._get_body_states_multiple_isolated_robots import (
     get_body_states_multiple_isolated_robots,
+    get_body_states_multiple_isolated_robots_intermediate,
 )
 from ._get_body_states_single_robot import get_body_states_single_robot
 from ._modular_robot import ModularRobot
@@ -35,5 +36,6 @@ __all__ = [
     "create_batch_multiple_isolated_robots",
     "create_batch_single_robot",
     "get_body_states_multiple_isolated_robots",
+    "get_body_states_multiple_isolated_robots_intermediate",
     "get_body_states_single_robot",
 ]
