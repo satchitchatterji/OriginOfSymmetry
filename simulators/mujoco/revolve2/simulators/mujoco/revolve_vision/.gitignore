@@ -1,0 +1,8 @@
+.idea/
+*.egg-info/
+tmp/
+remote/
+stash/
+__pycache__
+
+*.log
