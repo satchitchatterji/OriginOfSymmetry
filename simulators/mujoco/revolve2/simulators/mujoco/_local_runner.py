@@ -9,12 +9,7 @@ import mujoco_viewer
 import numpy as np
 import numpy.typing as npt
 
-#vision
-from .OpenGLCamera import OpenGLVision
-
-# cv2.namedWindow("Robot Environment", cv2.WINDOW_NORMAL)
-# cv2.resizeWindow("Robot Environment", 100, 100)
-#/vision
+from .revolve_vision.src.simulation import vision
 
 try:
     import logging
@@ -50,7 +45,9 @@ from revolve2.simulation.running import (
 )
 
 
+
 class LocalRunner(Runner):
+    
     """Runner for simulating using Mujoco."""
 
     _headless: bool
@@ -63,6 +60,7 @@ class LocalRunner(Runner):
         start_paused: bool = False,
         num_simulators: int = 1,
     ):
+        
         """
         Initialize this object.
 
@@ -96,25 +94,13 @@ class LocalRunner(Runner):
         simulation_timestep: float,
     ) -> EnvironmentResults:
         logging.info(f"Environment {env_index}")
+        logging.critical(f"Environment {env_index} started")
 
         model = cls._make_model(env_descr, simulation_timestep)
-        
-        # vision
-        vision_obj = OpenGLVision(model, (10, 10), True)
-        # /vision
 
         data = mujoco.MjData(model)
-
-        # vision
-        camera_dir = f"./camera_{env_index}"
-        try: 
-            os.mkdir(camera_dir)
-            print("Camera folder made in:")
-            print(os.path.join(os.getcwd(), camera_dir))
-        except OSError as error: 
-            print("Error/Warning with creating camera folder")
-            print(">", error)
-        # /vision
+        logging.critical(f"Environment {env_index} model and data initialized")
+        
 
         initial_targets = [
             dof_state
@@ -136,6 +122,11 @@ class LocalRunner(Runner):
             )
             viewer._render_every_frame = False  # Private but functionality is not exposed and for now it breaks nothing.
             viewer._paused = start_paused
+        logging.critical(f"Environment {env_index} viewer initialized") 
+        # second camera
+        openGLVision = vision.OpenGLVision(model, (640, 480), headless)
+        #debug logging
+        logging.critical("OpenGLVision initialized")
 
         if record_settings is not None:
             video_step = 1 / record_settings.fps
@@ -169,15 +160,6 @@ class LocalRunner(Runner):
                 last_control_time = math.floor(time / control_step) * control_step
                 control_user = ActorControl()
                 env_descr.controller.control(control_step, control_user)
-                
-                # vision
-                current_vision = vision_obj.process(model, data)
-                current_vision = np.rot90(current_vision, 2)
-                cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
-                # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
-                # /vision
-                # controller.get_action()
-                
                 actor_targets = control_user._dof_targets
                 actor_targets.sort(key=lambda t: t[0])
                 targets = [
@@ -204,6 +186,13 @@ class LocalRunner(Runner):
                 record_settings is not None and time >= last_video_time + video_step
             ):
                 viewer.render()
+
+            # second camera
+            img = openGLVision.process(model, data)
+            logging.info("OpenGLVision processed")
+            #save the image
+            cv2.imwrite(f"{record_settings.video_directory}/{env_index}_{time}.png", img)
+            logging.info("OpenGLVision saved")
 
             # capture video frame if it's time
             if record_settings is not None and time >= last_video_time + video_step:
@@ -273,6 +262,7 @@ class LocalRunner(Runner):
                 )
                 for env_index, env_descr in enumerate(batch.environments)
             ]
+
             results = BatchResults([future.result() for future in futures])
 
         logging.info("Finished batch.")
@@ -348,14 +338,6 @@ class LocalRunner(Runner):
 
             model = mujoco.MjModel.from_xml_string(urdf)
 
-            # sim = mujoco.MjSim(model)
-
-            # ## a is a tuple if depth is True and a numpy array if depth is False ##
-            # a = sim.render(width=200, height=200, camera_name='rgb', depth=True)
-            # rgb_img = a[0]
-            # depth_img = a[1]
-            # np.save(f"rgb_{actor_index}.npy", rgb_img)
-
             # mujoco can only save to a file, not directly to string,
             # so we create a temporary file.
             try:
@@ -412,7 +394,6 @@ class LocalRunner(Runner):
                     joint=robot.find(namespace="joint", identifier=joint.name),
                 )
 
-            # vision
             aabb = posed_actor.actor.calc_aabb()
             fps_cam_pos = [
                 aabb.offset.x + aabb.size.x / 2,
@@ -425,7 +406,8 @@ class LocalRunner(Runner):
                                 name=robot.full_identifier[:-1] + "_camera",
                                 pos=fps_cam_pos, rgba=[0, 0, 1, 1],
                                 type="ellipsoid", size=[0.0001, 0.025, 0.025])
-            # /vision
+            
+            
 
             attachment_frame = env_mjcf.attach(robot)
             attachment_frame.add("freejoint")
