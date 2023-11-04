@@ -103,7 +103,7 @@ class Evaluator:
         results = asyncio.run(self._runner.run_batch(batch))
 
         # get the intermediate states
-        body_states = get_body_states_multiple_isolated_robots_intermediate(
+        body_states = get_body_states_multiple_isolated_robots(
             [robot.body for robot in robots], results
         )
 
