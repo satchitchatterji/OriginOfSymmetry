@@ -24,12 +24,20 @@ import config
 import multineat
 import numpy as np
 import numpy.typing as npt
+
+from base import Base
 from evaluator import Evaluator
+from experiment import Experiment
+from generation import Generation
 from genotype import Genotype
 from individual import Individual
+from population import Population
 from revolve2.ci_group.logging import setup_logging
 from revolve2.ci_group.rng import make_rng_time_seed
 from revolve2.experimentation.optimization.ea import population_management, selection
+from revolve2.experimentation.database import OpenMethod, open_database_sqlite
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import Session
 
 from statistics import mean 
 from numpy import *
@@ -37,21 +45,6 @@ import math
 import matplotlib.pyplot as plt
 
 import datetime
-
-
-# # test plot saving
-# plt.plot([1,2,3,4])
-# plt.ylabel('some numbers')
-
-# # save plot as png file with name of the current time
-# now = datetime.datetime.now()
-# date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-# file_name = 'graph'+date_time+'.png'
-# print("graph saved in "+ file_name)
-# plt.savefig(file_name)
-# plt.close()
-# # quit program
-# quit()
 
 def select_parents(
     rng: np.random.Generator,
@@ -134,6 +127,7 @@ def find_best_robot(
         population + [] if current_best is None else [current_best] + population,
         key=lambda x: x.fitness,
     )
+
 def find_mean_fitness(
         population: list[Individual]
 ) -> Individual:
@@ -146,13 +140,38 @@ def find_mean_fitness(
     fitnesses = [individual.fitness for individual in population]
     return mean(fitnesses)
 
-def main() -> None:
-    """Run the program."""
-    # Set up standard logging.
-    setup_logging(file_name="log.txt")
+    def plot_fitnesses(max_fitness_values, mean_fitness_values):
+        # plot the fitness values
+        plt.plot(max_fitness_values, label='max fitness')
+        plt.plot(mean_fitness_values, label='mean fitness')
+        plt.xlabel('Generations')
+        plt.ylabel('Fitness')
+        plt.legend()
+        plt.title('Fitness over generations')
+        
+        # save plot as png file with name of the current time
+        now = datetime.datetime.now()
+
+        date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
+        file_name = 'graph'+date_time+'.png'
+        
+        plt.savefig(file_name)
+        print("graph saved in "+ file_name)
+        plt.close()
+
+def run_experiment(dbengine: Engine) -> None:
+    logging.info("----------------")
+    logging.info("Start experiment")
 
     # Set up the random number generater.
     rng = make_rng_time_seed()
+
+    # Create and save the experiment instance.
+    experiment = Experiment(rng_seed=rng_seed)
+    logging.info("Saving experiment configuration.")
+    with Session(dbengine) as session:
+        session.add(experiment)
+        session.commit()
 
     # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
     evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS)
@@ -181,10 +200,23 @@ def main() -> None:
     )
 
     # Create a population of individuals, combining genotype with fitness.
-    population = [
-        Individual(genotype, fitness)
-        for genotype, fitness in zip(initial_genotypes, initial_fitnesses, strict=True)
-    ]
+    population = Population(
+        [
+            Individual(genotype, fitness)
+            for genotype, fitness in zip(
+                initial_genotypes, initial_fitnesses, strict=True
+            )
+        ]
+    )
+
+    # Finish the zeroth generation and save it to the database.
+    generation = Generation(
+        experiment=experiment, generation_index=0, population=population
+    )
+    logging.info("Saving generation.")
+    with Session(dbengine, expire_on_commit=False) as session:
+        session.add(generation)
+        session.commit()
 
     # Save the best robot
     best_robot = find_best_robot(None, population)
@@ -217,11 +249,13 @@ def main() -> None:
             [genotype.develop() for genotype in offspring_genotypes]
         )
 
-        # <ake an intermediate offspring population.
-        offspring_population = [
-            Individual(genotype, fitness)
-            for genotype, fitness in zip(offspring_genotypes, offspring_fitnesses)
-        ]
+        # Make an intermediate offspring population.
+        offspring_population = Population(
+            [
+                Individual(genotype, fitness)
+                for genotype, fitness in zip(offspring_genotypes, offspring_fitnesses)
+            ]
+        )
 
         # Create the next population by selecting survivors.
         population = select_survivors(
@@ -229,6 +263,18 @@ def main() -> None:
             population,
             offspring_population,
         )
+
+        # Make it all into a generation and save it to the database.
+        generation = Generation(
+            experiment=experiment,
+            generation_index=generation.generation_index + 1,
+            population=population,
+        )
+        logging.info("Saving generation.")
+        with Session(dbengine, expire_on_commit=False) as session:
+            session.add(generation)
+            session.commit()
+
 
         # Find the new best robot
         best_robot = find_best_robot(best_robot, population)
@@ -242,26 +288,24 @@ def main() -> None:
         # Increase the generation index counter.
         generation_index += 1
     
-    # plot the fitness values
-    plt.plot(max_fitness_values, label='max fitness')
-    plt.plot(mean_fitness_values, label='mean fitness')
-    plt.xlabel('Generations')
-    plt.ylabel('Fitness')
-    plt.legend()
-    plt.title('Fitness over generations')
-    
-    # save plot as png file with name of the current time
-    now = datetime.datetime.now()
+    plot_fitnesses(max_fitness_values, mean_fitness_values)
 
 
+def main() -> None:
+    """Run the program."""
+    # Set up standard logging.
+    setup_logging(file_name="log.txt")
 
-    date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-    file_name = 'graph'+date_time+'.png'
-    
-    plt.savefig(file_name)
-    print("graph saved in "+ file_name)
-    plt.close()
+    # Open the database, only if it does not already exists.
+    dbengine = open_database_sqlite(
+        config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
+    )
+    # Create the structure of the database.
+    Base.metadata.create_all(dbengine)
 
+    # Run the experiment several times.
+    for _ in range(config.NUM_REPETITIONS):
+        run_experiment(dbengine)
 
 if __name__ == "__main__":
     main()
