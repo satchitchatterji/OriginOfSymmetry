@@ -140,7 +140,7 @@ def find_mean_fitness(
     fitnesses = [individual.fitness for individual in population]
     return mean(fitnesses)
 
-    def plot_fitnesses(max_fitness_values, mean_fitness_values):
+    def plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num):
         # plot the fitness values
         plt.plot(max_fitness_values, label='max fitness')
         plt.plot(mean_fitness_values, label='mean fitness')
@@ -153,13 +153,13 @@ def find_mean_fitness(
         now = datetime.datetime.now()
 
         date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-        file_name = 'graph'+date_time+'.png'
+        file_name = f'graph experiment {experiment_num}'+date_time+'.png'
         
         plt.savefig(file_name)
         print("graph saved in "+ file_name)
         plt.close()
 
-def run_experiment(dbengine: Engine) -> None:
+def run_experiment(dbengine: Engine, exp_num: int) -> None:
     logging.info("----------------")
     logging.info("Start experiment")
 
@@ -288,7 +288,7 @@ def run_experiment(dbengine: Engine) -> None:
         # Increase the generation index counter.
         generation_index += 1
     
-    plot_fitnesses(max_fitness_values, mean_fitness_values)
+    plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num)
 
 
 def main() -> None:
@@ -304,8 +304,8 @@ def main() -> None:
     Base.metadata.create_all(dbengine)
 
     # Run the experiment several times.
-    for _ in range(config.NUM_REPETITIONS):
-        run_experiment(dbengine)
+    for rep in range(config.NUM_REPETITIONS):
+        run_experiment(dbengine, rep)
 
 if __name__ == "__main__":
     main()
