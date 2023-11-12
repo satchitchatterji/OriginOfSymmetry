@@ -153,7 +153,7 @@ def find_mean_fitness(
         now = datetime.datetime.now()
 
         date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-        file_name = f'graph experiment {experiment_num}'+date_time+'.png'
+        file_name = f'graph experiment {experiment_num} '+date_time+'.png'
         
         plt.savefig(file_name)
         print("graph saved in "+ file_name)
