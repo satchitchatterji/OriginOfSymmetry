@@ -14,6 +14,7 @@ import config
 import multineat
 import numpy as np
 import numpy.typing as npt
+
 from base import Base
 from evaluator import Evaluator
 from experiment import Experiment

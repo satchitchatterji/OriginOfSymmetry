@@ -33,7 +33,7 @@ from genotype import Genotype
 from individual import Individual
 from population import Population
 from revolve2.ci_group.logging import setup_logging
-from revolve2.ci_group.rng import make_rng_time_seed
+from revolve2.ci_group.rng import make_rng, seed_from_time
 from revolve2.experimentation.optimization.ea import population_management, selection
 from revolve2.experimentation.database import OpenMethod, open_database_sqlite
 from sqlalchemy.engine import Engine
@@ -164,7 +164,8 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     logging.info("Start experiment")
 
     # Set up the random number generater.
-    rng = make_rng_time_seed()
+    rng_seed = seed_from_time()
+    rng = make_rng(rng_seed)
 
     # Create and save the experiment instance.
     experiment = Experiment(rng_seed=rng_seed)
@@ -297,8 +298,11 @@ def main() -> None:
     setup_logging(file_name="log.txt")
 
     # Open the database, only if it does not already exists.
+    # dbengine = open_database_sqlite(
+    #     config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
+    # )
     dbengine = open_database_sqlite(
-        config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
+        config.DATABASE_FILE
     )
     # Create the structure of the database.
     Base.metadata.create_all(dbengine)

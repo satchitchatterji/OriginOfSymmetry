@@ -13,5 +13,7 @@ class Individual(Base, GenericIndividual[Genotype], population_table="population
 
     __tablename__ = "individual"
 
-    genotype: Genotype
-    fitness: float
+    # id: int
+    # genotype: Genotype
+    # fitness: float
+    # population_table = "population"
