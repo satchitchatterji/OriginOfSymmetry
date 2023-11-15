@@ -1,7 +1,7 @@
 """Contains EnvironmentActorController, an environment controller for an environment with a single actor that uses a provided ActorController."""
 
 from revolve2.actor_controller import ActorController
-from revolve2.core.physics.running import ActorControl, EnvironmentController
+from revolve2.simulation.running import ActorControl, EnvironmentController
 import numpy as np
 from typing import List, Tuple
 import numpy.typing as npt
