@@ -46,6 +46,8 @@ import matplotlib.pyplot as plt
 
 import datetime
 
+GLOBAL_BALANCE = 0.0
+
 def select_parents(
     rng: np.random.Generator,
     population: list[Individual],
@@ -63,8 +65,8 @@ def select_parents(
         [
             selection.multiple_unique(
                 2,
-                [individual.genotype for individual in population],
-                [individual.fitness for individual in population],
+                [individual.genotype for individual in population.individuals],
+                [individual.fitness for individual in population.individuals],
                 lambda _, fitnesses: selection.tournament(rng, fitnesses, k=1),
             )
             for _ in range(offspring_size)
@@ -86,10 +88,10 @@ def select_survivors(
     :returns: A newly created population.
     """
     original_survivors, offspring_survivors = population_management.steady_state(
-        [i.genotype for i in original_population],
-        [i.fitness for i in original_population],
-        [i.genotype for i in offspring_population],
-        [i.fitness for i in offspring_population],
+        [i.genotype for i in original_population.individuals],
+        [i.fitness for i in original_population.individuals],
+        [i.genotype for i in offspring_population.individuals],
+        [i.fitness for i in offspring_population.individuals],
         lambda n, genotypes, fitnesses: selection.multiple_unique(
             n,
             genotypes,
@@ -98,20 +100,26 @@ def select_survivors(
         ),
     )
 
-    return [
-        Individual(
-            original_population[i].genotype,
-            original_population[i].fitness,
-        )
-        for i in original_survivors
-    ] + [
-        Individual(
-            offspring_population[i].genotype,
-            offspring_population[i].fitness,
-        )
-        for i in offspring_survivors
-    ]
-
+    return Population(
+        [
+            Individual(
+                original_population.individuals[i].genotype,
+                original_population.individuals[i].fitness,
+                original_population.individuals[i].symmetry,
+                original_population.individuals[i].balance,
+            )
+            for i in original_survivors
+        ]
+        + [
+            Individual(
+                offspring_population.individuals[i].genotype,
+                offspring_population.individuals[i].fitness,
+                offspring_population.individuals[i].symmetry,
+                offspring_population.individuals[i].balance,
+            )
+            for i in offspring_survivors
+        ]
+    )
 
 def find_best_robot(
     current_best: Individual | None, population: list[Individual]
@@ -124,7 +132,7 @@ def find_best_robot(
     :returns: The best individual.
     """
     return max(
-        population + [] if current_best is None else [current_best] + population,
+        population + [] if current_best is None else [current_best],
         key=lambda x: x.fitness,
     )
 
@@ -137,7 +145,7 @@ def find_mean_fitness(
     :param population: The population.
     :returns: The mean.
     """
-    fitnesses = [individual.fitness for individual in population]
+    fitnesses = [individual.fitness for individual in population.individuals]
     return mean(fitnesses)
 
     def plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num):
@@ -196,16 +204,16 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
-    initial_fitnesses = evaluator.evaluate(
+    initial_fitnesses, initial_sym = evaluator.evaluate(
         [genotype.develop() for genotype in initial_genotypes]
     )
 
     # Create a population of individuals, combining genotype with fitness.
     population = Population(
         [
-            Individual(genotype, fitness)
-            for genotype, fitness in zip(
-                initial_genotypes, initial_fitnesses, strict=True
+            Individual(genotype, fitness, sym, GLOBAL_BALANCE)
+            for genotype, fitness, sym in zip(
+                initial_genotypes, initial_fitnesses, initial_sym, strict=True
             )
         ]
     )
@@ -219,15 +227,15 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         session.add(generation)
         session.commit()
 
-    # Save the best robot
-    best_robot = find_best_robot(None, population)
+    # # Save the best robot
+    # best_robot = find_best_robot(None, population)
 
     # Set the current generation to 0.
     generation_index = 0
 
-    # list to store the fitness values
-    max_fitness_values = []
-    mean_fitness_values = []
+    # # list to store the fitness values
+    # max_fitness_values = []
+    # mean_fitness_values = []
 
     # Start the actual optimization process.
     logging.info("Start optimization process.")
@@ -238,23 +246,23 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         parents = select_parents(rng, population, config.OFFSPRING_SIZE)
         offspring_genotypes = [
             Genotype.crossover(
-                population[parent1_i].genotype,
-                population[parent2_i].genotype,
+                population.individuals[parent1_i].genotype,
+                population.individuals[parent2_i].genotype,
                 rng,
             ).mutate(innov_db_body, innov_db_brain, rng)
             for parent1_i, parent2_i in parents
         ]
 
         # Evaluate the offspring.
-        offspring_fitnesses = evaluator.evaluate(
+        offspring_fitnesses, offspring_symmetries = evaluator.evaluate(
             [genotype.develop() for genotype in offspring_genotypes]
         )
 
         # Make an intermediate offspring population.
         offspring_population = Population(
             [
-                Individual(genotype, fitness)
-                for genotype, fitness in zip(offspring_genotypes, offspring_fitnesses)
+                Individual(genotype, fitness, sym, GLOBAL_BALANCE)
+                for genotype, fitness, sym in zip(offspring_genotypes, offspring_fitnesses, offspring_symmetries)
             ]
         )
 
@@ -278,18 +286,18 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
 
         # Find the new best robot
-        best_robot = find_best_robot(best_robot, population)
+        # best_robot = find_best_robot(best_robot, population)
 
-        max_fitness_values.append(best_robot.fitness)
-        mean_fitness_values.append(find_mean_fitness(population))
+        # max_fitness_values.append(best_robot.fitness)
+        # mean_fitness_values.append(find_mean_fitness(population))
 
-        logging.info(f"Best robot until now: {best_robot.fitness}")
-        logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
+        # logging.info(f"Best robot until now: {best_robot.fitness}")
+        # logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
         # Increase the generation index counter.
         generation_index += 1
     
-    plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num)
+    # plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num)
 
 
 def main() -> None:

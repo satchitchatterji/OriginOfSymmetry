@@ -100,7 +100,7 @@ class MorphologicalMeasures:
             raise NotFinalizedError()
 
         self.body_as_grid, self.core_grid_position = body.to_grid()
-
+        print(self.body_as_grid)
         self.is_2d = self.__calculate_is_2d(body)
         self.core = body.core
         self.bricks = body.find_bricks()
@@ -114,8 +114,8 @@ class MorphologicalMeasures:
             self.__calculate_double_neighbour_active_hinges()
         )
         self.xy_symmetry = self.__calculate_xy_symmetry()
-        self.xz_symmetry = self.__calculate_xz_symmetry()
-        self.yz_symmetry = self.__calculate_yz_symmetry()
+        # self.xz_symmetry = self.__calculate_xz_symmetry()
+        # self.yz_symmetry = self.__calculate_yz_symmetry()
 
     @classmethod
     def __calculate_is_2d(cls, body: Body) -> bool:

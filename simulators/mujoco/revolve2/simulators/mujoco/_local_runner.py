@@ -124,9 +124,9 @@ class LocalRunner(Runner):
             viewer._paused = start_paused
         logging.critical(f"Environment {env_index} viewer initialized") 
         # second camera
-        openGLVision = vision.OpenGLVision(model, (640, 480), headless)
+        # openGLVision = vision.OpenGLVision(model, (640, 480), headless)
         #debug logging
-        logging.critical("OpenGLVision initialized")
+        # logging.critical("OpenGLVision initialized")
 
         if record_settings is not None:
             video_step = 1 / record_settings.fps
@@ -187,12 +187,12 @@ class LocalRunner(Runner):
             ):
                 viewer.render()
 
-            # second camera
-            img = openGLVision.process(model, data)
-            logging.info("OpenGLVision processed")
-            #save the image
-            cv2.imwrite(f"{record_settings.video_directory}/{env_index}_{time}.png", img)
-            logging.info("OpenGLVision saved")
+            # # second camera
+            # img = openGLVision.process(model, data)
+            # logging.info("OpenGLVision processed")
+            # #save the image
+            # cv2.imwrite(f"{record_settings.video_directory}/{env_index}_{time}.png", img)
+            # logging.info("OpenGLVision saved")
 
             # capture video frame if it's time
             if record_settings is not None and time >= last_video_time + video_step:

@@ -111,14 +111,14 @@ class Evaluator:
         # calculate the fitnesses
         fitnesses = [
             #fitness_functions.xy_displacement_with_height_penality(body_states_robot)
-            fitness_functions.xy_displacement(body_states_robot)
-            for body_states_robot in body_states
+            fitness_functions.xy_displacement(body_state_begin, body_state_end)
+            for body_state_begin, body_state_end in body_states
         ]
 
         symmetries = [
-            MorphologicalMeasures(robot.body).symmetry()
+            MorphologicalMeasures(robot.body).symmetry2d
             for robot in robots
         ]
         print("Computing symmetries:\n",symmetries)
 
-        return fitnesses
+        return fitnesses, symmetries
