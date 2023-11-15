@@ -9,8 +9,9 @@ import mujoco_viewer
 import numpy as np
 import numpy.typing as npt
 
-from .revolve_vision.src.simulation import vision
-
+##############################################################################################################
+from .OpenGLCamera import OpenGLVision
+##############################################################################################################
 try:
     import logging
 
@@ -98,6 +99,10 @@ class LocalRunner(Runner):
 
         model = cls._make_model(env_descr, simulation_timestep)
 
+        ##############################################################################################################
+        vision_obj = OpenGLVision(model, (10, 10), True)
+        ##############################################################################################################
+
         data = mujoco.MjData(model)
         logging.critical(f"Environment {env_index} model and data initialized")
         
@@ -123,10 +128,6 @@ class LocalRunner(Runner):
             viewer._render_every_frame = False  # Private but functionality is not exposed and for now it breaks nothing.
             viewer._paused = start_paused
         logging.critical(f"Environment {env_index} viewer initialized") 
-        # second camera
-        # openGLVision = vision.OpenGLVision(model, (640, 480), headless)
-        #debug logging
-        # logging.critical("OpenGLVision initialized")
 
         if record_settings is not None:
             video_step = 1 / record_settings.fps
@@ -159,6 +160,14 @@ class LocalRunner(Runner):
             if time >= last_control_time + control_step:
                 last_control_time = math.floor(time / control_step) * control_step
                 control_user = ActorControl()
+                
+                ##############################################################################################################
+                current_vision = vision_obj.process(model, data)
+                current_vision = np.rot90(current_vision, 2)
+                cv2.imwrite(f"Camera/{env_index}_{time}.png", current_vision)
+                # controller.get_action()
+                ##############################################################################################################
+
                 env_descr.controller.control(control_step, control_user)
                 actor_targets = control_user._dof_targets
                 actor_targets.sort(key=lambda t: t[0])
@@ -186,13 +195,6 @@ class LocalRunner(Runner):
                 record_settings is not None and time >= last_video_time + video_step
             ):
                 viewer.render()
-
-            # # second camera
-            # img = openGLVision.process(model, data)
-            # logging.info("OpenGLVision processed")
-            # #save the image
-            # cv2.imwrite(f"{record_settings.video_directory}/{env_index}_{time}.png", img)
-            # logging.info("OpenGLVision saved")
 
             # capture video frame if it's time
             if record_settings is not None and time >= last_video_time + video_step:
@@ -393,7 +395,8 @@ class LocalRunner(Runner):
                     kv=0.05,
                     joint=robot.find(namespace="joint", identifier=joint.name),
                 )
-
+                
+            ###################################################################################################################
             aabb = posed_actor.actor.calc_aabb()
             fps_cam_pos = [
                 aabb.offset.x + aabb.size.x / 2,
@@ -406,7 +409,7 @@ class LocalRunner(Runner):
                                 name=robot.full_identifier[:-1] + "_camera",
                                 pos=fps_cam_pos, rgba=[0, 0, 1, 1],
                                 type="ellipsoid", size=[0.0001, 0.025, 0.025])
-            
+            ###################################################################################################################
             
 
             attachment_frame = env_mjcf.attach(robot)

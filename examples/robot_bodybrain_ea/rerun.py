@@ -23,8 +23,9 @@ def main() -> None:
 
     logging.info(f"Fitness from pickle: {individual.fitness}")
 
+    print("Note: Running evaluator with headless=True")
     evaluator = Evaluator(
-        headless=False,
+        headless=True,
         num_simulators=1,
     )
     fitness = evaluator.evaluate([robot])[0]

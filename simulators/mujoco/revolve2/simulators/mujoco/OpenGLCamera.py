@@ -61,4 +61,3 @@ class OpenGLVision:
         mujoco.mjr_readPixels(self.img, None, self.viewport, self.context)
 
         return self.img
-

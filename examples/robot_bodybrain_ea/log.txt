@@ -2211,3 +2211,137 @@ Environment 0 model and data initialized
 Environment 0 viewer initialized
 Finished batch.
 Saving generation.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700056700994051
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700057716851315
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 2.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700057835515179
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 2.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700057894025733
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 2.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started

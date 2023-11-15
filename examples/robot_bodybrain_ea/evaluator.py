@@ -82,6 +82,7 @@ class Evaluator:
         :param num_simulators: `num_simulators` parameter for the physics runner.
         """
         self._runner = LocalRunner(headless=headless, num_simulators=num_simulators)
+        print(f"Evaluator: Using {headless=}, {num_simulators=}")
         self._terrain = terrains.flat()
 
     def evaluate(
