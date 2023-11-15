@@ -1,4 +1,5 @@
 import numpy as np
+from itertools import product
 
 from ._active_hinge import ActiveHinge
 from ._body import Body
@@ -100,7 +101,7 @@ class MorphologicalMeasures:
             raise NotFinalizedError()
 
         self.body_as_grid, self.core_grid_position = body.to_grid()
-        print(self.body_as_grid)
+        self.grid = np.asarray(self.body_as_grid)
         self.is_2d = self.__calculate_is_2d(body)
         self.core = body.core
         self.bricks = body.find_bricks()
@@ -114,8 +115,8 @@ class MorphologicalMeasures:
             self.__calculate_double_neighbour_active_hinges()
         )
         self.xy_symmetry = self.__calculate_xy_symmetry()
-        # self.xz_symmetry = self.__calculate_xz_symmetry()
-        # self.yz_symmetry = self.__calculate_yz_symmetry()
+        self.xz_symmetry = self.__calculate_xz_symmetry()
+        self.yz_symmetry = self.__calculate_yz_symmetry()
 
     @classmethod
     def __calculate_is_2d(cls, body: Body) -> bool:
@@ -169,80 +170,75 @@ class MorphologicalMeasures:
             for active_hinge in self.active_hinges
             if sum([0 if child is None else 1 for child in active_hinge.children]) == 1
         ]
-
     def __calculate_xy_symmetry(self) -> float:
         num_along_plane = 0
-        for x in range(self.bounding_box_depth):
-            for y in range(self.bounding_box_width):
-                if self.body_as_grid[x][y][self.core_grid_position[2]] is not None:
-                    num_along_plane += 1
+        for x, y in product(
+            range(self.bounding_box_depth), range(self.bounding_box_width)
+        ):
+            if self.grid[x, y, self.core_grid_position[2]] is not None:
+                num_along_plane += 1
 
         if num_along_plane == self.num_modules:
             return 0.0
 
         num_symmetrical = 0
-        for x in range(self.bounding_box_depth):
-            for y in range(self.bounding_box_width):
-                for z in range(1, (self.bounding_box_height - 1) // 2 + 1):
-                    if self.body_as_grid[x][y][
-                        self.core_grid_position[2] + z
-                    ] is not None and type(
-                        self.body_as_grid[x][y][self.core_grid_position[2] + z]
-                    ) == type(
-                        self.body_as_grid[x][y][self.core_grid_position[2] - z]
-                    ):
-                        num_symmetrical += 2
-
+        for x, y, z in product(
+            range(self.bounding_box_depth),
+            range(self.bounding_box_width),
+            range(1, (self.bounding_box_height - 1) // 2),
+        ):
+            if self.grid[x, y, self.core_grid_position[2] + z] is not None and type(
+                self.grid[x, y, self.core_grid_position[2] + z]
+            ) is type(self.grid[x, y, self.core_grid_position[2] - z]):
+                num_symmetrical += 2
         return num_symmetrical / (self.num_modules - num_along_plane)
 
+    # new symmetry measures as in the newer repo 15/11/23
     def __calculate_xz_symmetry(self) -> float:
         num_along_plane = 0
-        for x in range(self.bounding_box_depth):
-            for z in range(self.bounding_box_height):
-                if self.body_as_grid[x][self.core_grid_position[1]][z] is not None:
-                    num_along_plane += 1
+        for x, z in product(
+            range(self.bounding_box_depth), range(self.bounding_box_height)
+        ):
+            if self.grid[x, self.core_grid_position[1], z] is not None:
+                num_along_plane += 1
 
         if num_along_plane == self.num_modules:
             return 0.0
 
         num_symmetrical = 0
-        for x in range(self.bounding_box_depth):
-            for z in range(self.bounding_box_height):
-                for y in range(1, (self.bounding_box_width - 1) // 2 + 1):
-                    if self.body_as_grid[x][self.core_grid_position[1] + y][
-                        z
-                    ] is not None and type(
-                        self.body_as_grid[x][self.core_grid_position[1] + y][z]
-                    ) == type(
-                        self.body_as_grid[x][self.core_grid_position[1] - y][z]
-                    ):
-                        num_symmetrical += 2
 
+        for x, z, y in product(
+            range(self.bounding_box_depth),
+            range(self.bounding_box_height),
+            range(1, (self.bounding_box_width - 1) // 2),
+        ):
+            if self.grid[x, self.core_grid_position[1] + y, z] is not None and type(
+                self.grid[x, self.core_grid_position[1] + y, z]
+            ) is type(self.grid[x, self.core_grid_position[1] - y, z]):
+                num_symmetrical += 2
         return num_symmetrical / (self.num_modules - num_along_plane)
 
     def __calculate_yz_symmetry(self) -> float:
         num_along_plane = 0
-        for y in range(self.bounding_box_width):
-            for z in range(self.bounding_box_height):
-                if self.body_as_grid[self.core_grid_position[0]][y][z] is not None:
-                    num_along_plane += 1
+        for y, z in product(
+            range(self.bounding_box_width), range(self.bounding_box_height)
+        ):
+            if self.grid[self.core_grid_position[0], y, z] is not None:
+                num_along_plane += 1
 
         if num_along_plane == self.num_modules:
             return 0.0
 
         num_symmetrical = 0
-        for y in range(self.bounding_box_width):
-            for z in range(self.bounding_box_height):
-                for x in range(1, (self.bounding_box_depth - 1) // 2 + 1):
-                    if self.body_as_grid[self.core_grid_position[0] + x][y][
-                        z
-                    ] is not None and type(
-                        self.body_as_grid[self.core_grid_position[0] + x][y][z]
-                    ) == type(
-                        self.body_as_grid[self.core_grid_position[0] - x][y][z]
-                    ):
-                        num_symmetrical += 2
-
+        for y, z, x in product(
+            range(self.bounding_box_width),
+            range(self.bounding_box_height),
+            range(1, (self.bounding_box_depth - 1) // 2),
+        ):
+            if self.grid[self.core_grid_position[0] + x, y, z] is not None and type(
+                self.grid[self.core_grid_position[0] + x, y, z]
+            ) is type(self.grid[self.core_grid_position[0] - x, y, z]):
+                num_symmetrical += 2
         return num_symmetrical / (self.num_modules - num_along_plane)
 
     @property

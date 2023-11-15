@@ -1607,3 +1607,607 @@ Environment 4 started
 Environment 4 model and data initialized
 Environment 4 viewer initialized
 Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700054935470614
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055001690287
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055091237254
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055282491517
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055340166288
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055349736925
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055356379276
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055364790434
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055374090730
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055398000346
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055423771941
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700055563788951
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055571231873
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055577110795
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055583569106
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1700055590204060
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Environment 1
+Environment 1 started
+Environment 1 model and data initialized
+Environment 1 viewer initialized
+Environment 2
+Environment 2 started
+Environment 2 model and data initialized
+Environment 2 viewer initialized
+Environment 3
+Environment 3 started
+Environment 3 model and data initialized
+Environment 3 viewer initialized
+Environment 4
+Environment 4 started
+Environment 4 model and data initialized
+Environment 4 viewer initialized
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 1.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 0 started
+Environment 0 model and data initialized
+Environment 0 viewer initialized
+Finished batch.
+Saving generation.
