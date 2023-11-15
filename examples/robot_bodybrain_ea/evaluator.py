@@ -8,6 +8,7 @@ from revolve2.modular_robot import (
     ModularRobot,
     get_body_states_multiple_isolated_robots,
     get_body_states_multiple_isolated_robots_intermediate,
+    MorphologicalMeasures
 )
 from revolve2.simulation import Terrain
 from revolve2.simulation.running import Runner
@@ -113,4 +114,11 @@ class Evaluator:
             fitness_functions.xy_displacement(body_states_robot)
             for body_states_robot in body_states
         ]
+
+        symmetries = [
+            MorphologicalMeasures(robot.body).symmetry()
+            for robot in robots
+        ]
+        print("Computing symmetries:\n",symmetries)
+
         return fitnesses

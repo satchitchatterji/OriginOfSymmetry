@@ -585,3 +585,13 @@ class MorphologicalMeasures:
         :returns: Symmetry measurement.
         """
         return max(self.xy_symmetry, self.xz_symmetry, self.yz_symmetry)
+
+
+    @property
+    def symmetry2d(self) -> float:
+        """
+        Get the 'symmetry' measurement from the paper
+
+        :returns: Symmetry measurement in the xy plane
+        """
+        return self.xy_symmetry
