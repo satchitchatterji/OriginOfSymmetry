@@ -1,32 +1,35 @@
-import mujoco
-from typing import Tuple
 import logging
-import numpy as np
 import os
+from typing import Tuple
 
-import cv2
+import mujoco
 import numpy as np
+from mujoco import MjModel, MjData
 
-class Config:
-    opengl_lib = "glfw"   # Changed from 'egl' to 'glfw'
+from ..misc.config import Config
 
+
+# ==============================================================================
+# Vision (through offscreen OpenGL Rendering)
+# ==============================================================================
+OGL = Config.OpenGLLib
 class OpenGLVision:
-    max_width, max_height = 200, 200
-    global_context = None
+    max_width, max_height = 2000, 2000  # Size of the back-buffer (not used with egl)
+    global_context = OGL.GLFW.name
 
-    def __init__(self, model: mujoco.MjModel, shape: Tuple[int, int], headless: bool):
+    def __init__(self, model: MjModel, shape: Tuple[int, int], headless: bool = True):
+        # if OpenGLVision.global_context is None:
         if OpenGLVision.global_context is None and headless:
-            config = Config.opengl_lib.upper()
-            if config == "GLFW":
+            OGL = Config.OpenGLLib
+            ogl = Config.opengl_lib.upper()
+            if ogl == OGL.GLFW.name: # Does not work in multithread
                 from mujoco.glfw import GLContext
-                os.environ['MUJOCO_GL'] = 'glfw'
-            # Uncommenting below just in case you might need other backends in future
-            # elif config == "EGL":
-            #     from mujoco.egl import GLContext
-            #     os.environ['MUJOCO_GL'] = 'egl'
-            # elif config == "OSMESA":
-            #     from mujoco.osmesa import GLContext
-            #     os.environ['MUJOCO_GL'] = 'osmesa'
+            elif ogl == OGL.EGL.name:
+                from mujoco.egl import GLContext
+                os.environ['MUJOCO_GL'] = 'egl'
+            elif ogl == OGL.OSMESA.name:
+                from mujoco.osmesa import GLContext
+                os.environ['MUJOCO_GL'] = 'osmesa'
             else:
                 raise ValueError(f"Unknown OpenGL backend {Config.opengl_lib}")
             OpenGLVision.global_context = GLContext(self.max_width, self.max_height)
@@ -43,10 +46,10 @@ class OpenGLVision:
 
         self.cam = mujoco.MjvCamera()
         self.cam.type = mujoco.mjtCamera.mjCAMERA_FIXED
-        self.cam.fixedcamid = 0
+        self.cam.fixedcamid = -2
 
         self.vopt = mujoco.MjvOption()
-        self.scene = mujoco.MjvScene(model, maxgeom=10000)
+        self.scene = mujoco.MjvScene(model, maxgeom=model.ngeom+2)
         self.pert = mujoco.MjvPerturb()
 
         self.img = np.zeros((self.height, self.width, 3), dtype=np.uint8)

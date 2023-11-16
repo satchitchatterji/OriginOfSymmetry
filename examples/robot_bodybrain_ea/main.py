@@ -24,13 +24,29 @@ import config
 import multineat
 import numpy as np
 import numpy.typing as npt
+
+from base import Base
 from evaluator import Evaluator
+from experiment import Experiment
+from generation import Generation
 from genotype import Genotype
 from individual import Individual
+from population import Population
 from revolve2.ci_group.logging import setup_logging
-from revolve2.ci_group.rng import make_rng_time_seed
+from revolve2.ci_group.rng import make_rng, seed_from_time
 from revolve2.experimentation.optimization.ea import population_management, selection
+from revolve2.experimentation.database import OpenMethod, open_database_sqlite
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import Session
 
+from statistics import mean 
+from numpy import *
+import math
+import matplotlib.pyplot as plt
+
+import datetime
+
+GLOBAL_BALANCE = 0.0
 
 def select_parents(
     rng: np.random.Generator,
@@ -49,8 +65,8 @@ def select_parents(
         [
             selection.multiple_unique(
                 2,
-                [individual.genotype for individual in population],
-                [individual.fitness for individual in population],
+                [individual.genotype for individual in population.individuals],
+                [individual.fitness for individual in population.individuals],
                 lambda _, fitnesses: selection.tournament(rng, fitnesses, k=1),
             )
             for _ in range(offspring_size)
@@ -72,10 +88,10 @@ def select_survivors(
     :returns: A newly created population.
     """
     original_survivors, offspring_survivors = population_management.steady_state(
-        [i.genotype for i in original_population],
-        [i.fitness for i in original_population],
-        [i.genotype for i in offspring_population],
-        [i.fitness for i in offspring_population],
+        [i.genotype for i in original_population.individuals],
+        [i.fitness for i in original_population.individuals],
+        [i.genotype for i in offspring_population.individuals],
+        [i.fitness for i in offspring_population.individuals],
         lambda n, genotypes, fitnesses: selection.multiple_unique(
             n,
             genotypes,
@@ -84,20 +100,26 @@ def select_survivors(
         ),
     )
 
-    return [
-        Individual(
-            original_population[i].genotype,
-            original_population[i].fitness,
-        )
-        for i in original_survivors
-    ] + [
-        Individual(
-            offspring_population[i].genotype,
-            offspring_population[i].fitness,
-        )
-        for i in offspring_survivors
-    ]
-
+    return Population(
+        [
+            Individual(
+                original_population.individuals[i].genotype,
+                original_population.individuals[i].fitness,
+                original_population.individuals[i].symmetry,
+                original_population.individuals[i].balance,
+            )
+            for i in original_survivors
+        ]
+        + [
+            Individual(
+                offspring_population.individuals[i].genotype,
+                offspring_population.individuals[i].fitness,
+                offspring_population.individuals[i].symmetry,
+                offspring_population.individuals[i].balance,
+            )
+            for i in offspring_survivors
+        ]
+    )
 
 def find_best_robot(
     current_best: Individual | None, population: list[Individual]
@@ -114,16 +136,53 @@ def find_best_robot(
         key=lambda x: x.fitness,
     )
 
+def find_mean_fitness(
+        population: list[Individual]
+) -> Individual:
+    """
+    Return the mean fitness of the population.
 
-def main() -> None:
-    """Run the program."""
-    # Set up standard logging.
-    setup_logging(file_name="log.txt")
+    :param population: The population.
+    :returns: The mean.
+    """
+    fitnesses = [individual.fitness for individual in population.individuals]
+    return mean(fitnesses)
+
+    def plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num):
+        # plot the fitness values
+        plt.plot(max_fitness_values, label='max fitness')
+        plt.plot(mean_fitness_values, label='mean fitness')
+        plt.xlabel('Generations')
+        plt.ylabel('Fitness')
+        plt.legend()
+        plt.title('Fitness over generations')
+        
+        # save plot as png file with name of the current time
+        now = datetime.datetime.now()
+
+        date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
+        file_name = f'graph experiment {experiment_num} '+date_time+'.png'
+        
+        plt.savefig(file_name)
+        print("graph saved in "+ file_name)
+        plt.close()
+
+def run_experiment(dbengine: Engine, exp_num: int) -> None:
+    logging.info("----------------")
+    logging.info("Start experiment")
 
     # Set up the random number generater.
-    rng = make_rng_time_seed()
+    rng_seed = seed_from_time()
+    rng = make_rng(rng_seed)
 
-    # Intialize the evaluator that will be used to evaluate robots.
+    # Create and save the experiment instance.
+    experiment = Experiment(rng_seed=rng_seed)
+    logging.info("Saving experiment configuration.")
+    with Session(dbengine) as session:
+        session.add(experiment)
+        session.commit()
+
+    # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
     evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS)
 
     # CPPN innovation databases.
@@ -145,21 +204,38 @@ def main() -> None:
 
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
-    initial_fitnesses = evaluator.evaluate(
+    initial_fitnesses, initial_sym = evaluator.evaluate(
         [genotype.develop() for genotype in initial_genotypes]
     )
 
     # Create a population of individuals, combining genotype with fitness.
-    population = [
-        Individual(genotype, fitness)
-        for genotype, fitness in zip(initial_genotypes, initial_fitnesses, strict=True)
-    ]
+    population = Population(
+        [
+            Individual(genotype, fitness, sym, GLOBAL_BALANCE)
+            for genotype, fitness, sym in zip(
+                initial_genotypes, initial_fitnesses, initial_sym, strict=True
+            )
+        ]
+    )
 
-    # Save the best robot
-    best_robot = find_best_robot(None, population)
+    # Finish the zeroth generation and save it to the database.
+    generation = Generation(
+        experiment=experiment, generation_index=0, population=population
+    )
+    logging.info("Saving generation.")
+    with Session(dbengine, expire_on_commit=False) as session:
+        session.add(generation)
+        session.commit()
+
+    # # Save the best robot
+    # best_robot = find_best_robot(None, population)
 
     # Set the current generation to 0.
     generation_index = 0
+
+    # # list to store the fitness values
+    # max_fitness_values = []
+    # mean_fitness_values = []
 
     # Start the actual optimization process.
     logging.info("Start optimization process.")
@@ -170,23 +246,25 @@ def main() -> None:
         parents = select_parents(rng, population, config.OFFSPRING_SIZE)
         offspring_genotypes = [
             Genotype.crossover(
-                population[parent1_i].genotype,
-                population[parent2_i].genotype,
+                population.individuals[parent1_i].genotype,
+                population.individuals[parent2_i].genotype,
                 rng,
             ).mutate(innov_db_body, innov_db_brain, rng)
             for parent1_i, parent2_i in parents
         ]
 
         # Evaluate the offspring.
-        offspring_fitnesses = evaluator.evaluate(
+        offspring_fitnesses, offspring_symmetries = evaluator.evaluate(
             [genotype.develop() for genotype in offspring_genotypes]
         )
 
-        # <ake an intermediate offspring population.
-        offspring_population = [
-            Individual(genotype, fitness)
-            for genotype, fitness in zip(offspring_genotypes, offspring_fitnesses)
-        ]
+        # Make an intermediate offspring population.
+        offspring_population = Population(
+            [
+                Individual(genotype, fitness, sym, GLOBAL_BALANCE)
+                for genotype, fitness, sym in zip(offspring_genotypes, offspring_fitnesses, offspring_symmetries)
+            ]
+        )
 
         # Create the next population by selecting survivors.
         population = select_survivors(
@@ -195,15 +273,51 @@ def main() -> None:
             offspring_population,
         )
 
-        # Find the new best robot
-        best_robot = find_best_robot(best_robot, population)
+        # Make it all into a generation and save it to the database.
+        generation = Generation(
+            experiment=experiment,
+            generation_index=generation.generation_index + 1,
+            population=population,
+        )
+        logging.info("Saving generation.")
+        with Session(dbengine, expire_on_commit=False) as session:
+            session.add(generation)
+            session.commit()
 
-        logging.info(f"Best robot until now: {best_robot.fitness}")
-        logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
+
+        # Find the new best robot
+        # best_robot = find_best_robot(best_robot, population)
+
+        # max_fitness_values.append(best_robot.fitness)
+        # mean_fitness_values.append(find_mean_fitness(population))
+
+        # logging.info(f"Best robot until now: {best_robot.fitness}")
+        # logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
         # Increase the generation index counter.
         generation_index += 1
+    
+    # plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num)
 
+
+def main() -> None:
+    """Run the program."""
+    # Set up standard logging.
+    setup_logging(file_name="log.txt")
+
+    # Open the database, only if it does not already exists.
+    # dbengine = open_database_sqlite(
+    #     config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
+    # )
+    dbengine = open_database_sqlite(
+        config.DATABASE_FILE, open_method='TRUNCATE_AND_CREATE'
+    )
+    # Create the structure of the database.
+    Base.metadata.create_all(dbengine)
+
+    # Run the experiment several times.
+    for rep in range(config.NUM_REPETITIONS):
+        run_experiment(dbengine, rep)
 
 if __name__ == "__main__":
     main()
