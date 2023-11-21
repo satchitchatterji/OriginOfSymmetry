@@ -98,7 +98,7 @@ class LocalRunner(Runner):
         logging.info(f"Environment {env_index}")
 
         model = cls._make_model(env_descr, simulation_timestep)
-        
+
         # vision
         vision_obj = OpenGLVision(model, (10, 10), True)
         # /vision

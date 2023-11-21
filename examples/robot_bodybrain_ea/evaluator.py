@@ -121,4 +121,15 @@ class Evaluator:
             for robot in robots
         ]
 
-        return fitnesses, symmetries
+        xy_positions = get_body_states_multiple_isolated_robots_intermediate(
+                        [robot.body for robot in robots], results
+                       )
+
+        xy_positions = [str([state.core_position.xyz for state in robot_state]) for robot_state in xy_positions]
+        print(xy_positions)
+        print(len(xy_positions))
+
+        return fitnesses, symmetries, xy_positions
+
+
+        
