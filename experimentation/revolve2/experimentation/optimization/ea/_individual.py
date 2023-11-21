@@ -42,8 +42,7 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
         genotype: orm.Mapped[TGenotype] = orm.relationship()
         fitness: orm.Mapped[float] = orm.mapped_column(nullable=False)
         symmetry: orm.Mapped[float] = orm.mapped_column(nullable=False)
-        balance: orm.Mapped[float] = orm.mapped_column(nullable=False)
-        
+        all_xy_positions: orm.Mapped[list[tuple[float, float]]] = orm.mapped_column(nullable=False)
 
     # ----------------------
     # Implementation details
@@ -73,10 +72,10 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
         @orm.declared_attr
         def symmetry(cls) -> orm.Mapped[float]:  # noqa
             return cls.__symmetry_impl()
-        
+
         @orm.declared_attr
-        def balance(cls) -> orm.Mapped[float]:  # noqa
-            return cls.__balance_impl()
+        def all_xy_positions(cls) -> orm.Mapped[list[tuple[float, float]]]:  # noqa
+            return cls.__all_xy_positions_impl()
 
     __type_tgenotype: ClassVar[Type[TGenotype]]  # type: ignore[misc]
     __population_table: ClassVar[str]
@@ -137,7 +136,7 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
     @classmethod
     def __symmetry_impl(cls) -> orm.Mapped[float]:
         return orm.mapped_column(nullable=False)
-
+        
     @classmethod
-    def __balance_impl(cls) -> orm.Mapped[float]:
+    def __all_xy_positions_impl(cls) -> orm.Mapped[list[tuple[float, float]]]:
         return orm.mapped_column(nullable=False)
