@@ -53,7 +53,7 @@ def get_body_states_multiple_isolated_robots_intermediate(
     for body, environment_results in zip(bodies, batch_results.environment_results):
         single_intermediate_states = []
         for i in range(0, num_steps, step_size):
-            print("i: ", i)
+            # print("i: ", i)
             single_intermediate_states.append(
                     body.body_state_from_actor_state(
                         environment_results.environment_states[i].actor_states[0]

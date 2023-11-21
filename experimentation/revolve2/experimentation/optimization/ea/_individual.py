@@ -9,8 +9,6 @@ from revolve2.experimentation.database import HasId
 from typing_extensions import Self
 
 TGenotype = TypeVar("TGenotype")
-TGenotype = TypeVar("TGenotype")
-
 
 class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
     """

@@ -2562,3 +2562,28 @@ Start optimization process.
 Generation 1 / 2.
 Starting simulation batch with mujoco.
 Environment 0
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1700610258285069
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 2.
+Starting simulation batch with mujoco.
+Environment 0
