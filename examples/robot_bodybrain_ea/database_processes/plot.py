@@ -74,6 +74,7 @@ def main() -> None:
     df = open_experiment_table()
     print(df)
     plot_float_property_over_generations(df, "fitness")
+    plot_float_property_over_generations(df, "symmetry")
 
 
 
