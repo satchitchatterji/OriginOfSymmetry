@@ -9,6 +9,8 @@ import mujoco_viewer
 import numpy as np
 import numpy.typing as npt
 
+from .environment_steering_controller import EnvironmentActorController
+
 #vision
 from .OpenGLCamera import OpenGLVision
 
@@ -168,7 +170,12 @@ class LocalRunner(Runner):
             if time >= last_control_time + control_step:
                 last_control_time = math.floor(time / control_step) * control_step
                 control_user = ActorControl()
-                env_descr.controller.control(control_step, control_user)
+                #env_descr.controller.control(control_step, control_user)
+
+                
+                #EnvironmentActorController(control_user).control(
+                #    control_step, data, model
+                #)
                 
                 # vision
                 current_vision = vision_obj.process(model, data)
@@ -177,6 +184,9 @@ class LocalRunner(Runner):
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
                 # /vision
                 # controller.get_action()
+                env_descr.controller.control(control_step, control_user, current_vision)
+
+                
                 
                 actor_targets = control_user._dof_targets
                 actor_targets.sort(key=lambda t: t[0])
