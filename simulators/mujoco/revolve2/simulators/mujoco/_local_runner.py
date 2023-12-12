@@ -58,6 +58,9 @@ class LocalRunner(Runner):
     _headless: bool
     _start_paused: bool
     _num_simulators: int
+    # vision
+    _repetition = 0
+    # /vision
 
     def __init__(
         self,
@@ -84,6 +87,7 @@ class LocalRunner(Runner):
         self._start_paused = start_paused
         self._num_simulators = num_simulators
 
+        
     @classmethod
     def _run_environment(
         cls,
@@ -102,7 +106,8 @@ class LocalRunner(Runner):
         model = cls._make_model(env_descr, simulation_timestep)
         
         # vision
-        vision_obj = OpenGLVision(model, (10, 10), True)
+        robot_camera_size = (60, 60)
+        vision_obj = OpenGLVision(model, robot_camera_size, True)
         # /vision
 
         data = mujoco.MjData(model)
@@ -116,6 +121,12 @@ class LocalRunner(Runner):
         except OSError as error: 
             print("Error/Warning with creating camera folder")
             print(">", error)
+
+        # Define the codec and create VideoWriter object
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        video_out = cv2.VideoWriter(f"{camera_dir}/output{LocalRunner._repetition}.mp4", fourcc, 40.0, robot_camera_size)
+
+
         # /vision
 
         initial_targets = [
@@ -180,7 +191,9 @@ class LocalRunner(Runner):
                 # vision
                 current_vision = vision_obj.process(model, data)
                 current_vision = np.rot90(current_vision, 2)
-                cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
+                #cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
+
+                video_out.write(current_vision)
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
                 # /vision
                 # controller.get_action()
@@ -258,6 +271,11 @@ class LocalRunner(Runner):
         :returns: List of simulation states in ascending order of time.
         """
         logging.info("Starting simulation batch with mujoco.")
+
+
+        # vision
+        LocalRunner._repetition += 1
+        # /vision
 
         control_step = 1 / batch.control_frequency
         sample_step = 1 / batch.sampling_frequency
