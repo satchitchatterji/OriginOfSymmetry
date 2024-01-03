@@ -87,6 +87,35 @@ class LocalRunner(Runner):
         self._start_paused = start_paused
         self._num_simulators = num_simulators
 
+
+        # vision
+        # get all the camera directories that we already have in the form: camera_dir = f"./camera_{env_index}" from the root directory
+        camera_dirs = [f for f in os.listdir(os.getcwd()) if os.path.isdir(f) and f.startswith("camera_")]
+        
+        # delete all camera folders
+        for camera_dir in camera_dirs:
+
+            # delete all files in the folder
+            for file in os.listdir(camera_dir):
+                file_path = os.path.join(camera_dir, file)
+                try:
+                    if os.path.isfile(file_path):
+                        #assert that file is mp4 or ds_store
+                        assert file_path.endswith(".mp4") or file_path.endswith(".DS_Store"), "File inside camera folder is not mp4 or .DS_Store"
+                        os.unlink(file_path)
+                except Exception as e:
+                    print("Error/Warning with deleting files in camera folder")
+                    print(e)
+            # delete the folder   
+            try:
+                os.rmdir(camera_dir)
+            except OSError as error:
+                print("Error/Warning with deleting camera folder")
+                print(">", error)
+
+            
+        # /vision
+
         
     @classmethod
     def _run_environment(
@@ -122,9 +151,18 @@ class LocalRunner(Runner):
             print("Error/Warning with creating camera folder")
             print(">", error)
 
+        # get the highest number of output_{index}.mp4 files in the folder
+        output_files = [f for f in os.listdir(camera_dir) if os.path.isfile(os.path.join(camera_dir, f)) and f.startswith("output")]
+        output_files.sort()
+        if len(output_files) > 0:
+            repetition_number = int(output_files[-1].split(".")[0].split("output")[1])
+            repetition_number += 1
+        else:
+            repetition_number = 0
+
         # Define the codec and create VideoWriter object
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        video_out = cv2.VideoWriter(f"{camera_dir}/output{LocalRunner._repetition}.mp4", fourcc, 40.0, robot_camera_size)
+        video_out = cv2.VideoWriter(f"{camera_dir}/output{repetition_number}.mp4", fourcc, 40.0, robot_camera_size)
 
 
         # /vision
