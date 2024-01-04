@@ -122,7 +122,7 @@ def select_survivors(
     )
 
 def find_best_robot(
-    current_best: Individual | None, population: list[Individual]
+    current_best: Individual | None, population: Population
 ) -> Individual:
     """
     Return the best robot between the population and the current best individual.
@@ -132,12 +132,12 @@ def find_best_robot(
     :returns: The best individual.
     """
     return max(
-        population + [] if current_best is None else [current_best],
+        population.individuals + [] if current_best is None else [current_best],
         key=lambda x: x.fitness,
     )
 
 def find_mean_fitness(
-        population: list[Individual]
+        population: Population
 ) -> Individual:
     """
     Return the mean fitness of the population.
@@ -148,24 +148,24 @@ def find_mean_fitness(
     fitnesses = [individual.fitness for individual in population.individuals]
     return mean(fitnesses)
 
-    def plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num):
-        # plot the fitness values
-        plt.plot(max_fitness_values, label='max fitness')
-        plt.plot(mean_fitness_values, label='mean fitness')
-        plt.xlabel('Generations')
-        plt.ylabel('Fitness')
-        plt.legend()
-        plt.title('Fitness over generations')
-        
-        # save plot as png file with name of the current time
-        now = datetime.datetime.now()
+def plot_fitnesses(max_fitness_values, mean_fitness_values):
+    # plot the fitness values
+    plt.plot(max_fitness_values, label='max fitness')
+    plt.plot(mean_fitness_values, label='mean fitness')
+    plt.xlabel('Generations')
+    plt.ylabel('Fitness')
+    plt.legend()
+    plt.title('Fitness over generations')
+    
+    # save plot as png file with name of the current time
+    now = datetime.datetime.now()
 
-        date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-        file_name = f'graph experiment {experiment_num} '+date_time+'.png'
-        
-        plt.savefig(file_name)
-        print("graph saved in "+ file_name)
-        plt.close()
+    date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
+    file_name = 'graph experiment '+date_time+'.png'
+    
+    plt.savefig(file_name)
+    print("graph saved in "+ file_name)
+    plt.close()
 
 def run_experiment(dbengine: Engine, exp_num: int) -> None:
     logging.info("----------------")
@@ -228,14 +228,14 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         session.commit()
 
     # # Save the best robot
-    # best_robot = find_best_robot(None, population)
+    best_robot = find_best_robot(None, population)
 
     # Set the current generation to 0.
     generation_index = 0
 
-    # # list to store the fitness values
-    # max_fitness_values = []
-    # mean_fitness_values = []
+    # list to store the fitness values
+    max_fitness_values = []
+    mean_fitness_values = []
 
     # Start the actual optimization process.
     logging.info("Start optimization process.")
@@ -286,18 +286,18 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
 
         # Find the new best robot
-        # best_robot = find_best_robot(best_robot, population)
+        best_robot = find_best_robot(best_robot, population)
 
         # max_fitness_values.append(best_robot.fitness)
-        # mean_fitness_values.append(find_mean_fitness(population))
+        mean_fitness_values.append(find_mean_fitness(population))
 
         # logging.info(f"Best robot until now: {best_robot.fitness}")
-        # logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
+        logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
         # Increase the generation index counter.
         generation_index += 1
     
-    # plot_fitnesses(max_fitness_values, mean_fitness_values, experiment_num)
+    plot_fitnesses(max_fitness_values, mean_fitness_values)
 
 
 def main() -> None:

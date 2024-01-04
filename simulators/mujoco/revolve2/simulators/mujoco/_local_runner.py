@@ -59,7 +59,7 @@ class LocalRunner(Runner):
     _start_paused: bool
     _num_simulators: int
     # vision
-    _repetition = 0
+    #_repetition = 0
     # /vision
 
     def __init__(
@@ -310,11 +310,6 @@ class LocalRunner(Runner):
         """
         logging.info("Starting simulation batch with mujoco.")
 
-
-        # vision
-        LocalRunner._repetition += 1
-        # /vision
-
         control_step = 1 / batch.control_frequency
         sample_step = 1 / batch.sampling_frequency
 
@@ -359,6 +354,13 @@ class LocalRunner(Runner):
         env_mjcf.option.gravity = [0, 0, -9.81]
 
         heightmaps: list[geometry.Heightmap] = []
+
+        # vision
+        # Add a texture and a material to the assets
+        env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=20, height=20, name="checker_texture")
+        env_mjcf.asset.add("material", texture="checker_texture", name="checker_material")
+
+        # /vision
         for geo in env_descr.static_geometries:
             if isinstance(geo, geometry.Plane):
                 env_mjcf.worldbody.add(
@@ -366,7 +368,7 @@ class LocalRunner(Runner):
                     type="plane",
                     pos=[geo.position.x, geo.position.y, geo.position.z],
                     size=[geo.size.x / 2.0, geo.size.y / 2.0, 1.0],
-                    rgba=[geo.color.x, geo.color.y, geo.color.z, 1.0],
+                    material="checker_material" # vision
                 )
             elif isinstance(geo, geometry.Heightmap):
                 env_mjcf.asset.add(
