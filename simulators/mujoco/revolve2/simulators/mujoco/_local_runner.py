@@ -58,6 +58,7 @@ class LocalRunner(Runner):
     _headless: bool
     _start_paused: bool
     _num_simulators: int
+    sphere_pos: Vector3 = Vector3([10, 10, 1])
     # vision
     #_repetition = 0
     # /vision
@@ -66,7 +67,7 @@ class LocalRunner(Runner):
         self,
         headless: bool = False,
         start_paused: bool = False,
-        num_simulators: int = 1,
+        num_simulators: int = 1
     ):
         """
         Initialize this object.
@@ -233,9 +234,19 @@ class LocalRunner(Runner):
 
                 video_out.write(current_vision)
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
+
+
+                # get robot position and joint positions
+                
+                assert len (env_descr.actors) == 1, "Only one robot is supported"
+                robot_pos = env_descr.actors[0].position
+                joint_positions = []
+                for joint in env_descr.actors[0].actor.joints:
+                    joint_positions.append(joint.position)
+
                 # /vision
                 # controller.get_action()
-                env_descr.controller.control(control_step, control_user, current_vision)
+                env_descr.controller.control(control_step, control_user, current_vision, joint_positions, robot_pos, save_pos=True)
 
                 
                 
@@ -405,6 +416,17 @@ class LocalRunner(Runner):
             castshadow=False,
         )
         env_mjcf.visual.headlight.active = 0
+
+        # vision
+        env_mjcf.worldbody.add(
+            "geom",
+            type="sphere",  
+            pos=[LocalRunner.sphere_pos.x, LocalRunner.sphere_pos.y, LocalRunner.sphere_pos.z],
+            size=[0.2],  # size of the sphere
+            rgba=[1.0, 0.0, 0.0, 1.0],  # color of the sphere
+        )
+        
+        # \vision
 
         for actor_index, posed_actor in enumerate(env_descr.actors):
             urdf = physbot_to_urdf(

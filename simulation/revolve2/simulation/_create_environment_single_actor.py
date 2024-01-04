@@ -16,6 +16,9 @@ import numpy.typing as npt
 from matplotlib import pyplot as plt
 
 
+#from revolve2.simulators.mujoco import LocalRunner
+
+
 class EnvironmentActorController(EnvironmentController):
     """An environment controller for an environment with a single actor that uses a provided ActorController."""
 
@@ -53,24 +56,34 @@ class EnvironmentActorController(EnvironmentController):
         :param coordinates: current coordinates of each joint
         :param current_pos: current position of the agent
         """
+
+        # vision
         #vision_img = np.flip(vision_img) # flip the image because its axis are inverted #we are already doing it before passing the image to the controller
+
+        self.picture_w = vision_img.shape[1]
+        # / vision
+
 
         # we use color filters to find the next target point 
         green_filter = vision_img[:,:,1] < 100
         red_filter = vision_img[:,:,0] > 100
         blu_filter = vision_img[:,:,2] < 100
         coords = np.where(green_filter & red_filter & blu_filter)
+
+        target_in_sight = True # vision
         if coords[1].shape[0] > 0:
             self.x_pos = np.mean(coords[1])
+        else:
+            target_in_sight = False
 
         self.actor_controller.step(dt)
         targets = self.actor_controller.get_dof_targets()
 
-        if self.steer:
+        if self.steer and target_in_sight:
 
             core_position = current_pos[:2]
 
-            if save_pos:
+            if save_pos: # TODO what does this do?
                 for joint_pos in joint_positions[1:]:
                     self.is_left.append(joint_pos[0] > 0.)
                     self.is_right.append(joint_pos[0] < 0.)
@@ -110,8 +123,10 @@ def create_environment_single_actor(
     :returns: The created environment.
     """
     bounding_box = actor.calc_aabb()
-
-    env = Environment(EnvironmentActorController(controller))
+    # vision
+    #env = Environment(EnvironmentActorController(controller, steer=True, target_points=[(LocalRunner.sphere_pos.x, LocalRunner.sphere_pos.y)]))
+    env = Environment(EnvironmentActorController(controller, steer=True))
+    # / vision
     env.static_geometries.extend(terrain.static_geometry)
     env.actors.append(
         PosedActor(
