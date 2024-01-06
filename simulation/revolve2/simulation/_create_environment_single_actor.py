@@ -44,8 +44,7 @@ class EnvironmentActorController(EnvironmentController):
         self.steer = steer
         if steer:
             self.n = 7
-            self.is_left = []
-            self.is_right = []
+            
 
     def control(self, dt: float, actor_control: ActorControl, vision_img: npt.ArrayLike, joint_positions=None, current_pos=None, save_pos=False) -> None:
         """
@@ -72,6 +71,7 @@ class EnvironmentActorController(EnvironmentController):
 
         target_in_sight = True # vision
         if coords[1].shape[0] > 0:
+            print("sphere in sight")
             self.x_pos = np.mean(coords[1])
         else:
             target_in_sight = False
@@ -79,29 +79,44 @@ class EnvironmentActorController(EnvironmentController):
         self.actor_controller.step(dt)
         targets = self.actor_controller.get_dof_targets()
 
+        assert len(targets) == len(joint_positions)
+
+        #print("Test print")
+        #print("targets: ", targets)
         if self.steer and target_in_sight:
 
             core_position = current_pos[:2]
 
-            if save_pos: # TODO what does this do?
-                for joint_pos in joint_positions[1:]:
+            self.is_left = []
+            self.is_right = []
+
+            if save_pos: 
+                for joint_pos in joint_positions[1:]:#TODO why are we skipping the first joint?
                     self.is_left.append(joint_pos[0] > 0.)
                     self.is_right.append(joint_pos[0] < 0.)
 
             # check if joints are on the left or right
             joint_positions = [c[:2] for c in joint_positions]
 
+            
+
             # compute steering angle and parameters
             theta = (self.picture_w - self.x_pos) - (self.picture_w / 2)
             g = (((self.picture_w / 2) - abs(theta)) / (self.picture_w / 2)) ** self.n
 
-            # apply steering factor
+            
+
+            # apply steering factor TODO shouldn't we apply the steering factor only to the joints that are not already in the right position?
             for i, (left, right) in enumerate(zip(self.is_left, self.is_right)):
                 if left:
-                    if theta < 0:
+                    if theta < 0: # if theta is negative the target is on the right
+                        print("sphere on the right with theta ", theta)
+                        print("multiplying dof by ", g)
                         targets[i] *= g
                 elif right:
-                    if theta >= 0:
+                    if theta >= 0: # if theta is positive the target is on the left
+                        print("sphere on the left with theta ", theta)
+                        print("multiplying dof by ", g)
                         targets[i] *= g
             
         actor_control.set_dof_targets(0, targets)

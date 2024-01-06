@@ -222,10 +222,7 @@ class LocalRunner(Runner):
                 control_user = ActorControl()
                 #env_descr.controller.control(control_step, control_user)
 
-                
-                #EnvironmentActorController(control_user).control(
-                #    control_step, data, model
-                #)
+
                 
                 # vision
                 current_vision = vision_obj.process(model, data)
@@ -243,6 +240,9 @@ class LocalRunner(Runner):
                 joint_positions = []
                 for joint in env_descr.actors[0].actor.joints:
                     joint_positions.append(joint.position)
+
+                # if len(joint_positions) > 0:
+                #     print("joint_positions: ", joint_positions)
 
                 # /vision
                 # controller.get_action()
