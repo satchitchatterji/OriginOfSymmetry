@@ -132,7 +132,7 @@ def find_best_robot(
     :returns: The best individual.
     """
     return max(
-        population.individuals + [] if current_best is None else [current_best],
+        population.individuals + [] if current_best is None else population.individuals + [current_best],
         key=lambda x: x.fitness,
     )
 
@@ -285,11 +285,13 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
             session.commit()
 
 
+        
+        mean_fitness_values.append(find_mean_fitness(population))
+
         # Find the new best robot
         best_robot = find_best_robot(best_robot, population)
 
-        # max_fitness_values.append(best_robot.fitness)
-        mean_fitness_values.append(find_mean_fitness(population))
+        max_fitness_values.append(best_robot.fitness)
 
         # logging.info(f"Best robot until now: {best_robot.fitness}")
         logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")

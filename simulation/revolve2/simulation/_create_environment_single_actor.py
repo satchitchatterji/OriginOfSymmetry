@@ -34,7 +34,7 @@ class EnvironmentActorController(EnvironmentController):
     def __init__(
         self,
         actor_controller: ActorController,
-        target_points: List[Tuple[float]] = [(0.0, 0.0)],
+        target_points: List[Tuple[float]] = [(0.0, 0.0)], #TODO remove?
         steer: bool = False,
     ) -> None:
         """
@@ -138,8 +138,8 @@ class EnvironmentActorController(EnvironmentController):
                     if theta < 0:  # if theta is negative the target is on the right
                         print("sphere on the right with theta ", theta)
 
-                        if left:  # left joints are sped up
-                            targets[i] = targets[i] / g
+                        # if left:  # left joints are sped up DIV BY ZERO could cause problems
+                        #     targets[i] = targets[i] / g 
 
                         if right:  # right joints are slowed down
                             targets[i] *= g
@@ -150,8 +150,8 @@ class EnvironmentActorController(EnvironmentController):
                         if left:  # left joints are slowed down
                             targets[i] *= g
 
-                        if right:  # right joints are sped up
-                            targets[i] = targets[i] / g
+                        # if right:  # right joints are sped up DIV BY ZERO could cause problems
+                        #     targets[i] = targets[i] / g
 
         actor_control.set_dof_targets(0, targets)
 
@@ -161,7 +161,7 @@ class EnvironmentActorController(EnvironmentController):
 
 
 def create_environment_single_actor(
-    actor: Actor, controller: ActorController, terrain: Terrain
+    actor: Actor, controller: ActorController, terrain: Terrain, target_point: tuple[float, float] = (0.0, 0.0)
 ) -> Environment:
     """
     Create an environment for simulating a single actor.
@@ -191,4 +191,5 @@ def create_environment_single_actor(
             [0.0 for _ in controller.get_dof_targets()],
         )
     )
+    env.target_point = target_point
     return env

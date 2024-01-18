@@ -97,9 +97,11 @@ class Evaluator:
         :param robots: The robots to simulate.
         :returns: Fitnesses of the robots.
         """
+        targets = [(10,10) for  _ in robots]
+
         # Simulate the robots and process the results.
         batch = create_batch_multiple_isolated_robots_standard(
-            robots, [self._terrain for _ in robots]#, sampling_frequency = 5
+            robots, [self._terrain for _ in robots], targets,#,  sampling_frequency = 5
         )
 
         results = asyncio.run(self._runner.run_batch(batch))
@@ -112,8 +114,10 @@ class Evaluator:
         # calculate the fitnesses
         fitnesses = [
             #fitness_functions.xy_displacement_with_height_penality(body_states_robot)
-            fitness_functions.xy_displacement(body_state_begin, body_state_end)
-            for body_state_begin, body_state_end in body_states
+            #fitness_functions.xy_displacement(body_state_begin, body_state_end)
+            #for body_state_begin, body_state_end in body_states
+            fitness_functions.distance_to_target(body_state_end, target) for (_, body_state_end), target in zip(body_states, targets)
+
         ]
 
         symmetries = [

@@ -417,11 +417,11 @@ class LocalRunner(Runner):
         )
         env_mjcf.visual.headlight.active = 0
 
-        # vision
+        # vision Adding red sphere
         env_mjcf.worldbody.add(
             "geom",
             type="sphere",  
-            pos=[LocalRunner.sphere_pos.x, LocalRunner.sphere_pos.y, LocalRunner.sphere_pos.z],
+            pos=[env_descr.target_point[0], env_descr.target_point[1], LocalRunner.sphere_pos.z],
             size=[0.2],  # size of the sphere
             rgba=[1.0, 0.0, 0.0, 1.0],  # color of the sphere
         )

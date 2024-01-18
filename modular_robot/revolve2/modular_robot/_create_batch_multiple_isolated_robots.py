@@ -7,10 +7,12 @@ from ._modular_robot import ModularRobot
 def create_batch_multiple_isolated_robots(
     robots: list[ModularRobot],
     terrains: list[Terrain],
+    target_points: list[tuple[float]],
     simulation_time: int | None,
     sampling_frequency: float,
     simulation_timestep: float,
-    control_frequency: float,
+    control_frequency: float
+    
 ) -> Batch:
     """
     Create a batch for simulating multiple robots that do not interact.
@@ -25,8 +27,8 @@ def create_batch_multiple_isolated_robots(
     """
     actor_controllers = [robot.make_actor_and_controller() for robot in robots]
     envs = [
-        create_environment_single_actor(actor, controller, terrain)
-        for (actor, controller), terrain in zip(actor_controllers, terrains)
+        create_environment_single_actor(actor, controller, terrain, target_point)
+        for (actor, controller), terrain, target_point in zip(actor_controllers, terrains, target_points)
     ]
 
     batch = Batch(
