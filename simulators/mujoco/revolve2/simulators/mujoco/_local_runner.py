@@ -368,7 +368,7 @@ class LocalRunner(Runner):
 
         # vision
         # Add a texture and a material to the assets
-        env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=20, height=20, name="checker_texture")
+        env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=5, height=5, name="checker_texture")
         env_mjcf.asset.add("material", texture="checker_texture", name="checker_material")
 
         # /vision

@@ -98,6 +98,7 @@ class Evaluator:
         :returns: Fitnesses of the robots.
         """
         targets = [(10,10) for  _ in robots]
+        # TODO repeat k target for each generation
 
         # Simulate the robots and process the results.
         batch = create_batch_multiple_isolated_robots_standard(
