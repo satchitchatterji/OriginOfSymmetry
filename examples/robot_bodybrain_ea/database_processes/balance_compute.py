@@ -42,8 +42,14 @@ def compute_balance_from_str(single_robot_body_state_str, t):
 def compute_balance_from_str_list(robot_states_str_list):
     # computes balance for a single robot over run as per Kargar, Miras, & Eiben (2021)
     balance_list = []
+
     for single_robot_body_state_str in robot_states_str_list:
-        balance_list.append(compute_balance_from_str(single_robot_body_state_str, len(single_robot_body_state_str)))
+        try:
+            balance_list.append(compute_balance_from_str(single_robot_body_state_str, len(single_robot_body_state_str)))
+        except Exception as e:
+            print("Error: could not compute balance from string.")
+            print(e)
+
     return balance_list
 
 if __name__ == "__main__":
