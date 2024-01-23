@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 
 from util import open_experiment_table
+from balance_compute import compute_balance_from_str_list
 
-def plot_float_property_over_generations(df, property_name="fitness"):
+def plot_float_property_over_generations(df, property_name="fitness", savename=None):
     """Plot property_name (fitness/symmetry/balance) over generations for all experiments, averaged."""
     agg_per_experiment_per_generation = (
         df.groupby(["experiment_id", "generation_index"])
@@ -67,16 +68,21 @@ def plot_float_property_over_generations(df, property_name="fitness"):
     plt.ylabel(f"{property_name}")
     plt.title(f"Mean and max {property_name} across repetitions with std as shade")
     plt.legend()
+    plt.grid()
+    if savename is not None:
+        plt.savefig(savename, bbox_inches="tight")
     plt.show()
 
 def main() -> None:
     """Run the program."""
     df = open_experiment_table()
+    df = df[df["experiment_id"] >= 11]
+    print(df)
+    df["balance"] = compute_balance_from_str_list(df["xy_positions"])
     print(df)
     plot_float_property_over_generations(df, "fitness")
     plot_float_property_over_generations(df, "symmetry")
-
-
+    plot_float_property_over_generations(df, "balance")
 
 if __name__ == "__main__":
     main()
