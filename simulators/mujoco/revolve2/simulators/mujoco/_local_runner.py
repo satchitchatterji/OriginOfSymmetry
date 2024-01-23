@@ -9,6 +9,8 @@ import mujoco_viewer
 import numpy as np
 import numpy.typing as npt
 
+from .environment_steering_controller import EnvironmentActorController
+
 #vision
 from .OpenGLCamera import OpenGLVision
 
@@ -56,12 +58,16 @@ class LocalRunner(Runner):
     _headless: bool
     _start_paused: bool
     _num_simulators: int
+    sphere_pos: Vector3 = Vector3([10, 10, 1])
+    # vision
+    #_repetition = 0
+    # /vision
 
     def __init__(
         self,
         headless: bool = False,
         start_paused: bool = False,
-        num_simulators: int = 1,
+        num_simulators: int = 1
     ):
         """
         Initialize this object.
@@ -82,6 +88,36 @@ class LocalRunner(Runner):
         self._start_paused = start_paused
         self._num_simulators = num_simulators
 
+
+        # vision
+        # get all the camera directories that we already have in the form: camera_dir = f"./camera_{env_index}" from the root directory
+        camera_dirs = [f for f in os.listdir(os.getcwd()) if os.path.isdir(f) and f.startswith("camera_")]
+        
+        # delete all camera folders
+        for camera_dir in camera_dirs:
+
+            # delete all files in the folder
+            for file in os.listdir(camera_dir):
+                file_path = os.path.join(camera_dir, file)
+                try:
+                    if os.path.isfile(file_path):
+                        #assert that file is mp4 or ds_store
+                        assert file_path.endswith(".mp4") or file_path.endswith(".DS_Store"), "File inside camera folder is not mp4 or .DS_Store"
+                        os.unlink(file_path)
+                except Exception as e:
+                    print("Error/Warning with deleting files in camera folder")
+                    print(e)
+            # delete the folder   
+            try:
+                os.rmdir(camera_dir)
+            except OSError as error:
+                print("Error/Warning with deleting camera folder")
+                print(">", error)
+
+            
+        # /vision
+
+        
     @classmethod
     def _run_environment(
         cls,
@@ -100,7 +136,8 @@ class LocalRunner(Runner):
         model = cls._make_model(env_descr, simulation_timestep)
 
         # vision
-        vision_obj = OpenGLVision(model, (10, 10), True)
+        robot_camera_size = (60, 60)
+        vision_obj = OpenGLVision(model, robot_camera_size, True)
         # /vision
 
         data = mujoco.MjData(model)
@@ -114,6 +151,21 @@ class LocalRunner(Runner):
         except OSError as error: 
             print("Error/Warning with creating camera folder")
             print(">", error)
+
+        # get the highest number of output_{index}.mp4 files in the folder
+        output_files = [f for f in os.listdir(camera_dir) if os.path.isfile(os.path.join(camera_dir, f)) and f.startswith("output")]
+        output_files.sort()
+        if len(output_files) > 0:
+            repetition_number = int(output_files[-1].split(".")[0].split("output")[1])
+            repetition_number += 1
+        else:
+            repetition_number = 0
+
+        # Define the codec and create VideoWriter object
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        video_out = cv2.VideoWriter(f"{camera_dir}/output{repetition_number}.mp4", fourcc, 40.0, robot_camera_size)
+
+
         # /vision
 
         initial_targets = [
@@ -168,15 +220,35 @@ class LocalRunner(Runner):
             if time >= last_control_time + control_step:
                 last_control_time = math.floor(time / control_step) * control_step
                 control_user = ActorControl()
-                env_descr.controller.control(control_step, control_user)
+                #env_descr.controller.control(control_step, control_user)
+
+
                 
                 # vision
                 current_vision = vision_obj.process(model, data)
                 current_vision = np.rot90(current_vision, 2)
-                cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
+                #cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
+
+                video_out.write(current_vision)
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
+
+
+                # get robot position and joint positions
+                
+                assert len (env_descr.actors) == 1, "Only one robot is supported"
+                robot_pos = env_descr.actors[0].position
+                joint_positions = []
+                for joint in env_descr.actors[0].actor.joints:
+                    joint_positions.append(joint.position)
+
+                # if len(joint_positions) > 0:
+                #     print("joint_positions: ", joint_positions)
+
                 # /vision
                 # controller.get_action()
+                env_descr.controller.control(control_step, control_user, current_vision, joint_positions, robot_pos, save_pos=True)
+
+                
                 
                 actor_targets = control_user._dof_targets
                 actor_targets.sort(key=lambda t: t[0])
@@ -293,6 +365,13 @@ class LocalRunner(Runner):
         env_mjcf.option.gravity = [0, 0, -9.81]
 
         heightmaps: list[geometry.Heightmap] = []
+
+        # vision
+        # Add a texture and a material to the assets
+        env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=5, height=5, name="checker_texture")
+        env_mjcf.asset.add("material", texture="checker_texture", name="checker_material")
+
+        # /vision
         for geo in env_descr.static_geometries:
             if isinstance(geo, geometry.Plane):
                 env_mjcf.worldbody.add(
@@ -300,7 +379,7 @@ class LocalRunner(Runner):
                     type="plane",
                     pos=[geo.position.x, geo.position.y, geo.position.z],
                     size=[geo.size.x / 2.0, geo.size.y / 2.0, 1.0],
-                    rgba=[geo.color.x, geo.color.y, geo.color.z, 1.0],
+                    material="checker_material" # vision
                 )
             elif isinstance(geo, geometry.Heightmap):
                 env_mjcf.asset.add(
@@ -337,6 +416,17 @@ class LocalRunner(Runner):
             castshadow=False,
         )
         env_mjcf.visual.headlight.active = 0
+
+        # vision Adding red sphere
+        env_mjcf.worldbody.add(
+            "geom",
+            type="sphere",  
+            pos=[env_descr.target_point[0], env_descr.target_point[1], LocalRunner.sphere_pos.z],
+            size=[0.2],  # size of the sphere
+            rgba=[1.0, 0.0, 0.0, 1.0],  # color of the sphere
+        )
+        
+        # \vision
 
         for actor_index, posed_actor in enumerate(env_descr.actors):
             urdf = physbot_to_urdf(

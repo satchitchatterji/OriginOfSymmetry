@@ -7,3 +7,4 @@ class RecordSettings:
 
     video_directory: str
     fps: int = 24
+    save_robot_view: bool = True

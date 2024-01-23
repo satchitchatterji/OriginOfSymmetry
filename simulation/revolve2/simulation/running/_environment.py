@@ -12,3 +12,4 @@ class Environment:
     controller: EnvironmentController
     actors: list[PosedActor] = field(default_factory=list, init=False)
     static_geometries: list[Geometry] = field(default_factory=list, init=False)
+    target_point: tuple[float, float] = field(default_factory=tuple, init=False)

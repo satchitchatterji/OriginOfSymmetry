@@ -1,8 +1,8 @@
 """Configuration parameters for this example."""
 
 DATABASE_FILE = "./database_sym.sqlite"
-NUM_REPETITIONS = 5
+NUM_REPETITIONS = 1
 NUM_SIMULATORS = 1
 POPULATION_SIZE = 5
-OFFSPRING_SIZE = 1
-NUM_GENERATIONS = 2
+OFFSPRING_SIZE = 5
+NUM_GENERATIONS = 4

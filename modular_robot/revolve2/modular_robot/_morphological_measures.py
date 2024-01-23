@@ -210,7 +210,7 @@ class MorphologicalMeasures:
         for x, z, y in product(
             range(self.bounding_box_depth),
             range(self.bounding_box_height),
-            range(1, (self.bounding_box_width - 1) // 2),
+            range(1, ((self.bounding_box_width ) // 2)-1), # modified
         ):
             if self.grid[x, self.core_grid_position[1] + y, z] is not None and type(
                 self.grid[x, self.core_grid_position[1] + y, z]
