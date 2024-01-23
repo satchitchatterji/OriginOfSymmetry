@@ -46,8 +46,6 @@ import matplotlib.pyplot as plt
 
 import datetime
 
-GLOBAL_BALANCE = 0.0
-
 def select_parents(
     rng: np.random.Generator,
     population: list[Individual],
@@ -106,7 +104,7 @@ def select_survivors(
                 original_population.individuals[i].genotype,
                 original_population.individuals[i].fitness,
                 original_population.individuals[i].symmetry,
-                original_population.individuals[i].balance,
+                original_population.individuals[i].xy_positions,
             )
             for i in original_survivors
         ]
@@ -115,7 +113,7 @@ def select_survivors(
                 offspring_population.individuals[i].genotype,
                 offspring_population.individuals[i].fitness,
                 offspring_population.individuals[i].symmetry,
-                offspring_population.individuals[i].balance,
+                offspring_population.individuals[i].xy_positions,
             )
             for i in offspring_survivors
         ]
@@ -204,16 +202,16 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
-    initial_fitnesses, initial_sym = evaluator.evaluate(
+    initial_fitnesses, initial_sym, initial_xy = evaluator.evaluate(
         [genotype.develop() for genotype in initial_genotypes]
     )
 
     # Create a population of individuals, combining genotype with fitness.
     population = Population(
         [
-            Individual(genotype, fitness, sym, GLOBAL_BALANCE)
-            for genotype, fitness, sym in zip(
-                initial_genotypes, initial_fitnesses, initial_sym, strict=True
+            Individual(genotype, fitness, sym, xy)
+            for genotype, fitness, sym, xy in zip(
+                initial_genotypes, initial_fitnesses, initial_sym, initial_xy, strict=True
             )
         ]
     )
@@ -254,15 +252,19 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         ]
 
         # Evaluate the offspring.
-        offspring_fitnesses, offspring_symmetries = evaluator.evaluate(
+        offspring_fitnesses, offspring_symmetries, offspring_xy = evaluator.evaluate(
             [genotype.develop() for genotype in offspring_genotypes]
         )
 
         # Make an intermediate offspring population.
         offspring_population = Population(
             [
-                Individual(genotype, fitness, sym, GLOBAL_BALANCE)
-                for genotype, fitness, sym in zip(offspring_genotypes, offspring_fitnesses, offspring_symmetries)
+                Individual(genotype, fitness, sym, xy)
+                for genotype, fitness, sym, xy in zip(offspring_genotypes, 
+                                                      offspring_fitnesses, 
+                                                      offspring_symmetries, 
+                                                      offspring_xy
+                                                      )
             ]
         )
 

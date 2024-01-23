@@ -134,7 +134,7 @@ class LocalRunner(Runner):
         logging.info(f"Environment {env_index}")
 
         model = cls._make_model(env_descr, simulation_timestep)
-        
+
         # vision
         robot_camera_size = (60, 60)
         vision_obj = OpenGLVision(model, robot_camera_size, True)
