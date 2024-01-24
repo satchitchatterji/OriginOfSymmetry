@@ -10,7 +10,6 @@ from typing_extensions import Self
 
 TGenotype = TypeVar("TGenotype")
 
-
 class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
     """
     Generic SQLAlchemy model for an individual.
@@ -42,8 +41,7 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
         genotype: orm.Mapped[TGenotype] = orm.relationship()
         fitness: orm.Mapped[float] = orm.mapped_column(nullable=False)
         symmetry: orm.Mapped[float] = orm.mapped_column(nullable=False)
-        balance: orm.Mapped[float] = orm.mapped_column(nullable=False)
-        
+        xy_positions: orm.Mapped[str] = orm.mapped_column(nullable=False)
 
     # ----------------------
     # Implementation details
@@ -73,10 +71,10 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
         @orm.declared_attr
         def symmetry(cls) -> orm.Mapped[float]:  # noqa
             return cls.__symmetry_impl()
-        
+
         @orm.declared_attr
-        def balance(cls) -> orm.Mapped[float]:  # noqa
-            return cls.__balance_impl()
+        def xy_positions(cls) -> orm.Mapped[str]:  # noqa
+            return cls.__xy_positions_impl()
 
     __type_tgenotype: ClassVar[Type[TGenotype]]  # type: ignore[misc]
     __population_table: ClassVar[str]
@@ -137,7 +135,7 @@ class Individual(HasId, orm.MappedAsDataclass, Generic[TGenotype]):
     @classmethod
     def __symmetry_impl(cls) -> orm.Mapped[float]:
         return orm.mapped_column(nullable=False)
-
+        
     @classmethod
-    def __balance_impl(cls) -> orm.Mapped[float]:
+    def __xy_positions_impl(cls) -> orm.Mapped[str]:
         return orm.mapped_column(nullable=False)
