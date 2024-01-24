@@ -184,7 +184,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
     # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
 
-    record_settings = RecordSettings( video_directory="test_video_dir", generation_step=3, save_robot_view=True, fps=24)
+    record_settings = RecordSettings( video_directory="test_video_dir", generation_step=9, save_robot_view=True, fps=24) #TODO add fps value and size of view usage
 
 
     evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS, record_settings=record_settings)

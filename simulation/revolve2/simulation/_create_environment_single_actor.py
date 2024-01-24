@@ -81,7 +81,7 @@ class EnvironmentActorController(EnvironmentController):
 
         target_in_sight = True  # vision
         if coords[1].shape[0] > 0:
-            print("sphere in sight")
+            #print("sphere in sight")
             self.x_pos = np.mean(coords[1])
         else:
             target_in_sight = False
@@ -122,21 +122,21 @@ class EnvironmentActorController(EnvironmentController):
                     if (
                         left and theta < 0
                     ):  # if theta is negative the target is on the right
-                        print("sphere on the right with theta ", theta)
-                        print("multiplying dof by ", g)
+                        #print("sphere on the right with theta ", theta)
+                        #print("multiplying dof by ", g)
                         targets[i] *= g
 
                     elif (
                         right and theta >= 0
                     ):  # if theta is positive the target is on the left
-                        print("sphere on the left with theta ", theta)
-                        print("multiplying dof by ", g)
+                        #print("sphere on the left with theta ", theta)
+                        #print("multiplying dof by ", g)
                         targets[i] *= g
             else:
 
                 for i, (left, right) in enumerate(zip(self.is_left, self.is_right)):
                     if theta < 0:  # if theta is negative the target is on the right
-                        print("sphere on the right with theta ", theta)
+                        #print("sphere on the right with theta ", theta)
 
                         # if left:  # left joints are sped up DIV BY ZERO could cause problems
                         #     targets[i] = targets[i] / g 
@@ -145,7 +145,7 @@ class EnvironmentActorController(EnvironmentController):
                             targets[i] *= g
 
                     elif theta >= 0:  # if theta is positive the target is on the left
-                        print("sphere on the left with theta ", theta)
+                        #print("sphere on the left with theta ", theta)
 
                         if left:  # left joints are slowed down
                             targets[i] *= g
