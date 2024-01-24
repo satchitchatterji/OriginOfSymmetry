@@ -195,6 +195,7 @@ class MorphologicalMeasures:
 
     # new symmetry measures as in the newer repo 15/11/23
     def __calculate_xz_symmetry(self) -> float:
+        return 0 # not used, causes bugs
         num_along_plane = 0
         for x, z in product(
             range(self.bounding_box_depth), range(self.bounding_box_height)
@@ -219,6 +220,7 @@ class MorphologicalMeasures:
         return num_symmetrical / (self.num_modules - num_along_plane)
 
     def __calculate_yz_symmetry(self) -> float:
+        return 0 # not used, causes bugs
         num_along_plane = 0
         for y, z in product(
             range(self.bounding_box_width), range(self.bounding_box_height)
