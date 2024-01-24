@@ -14,6 +14,9 @@ from revolve2.simulation import Terrain
 from revolve2.simulation.running import Runner
 from revolve2.simulators.mujoco import LocalRunner
 
+# vision
+from revolve2.simulation.running import RecordSettings
+# / vision
 
 # class Evaluator:
 #     """Provides evaluation of robots."""
@@ -74,6 +77,7 @@ class Evaluator:
         self,
         headless: bool,
         num_simulators: int,
+        record_settings: RecordSettings | None = None
     ) -> None:
         """
         Initialize this object.
@@ -81,13 +85,15 @@ class Evaluator:
         :param headless: `headless` parameter for the physics runner.
         :param num_simulators: `num_simulators` parameter for the physics runner.
         """
-        self._runner = LocalRunner(headless=headless, num_simulators=num_simulators)
+        self._runner = LocalRunner(headless=headless, num_simulators=num_simulators, vision_dir=record_settings.video_directory)
         print(f"Evaluator: Using {headless=}, {num_simulators=}")
         self._terrain = terrains.flat()
+        self._record_settings = record_settings
 
     def evaluate(
         self,
         robots: list[ModularRobot],
+        generation_index: int
     ) -> list[float]:
         """
         Evaluate multiple robots.
@@ -99,13 +105,14 @@ class Evaluator:
         """
         targets = [(10,10) for  _ in robots]
         # TODO repeat k target for each generation
+        
 
         # Simulate the robots and process the results.
         batch = create_batch_multiple_isolated_robots_standard(
             robots, [self._terrain for _ in robots], targets,#,  sampling_frequency = 5
         )
 
-        results = asyncio.run(self._runner.run_batch(batch))
+        results = asyncio.run(self._runner.run_batch(batch, record_settings=self._record_settings, generation_index=generation_index))
 
         # get the intermediate states
         body_states = get_body_states_multiple_isolated_robots(

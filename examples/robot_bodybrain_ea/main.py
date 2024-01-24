@@ -46,6 +46,9 @@ import matplotlib.pyplot as plt
 
 import datetime
 
+from revolve2.simulation.running import RecordSettings
+
+
 GLOBAL_BALANCE = 0.0
 
 def select_parents(
@@ -183,7 +186,11 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         session.commit()
 
     # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
-    evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS)
+
+    record_settings = RecordSettings( video_directory="test_video_dir", generation_step=3, save_robot_view=True, fps=24)
+
+
+    evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS, record_settings=record_settings)
 
     # CPPN innovation databases.
     # If you don't understand CPPN, just know that a single database is shared in the whole evolutionary process.
@@ -205,7 +212,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
     initial_fitnesses, initial_sym = evaluator.evaluate(
-        [genotype.develop() for genotype in initial_genotypes]
+        [genotype.develop() for genotype in initial_genotypes], generation_index=0
     )
 
     # Create a population of individuals, combining genotype with fitness.
@@ -231,7 +238,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     best_robot = find_best_robot(None, population)
 
     # Set the current generation to 0.
-    generation_index = 0
+    generation_index = 1
 
     # list to store the fitness values
     max_fitness_values = []
@@ -240,7 +247,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     # Start the actual optimization process.
     logging.info("Start optimization process.")
     while generation_index < config.NUM_GENERATIONS:
-        logging.info(f"Generation {generation_index + 1} / {config.NUM_GENERATIONS}.")
+        logging.info(f"Generation {generation_index } / {config.NUM_GENERATIONS}.")
 
         # Create offspring.
         parents = select_parents(rng, population, config.OFFSPRING_SIZE)
@@ -255,7 +262,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
         # Evaluate the offspring.
         offspring_fitnesses, offspring_symmetries = evaluator.evaluate(
-            [genotype.develop() for genotype in offspring_genotypes]
+            [genotype.develop() for genotype in offspring_genotypes], generation_index=generation_index
         )
 
         # Make an intermediate offspring population.

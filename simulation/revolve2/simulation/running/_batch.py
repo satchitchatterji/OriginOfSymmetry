@@ -36,3 +36,5 @@ class Batch:
 
     environments: list[Environment] = field(default_factory=list, init=False)
     """The environments to simulate."""
+
+    generation_index: int = field(default=0, init=False)

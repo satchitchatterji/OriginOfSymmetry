@@ -1,6 +1,7 @@
 import concurrent.futures
 import math
 import os
+import shutil
 import tempfile
 
 import cv2
@@ -67,7 +68,8 @@ class LocalRunner(Runner):
         self,
         headless: bool = False,
         start_paused: bool = False,
-        num_simulators: int = 1
+        num_simulators: int = 1,
+        vision_dir: None | str = None,
     ):
         """
         Initialize this object.
@@ -91,28 +93,44 @@ class LocalRunner(Runner):
 
         # vision
         # get all the camera directories that we already have in the form: camera_dir = f"./camera_{env_index}" from the root directory
-        camera_dirs = [f for f in os.listdir(os.getcwd()) if os.path.isdir(f) and f.startswith("camera_")]
-        
-        # delete all camera folders
-        for camera_dir in camera_dirs:
 
-            # delete all files in the folder
-            for file in os.listdir(camera_dir):
-                file_path = os.path.join(camera_dir, file)
-                try:
-                    if os.path.isfile(file_path):
-                        #assert that file is mp4 or ds_store
-                        assert file_path.endswith(".mp4") or file_path.endswith(".DS_Store"), "File inside camera folder is not mp4 or .DS_Store"
-                        os.unlink(file_path)
-                except Exception as e:
-                    print("Error/Warning with deleting files in camera folder")
-                    print(e)
-            # delete the folder   
-            try:
-                os.rmdir(camera_dir)
-            except OSError as error:
-                print("Error/Warning with deleting camera folder")
-                print(">", error)
+        if vision_dir is not None:
+            # check if the directory exists
+            if not os.path.isdir(vision_dir):
+                os.mkdir(vision_dir)
+                print("Vision directory made in:")
+                print(os.path.join(os.getcwd(), vision_dir))
+            
+
+            generation_dirs = [f for f in os.listdir(vision_dir) if os.path.isdir(os.path.join(vision_dir, f)) and f.startswith("generation_")]
+
+            for camera_dir in generation_dirs:
+                camera_dir_path = os.path.join(vision_dir, camera_dir)
+                shutil.rmtree(camera_dir_path)
+
+
+        # camera_dirs = [f for f in os.listdir(os.getcwd()) if os.path.isdir(f) and f.startswith("camera_")]
+        
+        # # delete all camera folders
+        # for camera_dir in camera_dirs:
+
+        #     # delete all files in the folder
+        #     for file in os.listdir(camera_dir):
+        #         file_path = os.path.join(camera_dir, file)
+        #         try:
+        #             if os.path.isfile(file_path):
+        #                 #assert that file is mp4 or ds_store
+        #                 assert file_path.endswith(".mp4") or file_path.endswith(".DS_Store"), "File inside camera folder is not mp4 or .DS_Store"
+        #                 os.unlink(file_path)
+        #         except Exception as e:
+        #             print("Error/Warning with deleting files in camera folder")
+        #             print(e)
+        #     # delete the folder   
+        #     try:
+        #         os.rmdir(camera_dir)
+        #     except OSError as error:
+        #         print("Error/Warning with deleting camera folder")
+        #         print(">", error)
 
             
         # /vision
@@ -130,6 +148,7 @@ class LocalRunner(Runner):
         sample_step: float,
         simulation_time: int | None,
         simulation_timestep: float,
+        generation_index: int | None = None
     ) -> EnvironmentResults:
         logging.info(f"Environment {env_index}")
 
@@ -143,27 +162,42 @@ class LocalRunner(Runner):
         data = mujoco.MjData(model)
 
         # vision
-        camera_dir = f"./camera_{env_index}"
-        try: 
-            os.mkdir(camera_dir)
-            print("Camera folder made in:")
-            print(os.path.join(os.getcwd(), camera_dir))
-        except OSError as error: 
-            print("Error/Warning with creating camera folder")
-            print(">", error)
+        # create camera folder
 
-        # get the highest number of output_{index}.mp4 files in the folder
-        output_files = [f for f in os.listdir(camera_dir) if os.path.isfile(os.path.join(camera_dir, f)) and f.startswith("output")]
-        output_files.sort()
-        if len(output_files) > 0:
-            repetition_number = int(output_files[-1].split(".")[0].split("output")[1])
-            repetition_number += 1
-        else:
-            repetition_number = 0
+        if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step == 0):
+            vision_dir = record_settings.video_directory
+            # delete all the subfolders that we already have in the form: camera_dir = f"./generation_{generation_index}" from the root directory
+            
+            
+            # create the generation folder
+            generation_dir = os.path.join(vision_dir, f"generation_{generation_index}")
 
-        # Define the codec and create VideoWriter object
-        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-        video_out = cv2.VideoWriter(f"{camera_dir}/output{repetition_number}.mp4", fourcc, 40.0, robot_camera_size)
+
+
+
+            
+            try:
+                os.mkdir(generation_dir)
+                print("Generation folder made in:")
+                print(os.path.join(os.getcwd(), generation_dir))
+            except OSError as error: 
+                print("Error/Warning with creating generation folder")
+                print(">", error)
+
+        
+
+            # # get the highest number of output_{index}.mp4 files in the folder
+            # output_files = [f for f in os.listdir(camera_dir) if os.path.isfile(os.path.join(camera_dir, f)) and f.startswith("output")]
+            # output_files.sort()
+            # if len(output_files) > 0:
+            #     repetition_number = int(output_files[-1].split(".")[0].split("output")[1])
+            #     repetition_number += 1
+            # else:
+            #     repetition_number = 0
+
+            # Define the codec and create VideoWriter object
+            fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            video_out = cv2.VideoWriter(os.path.join(generation_dir, f"output_{env_index}.mp4"), fourcc, 40.0, robot_camera_size)
 
 
         # /vision
@@ -181,7 +215,7 @@ class LocalRunner(Runner):
         for posed_actor in env_descr.actors:
             posed_actor.dof_states
 
-        if not headless or record_settings is not None:
+        if not headless:
             viewer = mujoco_viewer.MujocoViewer(
                 model,
                 data,
@@ -189,18 +223,18 @@ class LocalRunner(Runner):
             viewer._render_every_frame = False  # Private but functionality is not exposed and for now it breaks nothing.
             viewer._paused = start_paused
 
-        if record_settings is not None:
-            video_step = 1 / record_settings.fps
-            video_file_path = f"{record_settings.video_directory}/{env_index}.mp4"
-            fourcc = cv2.VideoWriter.fourcc(*"mp4v")
-            video = cv2.VideoWriter(
-                video_file_path,
-                fourcc,
-                record_settings.fps,
-                (viewer.viewport.width, viewer.viewport.height),
-            )
+        # if record_settings is not None:
+        #     video_step = 1 / record_settings.fps
+        #     video_file_path = f"{record_settings.video_directory}/{env_index}.mp4"
+        #     fourcc = cv2.VideoWriter.fourcc(*"mp4v")
+        #     video = cv2.VideoWriter(
+        #         video_file_path,
+        #         fourcc,
+        #         record_settings.fps,
+        #         (viewer.viewport.width, viewer.viewport.height),
+        #     )
 
-            viewer._hide_menu = True
+        #     viewer._hide_menu = True
 
         last_control_time = 0.0
         last_sample_time = 0.0
@@ -229,7 +263,9 @@ class LocalRunner(Runner):
                 current_vision = np.rot90(current_vision, 2)
                 #cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
 
-                video_out.write(current_vision)
+                if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step) == 0:
+
+                    video_out.write(current_vision)
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
 
 
@@ -272,35 +308,35 @@ class LocalRunner(Runner):
             mujoco.mj_step(model, data)
 
             # render if not headless. also render when recording and if it time for a new video frame.
-            if not headless or (
-                record_settings is not None and time >= last_video_time + video_step
-            ):
+            if not headless:
                 viewer.render()
 
             # capture video frame if it's time
-            if record_settings is not None and time >= last_video_time + video_step:
-                last_video_time = int(time / video_step) * video_step
+            # if record_settings is not None and time >= last_video_time + video_step:
+            #     last_video_time = int(time / video_step) * video_step
 
-                # https://github.com/deepmind/mujoco/issues/285 (see also record.cc)
-                img: npt.NDArray[np.uint8] = np.empty(
-                    (viewer.viewport.height, viewer.viewport.width, 3),
-                    dtype=np.uint8,
-                )
+            #     # https://github.com/deepmind/mujoco/issues/285 (see also record.cc)
+            #     img: npt.NDArray[np.uint8] = np.empty(
+            #         (viewer.viewport.height, viewer.viewport.width, 3),
+            #         dtype=np.uint8,
+            #     )
 
-                mujoco.mjr_readPixels(
-                    rgb=img,
-                    depth=None,
-                    viewport=viewer.viewport,
-                    con=viewer.ctx,
-                )
-                img = np.flip(img, axis=0)  # img is upside down initially
-                video.write(img)
+            #     mujoco.mjr_readPixels(
+            #         rgb=img,
+            #         depth=None,
+            #         viewport=viewer.viewport,
+            #         con=viewer.ctx,
+            #     )
+            #     img = np.flip(img, axis=0)  # img is upside down initially
+            #     video.write(img)
 
-        if not headless or record_settings is not None:
+        if not headless:
             viewer.close()
 
-        if record_settings is not None:
-            video.release()
+        if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step) == 0:
+            video_out.release()
+
+            
 
         # sample one final time
         results.environment_states.append(
@@ -310,7 +346,7 @@ class LocalRunner(Runner):
         return results
 
     async def run_batch(
-        self, batch: Batch, record_settings: RecordSettings | None = None
+        self, batch: Batch, record_settings: RecordSettings | None = None, generation_index: int | None = None
     ) -> BatchResults:
         """
         Run the provided batch by simulating each contained environment.
@@ -324,8 +360,8 @@ class LocalRunner(Runner):
         control_step = 1 / batch.control_frequency
         sample_step = 1 / batch.sampling_frequency
 
-        if record_settings is not None:
-            os.makedirs(record_settings.video_directory, exist_ok=False)
+        # if record_settings is not None:
+        #     os.makedirs(record_settings.video_directory, exist_ok=False)
 
         with concurrent.futures.ProcessPoolExecutor(
             max_workers=self._num_simulators
@@ -342,6 +378,7 @@ class LocalRunner(Runner):
                     sample_step,
                     batch.simulation_time,
                     batch.simulation_timestep,
+                    generation_index = generation_index
                 )
                 for env_index, env_descr in enumerate(batch.environments)
             ]
