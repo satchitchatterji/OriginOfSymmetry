@@ -85,7 +85,7 @@ class Evaluator:
         :param headless: `headless` parameter for the physics runner.
         :param num_simulators: `num_simulators` parameter for the physics runner.
         """
-        self._runner = LocalRunner(headless=headless, num_simulators=num_simulators, vision_dir=record_settings.video_directory)
+        self._runner = LocalRunner(headless=headless, num_simulators=num_simulators, record_settings=record_settings)
         print(f"Evaluator: Using {headless=}, {num_simulators=}")
         self._terrain = terrains.flat()
         self._record_settings = record_settings
@@ -93,7 +93,8 @@ class Evaluator:
     def evaluate(
         self,
         robots: list[ModularRobot],
-        generation_index: int
+        generation_index: int,
+        steer: bool = False
     ) -> list[float]:
         """
         Evaluate multiple robots.
@@ -112,7 +113,7 @@ class Evaluator:
             robots, [self._terrain for _ in robots], targets,#,  sampling_frequency = 5
         )
 
-        results = asyncio.run(self._runner.run_batch(batch, record_settings=self._record_settings, generation_index=generation_index))
+        results = asyncio.run(self._runner.run_batch(batch, record_settings=self._record_settings, generation_index=generation_index, steer = steer))
 
         # get the intermediate states
         body_states = get_body_states_multiple_isolated_robots(

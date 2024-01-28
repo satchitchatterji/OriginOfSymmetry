@@ -69,7 +69,7 @@ class LocalRunner(Runner):
         headless: bool = False,
         start_paused: bool = False,
         num_simulators: int = 1,
-        vision_dir: None | str = None,
+        record_settings: None | RecordSettings = None,
     ):
         """
         Initialize this object.
@@ -94,19 +94,20 @@ class LocalRunner(Runner):
         # vision
         # get all the camera directories that we already have in the form: camera_dir = f"./camera_{env_index}" from the root directory
 
-        if vision_dir is not None:
+        if record_settings is not None:
             # check if the directory exists
-            if not os.path.isdir(vision_dir):
-                os.mkdir(vision_dir)
+            if not os.path.isdir(record_settings.video_directory):
+                os.mkdir(record_settings.video_directory)
                 print("Vision directory made in:")
-                print(os.path.join(os.getcwd(), vision_dir))
+                print(os.path.join(os.getcwd(), record_settings.video_directory))
             
+            if record_settings.delete_at_init:
 
-            generation_dirs = [f for f in os.listdir(vision_dir) if os.path.isdir(os.path.join(vision_dir, f)) and f.startswith("generation_")]
+                generation_dirs = [f for f in os.listdir(record_settings.video_directory) if os.path.isdir(os.path.join(record_settings.video_directory, f)) and f.startswith("generation_")]
 
-            for camera_dir in generation_dirs:
-                camera_dir_path = os.path.join(vision_dir, camera_dir)
-                shutil.rmtree(camera_dir_path)
+                for camera_dir in generation_dirs:
+                    camera_dir_path = os.path.join(record_settings.video_directory, camera_dir)
+                    shutil.rmtree(camera_dir_path)
 
 
         # camera_dirs = [f for f in os.listdir(os.getcwd()) if os.path.isdir(f) and f.startswith("camera_")]
@@ -148,7 +149,8 @@ class LocalRunner(Runner):
         sample_step: float,
         simulation_time: int | None,
         simulation_timestep: float,
-        generation_index: int | None = None
+        generation_index: int | None = None,
+        steer: bool = False
     ) -> EnvironmentResults:
         logging.info(f"Environment {env_index}")
 
@@ -197,7 +199,7 @@ class LocalRunner(Runner):
 
             # Define the codec and create VideoWriter object
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-            video_out = cv2.VideoWriter(os.path.join(generation_dir, f"output_{env_index}.mp4"), fourcc, 40.0, robot_camera_size)
+            video_out = cv2.VideoWriter(os.path.join(generation_dir, f"out_{record_settings.video_name}_{env_index}.mp4"), fourcc, 40.0, robot_camera_size)
 
 
         # /vision
@@ -282,7 +284,7 @@ class LocalRunner(Runner):
 
                 # /vision
                 # controller.get_action()
-                env_descr.controller.control(control_step, control_user, current_vision, joint_positions, robot_pos, save_pos=True)
+                env_descr.controller.control(control_step, control_user, current_vision, joint_positions, robot_pos, save_pos= steer)
 
                 
                 
@@ -346,7 +348,7 @@ class LocalRunner(Runner):
         return results
 
     async def run_batch(
-        self, batch: Batch, record_settings: RecordSettings | None = None, generation_index: int | None = None
+        self, batch: Batch, record_settings: RecordSettings | None = None, generation_index: int | None = None, steer: bool = True
     ) -> BatchResults:
         """
         Run the provided batch by simulating each contained environment.
@@ -378,7 +380,8 @@ class LocalRunner(Runner):
                     sample_step,
                     batch.simulation_time,
                     batch.simulation_timestep,
-                    generation_index = generation_index
+                    generation_index = generation_index,
+                    steer = steer
                 )
                 for env_index, env_descr in enumerate(batch.environments)
             ]

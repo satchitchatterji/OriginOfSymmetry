@@ -93,18 +93,19 @@ class EnvironmentActorController(EnvironmentController):
 
         # print("Test print")
         # print("targets: ", targets)
-        if self.steer and target_in_sight:
+        if self.steer and target_in_sight and save_pos:
             core_position = current_pos[:2]
 
             self.is_left = []
             self.is_right = []
 
-            if save_pos:
-                for joint_pos in joint_positions[
-                    1:
-                ]:  # TODO why are we skipping the first joint?
-                    self.is_left.append(joint_pos[0] > 0.0)
-                    self.is_right.append(joint_pos[0] < 0.0)
+            
+            
+            for joint_pos in joint_positions[
+                1:
+            ]:  # TODO why are we skipping the first joint?
+                self.is_left.append(joint_pos[0] > 0.0)
+                self.is_right.append(joint_pos[0] < 0.0)
 
             # check if joints are on the left or right
             joint_positions = [c[:2] for c in joint_positions]

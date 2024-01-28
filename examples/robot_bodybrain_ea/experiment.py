@@ -12,3 +12,5 @@ class Experiment(Base, HasId):
 
     # The seed for the rng.
     rng_seed: orm.Mapped[int] = orm.mapped_column(nullable=False)
+    
+    steer: orm.Mapped[bool] = orm.mapped_column(nullable=False)

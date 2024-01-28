@@ -20,6 +20,9 @@ You learn:
 import logging
 import pickle
 
+from revolve2.modular_robot import ModularRobot
+
+
 import config
 import multineat
 import numpy as np
@@ -167,7 +170,16 @@ def plot_fitnesses(max_fitness_values, mean_fitness_values):
     print("graph saved in "+ file_name)
     plt.close()
 
-def run_experiment(dbengine: Engine, exp_num: int) -> None:
+def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_settings = RecordSettings()) -> Individual:
+    """
+    Run the experiment to optimize the body and brain of a robot using an evolutionary algorithm.
+
+    :param dbengine: The database engine.
+    :param exp_num: The experiment number.
+    :param steer: Whether to enable steering.
+    :param record_settings: The record settings for the simulation.
+    :returns: The best individual found during the experiment.
+    """
     logging.info("----------------")
     logging.info("Start experiment")
 
@@ -176,7 +188,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     rng = make_rng(rng_seed)
 
     # Create and save the experiment instance.
-    experiment = Experiment(rng_seed=rng_seed)
+    experiment = Experiment(rng_seed=rng_seed, steer = steer)
     logging.info("Saving experiment configuration.")
     with Session(dbengine) as session:
         session.add(experiment)
@@ -184,7 +196,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
 
     # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
 
-    record_settings = RecordSettings( video_directory="test_video_dir", generation_step=9, save_robot_view=True, fps=24) #TODO add fps value and size of view usage
+     #TODO add fps value and size of view usage
 
 
     evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS, record_settings=record_settings)
@@ -209,7 +221,8 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
     initial_fitnesses, initial_sym, initial_xy = evaluator.evaluate(
-        [genotype.develop() for genotype in initial_genotypes], generation_index=0
+        [genotype.develop() for genotype in initial_genotypes], generation_index=0,
+        steer=steer
     )
 
     # Create a population of individuals, combining genotype with fitness.
@@ -234,7 +247,7 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
     # # Save the best robot
     best_robot = find_best_robot(None, population)
 
-    # Set the current generation to 0.
+    # Set the current generation to 1.
     generation_index = 1
 
     # list to store the fitness values
@@ -308,26 +321,75 @@ def run_experiment(dbengine: Engine, exp_num: int) -> None:
         generation_index += 1
     
     plot_fitnesses(max_fitness_values, mean_fitness_values)
+    return best_robot
 
 
-def main() -> None:
-    """Run the program."""
+def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rc = RecordSettings(save_robot_view=False)) -> None:
+    """
+    Run multiple experiments and save the video of the best robot for each one of them.
+
+    The videos with the steering functionality will be saved in a subfolder named "generation_1" while the video without it will be saved in a subfolder named "generation_0".
+
+    :param steer: Whether to enable steering.
+    :param best_videos_dir: The directory to save the best robot videos.
+    :param exp_rc: The record settings for the experiment.
+    """
     # Set up standard logging.
     setup_logging(file_name="log.txt")
+
+
 
     # Open the database, only if it does not already exists.
     # dbengine = open_database_sqlite(
     #     config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
     # )
+    # dbengine = open_database_sqlite(
+    #     config.DATABASE_FILE, open_method='TRUNCATE_AND_CREATE'
+    # )
+    # Changed because the above was not using the correct argument type for open_method
     dbengine = open_database_sqlite(
-        config.DATABASE_FILE, open_method='TRUNCATE_AND_CREATE'
+        config.DATABASE_FILE, open_method=OpenMethod.OPEN_OR_CREATE
     )
     # Create the structure of the database.
     Base.metadata.create_all(dbengine)
 
     # Run the experiment several times.
+    best_robots = []
     for rep in range(config.NUM_REPETITIONS):
-        run_experiment(dbengine, rep)
+        best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rc)
+        best_robots.append(best_robot)
+
+    # GETTING THE BEST ROBOT FROM DATABASE, not needed if we get it from run_experiment
+        
+    # get the best robot from the last experiment (the last experiment is the one with the highest id)
+    # with Session(dbengine) as session:
+    #     last_experiment = session.query(Experiment).order_by(Experiment.id.desc()).first()
+    #     last_generation = session.query(Generation).filter_by(experiment_id=last_experiment.id).order_by(Generation.generation_index.desc()).first()
+    #     # get the id of the population from last generation
+    #     last_population_id = last_generation.population_id
+    #     # get the best individual with this population id
+    #     best_individual = session.query(Individual).filter_by(population_id=last_population_id).order_by(Individual.fitness.desc()).first()
+    #     # get the genotype id of the best individual
+    #     best_genotype_id = best_individual.genotype_id
+    #     # get the genotype with this id
+    #     best_genotype = session.query(Genotype).filter_by(id=best_genotype_id).first()
+    #     # get the phenotype of this genotype
+    #     best_robot = best_genotype.develop()
+
+    # get all the files from the the best robots videos directory
+    
+
+    for best_robot in best_robots:
+        video_name = f"{best_robot.id}_{'steer' if steer else 'nosteer'}"
+        developed_robot = best_robot.genotype.develop()
+        record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
+        evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
+
+        fitness = evaluator.evaluate([developed_robot], generation_index= int(steer), steer=steer)[0]
+
+
+
 
 if __name__ == "__main__":
-    main()
+    main(steer=True, best_videos_dir = 'best_robots_videos')
+    main(steer=False, best_videos_dir = 'best_robots_videos')
