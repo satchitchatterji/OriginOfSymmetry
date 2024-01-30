@@ -155,18 +155,22 @@ class LocalRunner(Runner):
         logging.info(f"Environment {env_index}")
 
         model = cls._make_model(env_descr, simulation_timestep)
+        
+        save_robot_view = (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step == 0)
 
         # vision
-        robot_camera_size = (60, 60)
-        vision_obj = OpenGLVision(model, robot_camera_size, True)
+        if steer or save_robot_view:
+            robot_camera_size = (60, 60)
+            vision_obj = OpenGLVision(model, robot_camera_size, True)
         # /vision
 
         data = mujoco.MjData(model)
 
         # vision
-        # create camera folder
+        
+        
 
-        if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step == 0):
+        if save_robot_view:
             vision_dir = record_settings.video_directory
             # delete all the subfolders that we already have in the form: camera_dir = f"./generation_{generation_index}" from the root directory
             
@@ -261,11 +265,14 @@ class LocalRunner(Runner):
 
                 
                 # vision
-                current_vision = vision_obj.process(model, data)
-                current_vision = np.rot90(current_vision, 2)
+                if steer or save_robot_view:
+                    current_vision = vision_obj.process(model, data)
+                    current_vision = np.rot90(current_vision, 2)
                 #cv2.imwrite(f"{camera_dir}/{time}.png", current_vision)
+                else:
+                    current_vision = None
 
-                if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step) == 0:
+                if save_robot_view:
 
                   
 
@@ -337,7 +344,7 @@ class LocalRunner(Runner):
         if not headless:
             viewer.close()
 
-        if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step) == 0:
+        if save_robot_view:
             video_out.release()
 
             

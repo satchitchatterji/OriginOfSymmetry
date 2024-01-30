@@ -53,7 +53,7 @@ class EnvironmentActorController(EnvironmentController):
         self,
         dt: float,
         actor_control: ActorControl,
-        vision_img: npt.ArrayLike,
+        vision_img: npt.ArrayLike | None,
         joint_positions=None,
         current_pos=None,
         save_pos=False,
@@ -69,6 +69,11 @@ class EnvironmentActorController(EnvironmentController):
 
         # vision
         # vision_img = np.flip(vision_img) # flip the image because its axis are inverted #we are already doing it before passing the image to the controller
+        if vision_img is None:
+            self.actor_controller.step(dt)
+            targets = self.actor_controller.get_dof_targets()
+            actor_control.set_dof_targets(0, targets)
+            return
 
         self.picture_w = vision_img.shape[1]
         # / vision
