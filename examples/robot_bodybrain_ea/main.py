@@ -151,7 +151,7 @@ def find_mean_fitness(
     fitnesses = [individual.fitness for individual in population.individuals]
     return mean(fitnesses)
 
-def plot_fitnesses(max_fitness_values, mean_fitness_values):
+def plot_fitnesses(max_fitness_values, mean_fitness_values, exp_name = ''):
     # plot the fitness values
     plt.plot(max_fitness_values, label='max fitness')
     plt.plot(mean_fitness_values, label='mean fitness')
@@ -164,7 +164,7 @@ def plot_fitnesses(max_fitness_values, mean_fitness_values):
     now = datetime.datetime.now()
 
     date_time = now.strftime("%m-%d-%Y_%H-%M-%S")
-    file_name = 'graph experiment '+date_time+'.png'
+    file_name =f"fitnesses_{exp_name}_{date_time}.png"
     
     plt.savefig(file_name)
     print("graph saved in "+ file_name)
@@ -320,11 +320,11 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
         # Increase the generation index counter.
         generation_index += 1
     
-    plot_fitnesses(max_fitness_values, mean_fitness_values)
+    plot_fitnesses(max_fitness_values, mean_fitness_values, "steer" if steer else "nosteer")
     return best_robot
 
 
-def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rc = RecordSettings(save_robot_view=False)) -> None:
+def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSettings(save_robot_view=False)) -> None:
     """
     Run multiple experiments and save the video of the best robot for each one of them.
 
@@ -356,7 +356,7 @@ def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rc = RecordSe
     # Run the experiment several times.
     best_robots = []
     for rep in range(config.NUM_REPETITIONS):
-        best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rc)
+        best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rs)
         best_robots.append(best_robot)
 
     # GETTING THE BEST ROBOT FROM DATABASE, not needed if we get it from run_experiment
@@ -391,5 +391,6 @@ def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rc = RecordSe
 
 
 if __name__ == "__main__":
+    #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
     main(steer=True, best_videos_dir = 'best_robots_videos')
     main(steer=False, best_videos_dir = 'best_robots_videos')

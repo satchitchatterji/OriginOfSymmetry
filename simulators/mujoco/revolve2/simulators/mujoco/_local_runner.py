@@ -267,7 +267,9 @@ class LocalRunner(Runner):
 
                 if (record_settings is not None) and record_settings.save_robot_view is True and (generation_index % record_settings.generation_step) == 0:
 
-                    video_out.write(current_vision)
+                  
+
+                    video_out.write(cv2.cvtColor(current_vision, cv2.COLOR_RGB2BGR))
                 # cv2.imshow("Robot Environment", cv2.resize(current_vision, (100,100)))
 
 
@@ -408,12 +410,28 @@ class LocalRunner(Runner):
 
         # vision
         # Add a texture and a material to the assets
-        env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=5, height=5, name="checker_texture")
-        env_mjcf.asset.add("material", texture="checker_texture", name="checker_material")
+        # env_mjcf.asset.add("texture", type="2d", builtin="checker", rgb1=[1, 1, 1], rgb2=[0, 0, 0], width=5, height=5, name="checker_texture")
+        # env_mjcf.asset.add("material", texture="checker_texture", name="checker_material")
+        env_mjcf.asset.add(
+            "texture",
+            name="grid",
+            type="2d",
+            builtin="checker", rgb1=".1 .1 .1", rgb2=".9 0.9 0.9", #Important for it to not be red as that's the color of the target
+            width="300", height="300" 
+        )
+        env_mjcf.asset.add(
+            "material",
+            name="checker_material",
+            texture="grid",
+            texrepeat="1 1",
+            texuniform="true",
+            reflectance="0"
+        )
 
         # /vision
         for geo in env_descr.static_geometries:
             if isinstance(geo, geometry.Plane):
+                
                 env_mjcf.worldbody.add(
                     "geom",
                     type="plane",
@@ -421,32 +439,33 @@ class LocalRunner(Runner):
                     size=[geo.size.x / 2.0, geo.size.y / 2.0, 1.0],
                     material="checker_material" # vision
                 )
-            elif isinstance(geo, geometry.Heightmap):
-                env_mjcf.asset.add(
-                    "hfield",
-                    name=f"hfield_{len(heightmaps)}",
-                    nrow=len(geo.heights),
-                    ncol=len(geo.heights[0]),
-                    size=[geo.size.x, geo.size.y, geo.size.z, geo.base_thickness],
-                )
 
-                env_mjcf.worldbody.add(
-                    "geom",
-                    type="hfield",
-                    hfield=f"hfield_{len(heightmaps)}",
-                    pos=[geo.position.x, geo.position.y, geo.position.z],
-                    quat=[
-                        geo.orientation.x,
-                        geo.orientation.y,
-                        geo.orientation.z,
-                        geo.orientation.w,
-                    ],
-                    # size=[geo.size.x, geo.size.y, 1.0],
-                    rgba=[geo.color.x, geo.color.y, geo.color.z, 1.0],
-                )
-                heightmaps.append(geo)
-            else:
-                raise NotImplementedError()
+            # elif isinstance(geo, geometry.Heightmap):
+            #     env_mjcf.asset.add(
+            #         "hfield",
+            #         name=f"hfield_{len(heightmaps)}",
+            #         nrow=len(geo.heights),
+            #         ncol=len(geo.heights[0]),
+            #         size=[geo.size.x, geo.size.y, geo.size.z, geo.base_thickness],
+            #     )
+
+            #     env_mjcf.worldbody.add(
+            #         "geom",
+            #         type="hfield",
+            #         hfield=f"hfield_{len(heightmaps)}",
+            #         pos=[geo.position.x, geo.position.y, geo.position.z],
+            #         quat=[
+            #             geo.orientation.x,
+            #             geo.orientation.y,
+            #             geo.orientation.z,
+            #             geo.orientation.w,
+            #         ],
+            #         # size=[geo.size.x, geo.size.y, 1.0],
+            #         rgba=[geo.color.x, geo.color.y, geo.color.z, 1.0],
+            #     )
+            #     heightmaps.append(geo)
+            # else:
+            #     raise NotImplementedError()
 
         env_mjcf.worldbody.add(
             "light",

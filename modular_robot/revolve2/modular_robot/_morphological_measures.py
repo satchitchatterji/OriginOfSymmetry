@@ -171,6 +171,7 @@ class MorphologicalMeasures:
             if sum([0 if child is None else 1 for child in active_hinge.children]) == 1
         ]
     def __calculate_xy_symmetry(self) -> float:
+        return -1 # not used, it is the symmetry with respects to the xy plane, so it’s actually the only one that doesn’t make sense computing since we have 2d robots
         num_along_plane = 0
         for x, y in product(
             range(self.bounding_box_depth), range(self.bounding_box_width)
@@ -195,7 +196,6 @@ class MorphologicalMeasures:
 
     # new symmetry measures as in the newer repo 15/11/23
     def __calculate_xz_symmetry(self) -> float:
-        return 0 # not used, causes bugs
         num_along_plane = 0
         for x, z in product(
             range(self.bounding_box_depth), range(self.bounding_box_height)
@@ -207,11 +207,14 @@ class MorphologicalMeasures:
             return 0.0
 
         num_symmetrical = 0
+        # takes the minimum of the distance of the core to the edge of the bounding box
+        min_distance_to_edge = min(self.core_grid_position[1], self.bounding_box_width - self.core_grid_position[1]-1)
 
         for x, z, y in product(
             range(self.bounding_box_depth),
             range(self.bounding_box_height),
-            range(1, ((self.bounding_box_width ) // 2)-1), # modified
+            #range(1, ((self.bounding_box_width ) // 2)-1), # modified
+            range(1, min_distance_to_edge+1) 
         ):
             if self.grid[x, self.core_grid_position[1] + y, z] is not None and type(
                 self.grid[x, self.core_grid_position[1] + y, z]
@@ -220,7 +223,7 @@ class MorphologicalMeasures:
         return num_symmetrical / (self.num_modules - num_along_plane)
 
     def __calculate_yz_symmetry(self) -> float:
-        return 0 # not used, causes bugs
+        return -1 # not used, causes bugs
         num_along_plane = 0
         for y, z in product(
             range(self.bounding_box_width), range(self.bounding_box_height)
@@ -592,4 +595,4 @@ class MorphologicalMeasures:
 
         :returns: Symmetry measurement in the xy plane
         """
-        return self.xy_symmetry
+        return self.xz_symmetry
