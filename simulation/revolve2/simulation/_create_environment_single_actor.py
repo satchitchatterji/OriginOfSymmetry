@@ -120,7 +120,7 @@ class EnvironmentActorController(EnvironmentController):
             theta = self.picture_w / 2 - self.x_pos
             g = (((self.picture_w / 2) - abs(theta)) / (self.picture_w / 2)) ** self.n
 
-            old_steering = False
+            old_steering = True
 
             if old_steering:
                 # apply steering factor TODO shouldn't we apply the steering factor only to the joints that are not already in the right position?

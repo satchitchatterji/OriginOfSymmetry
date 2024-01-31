@@ -139,7 +139,7 @@ class Evaluator:
                        )
 
         xy_positions = [repr([state for state in robot_state]) for robot_state in xy_positions]
-        print(xy_positions)
+        #print(xy_positions)
 
         return fitnesses, symmetries, xy_positions
 

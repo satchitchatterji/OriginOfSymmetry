@@ -315,7 +315,7 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
         max_fitness_values.append(best_robot.fitness)
 
         # logging.info(f"Best robot until now: {best_robot.fitness}")
-        logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
+        #logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
         # Increase the generation index counter.
         generation_index += 1
