@@ -392,5 +392,5 @@ def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSe
 
 if __name__ == "__main__":
     #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
-    main(steer=True, best_videos_dir = 'best_robots_videos')
+    #main(steer=True, best_videos_dir = 'best_robots_videos')
     main(steer=False, best_videos_dir = 'best_robots_videos')

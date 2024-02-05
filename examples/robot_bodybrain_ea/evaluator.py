@@ -104,13 +104,13 @@ class Evaluator:
         :param robots: The robots to simulate.
         :returns: Fitnesses of the robots.
         """
-        targets = [(10,10) for  _ in robots]
+        targets = [(5,5) for  _ in robots]
         # TODO repeat k target for each generation
         
 
         # Simulate the robots and process the results.
         batch = create_batch_multiple_isolated_robots_standard(
-            robots, [self._terrain for _ in robots], targets,#,  sampling_frequency = 5
+            robots, [self._terrain for _ in robots], targets, simulation_time=60#,  sampling_frequency = 5
         )
 
         results = asyncio.run(self._runner.run_batch(batch, record_settings=self._record_settings, generation_index=generation_index, steer = steer))
