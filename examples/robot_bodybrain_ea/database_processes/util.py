@@ -1,5 +1,17 @@
 import sys
-sys.path.append("..")
+import os
+import inspect
+#sys.path.append("..")
+
+
+# get path of the current file
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+# get the path of two directories above
+parentdir = os.path.dirname(currentdir)
+# add the parent directory to the sys path
+sys.path.insert(0, parentdir)
+
+
 
 import config
 import pandas

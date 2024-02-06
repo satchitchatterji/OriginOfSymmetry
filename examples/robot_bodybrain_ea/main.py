@@ -81,6 +81,7 @@ def select_survivors(
     rng: np.random.Generator,
     original_population: list[Individual],
     offspring_population: list[Individual],
+    tournament_size: int = 2,
 ) -> list[Individual]:
     """
     Select survivors using a tournament.
@@ -99,7 +100,7 @@ def select_survivors(
             n,
             genotypes,
             fitnesses,
-            lambda _, fitnesses: selection.tournament(rng, fitnesses, k=2),
+            lambda _, fitnesses: selection.tournament(rng, fitnesses, k=tournament_size),
         ),
     )
 
@@ -292,6 +293,8 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
             rng,
             population,
             offspring_population,
+            config.TOURNAMENT_SIZE,
+            
         )
 
         # Make it all into a generation and save it to the database.

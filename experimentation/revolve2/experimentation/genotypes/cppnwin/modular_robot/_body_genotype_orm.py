@@ -18,7 +18,7 @@ def _make_multineat_params() -> multineat.Parameters:
 
     multineat_params.MutateRemLinkProb = 0.02
     multineat_params.RecurrentProb = 0.0
-    multineat_params.OverallMutationRate = 0.15
+    multineat_params.OverallMutationRate = 0.15 #important
     multineat_params.MutateAddLinkProb = 0.08
     multineat_params.MutateAddNeuronProb = 0.01
     multineat_params.MutateWeightsProb = 0.90
