@@ -16,12 +16,18 @@ from ._body_develop import develop
 def _make_multineat_params() -> multineat.Parameters:
     multineat_params = multineat.Parameters()
 
-    multineat_params.MutateRemLinkProb = 0.02
+    multineat_params.PopulationSize = 100
+    multineat_params.TournamentSize = 5
+
+    multineat_params.MutateRemLinkProb = 0.03# baseline 0.02
     multineat_params.RecurrentProb = 0.0
     multineat_params.OverallMutationRate = 0.15 #important
-    multineat_params.MutateAddLinkProb = 0.08
-    multineat_params.MutateAddNeuronProb = 0.01
-    multineat_params.MutateWeightsProb = 0.90
+    multineat_params.MutateAddLinkProb = 0.1406 # baseline 0.08
+    multineat_params.MutateAddNeuronProb = 0.1815# baseline 0.01
+    multineat_params.MutateRemSimpleNeuronProb = 0.1137# baseline 0 TODO: check
+    multineat_params.MutateNeuronBiasesProb = 0.0108 # baseline 0 or 0.7?
+
+    multineat_params.MutateWeightsProb = 0.6827 # baseline 0.90
     multineat_params.MaxWeight = 8.0
     multineat_params.WeightMutationMaxPower = 0.2
     multineat_params.WeightReplacementMaxPower = 1.0
@@ -30,7 +36,7 @@ def _make_multineat_params() -> multineat.Parameters:
     multineat_params.MinActivationA = 0.05
     multineat_params.MaxActivationA = 6.0
 
-    multineat_params.MutateNeuronActivationTypeProb = 0.03
+    multineat_params.MutateNeuronActivationTypeProb = 0.0201  #baseline 0.03
 
     multineat_params.MutateOutputActivationFunction = False
 
@@ -88,7 +94,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
             innov_db=innov_db,
             rng=multineat_rng,
             multineat_params=_MULTINEAT_PARAMS,
-            output_activation_func=multineat.ActivationFunction.TANH,
+            output_activation_func=multineat.ActivationFunction.LINEAR,# changed from multineat.ActivationFunction.TANH
             num_inputs=5,  # bias(always 1), pos_x, pos_y, pos_z, chain_length
             num_outputs=5,  # empty, brick, activehinge, rot0, rot90
             num_initial_mutations=cls._NUM_INITIAL_MUTATIONS,
