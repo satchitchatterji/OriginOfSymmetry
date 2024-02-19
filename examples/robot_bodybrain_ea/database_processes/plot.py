@@ -76,16 +76,16 @@ def plot_float_property_over_generations(df, property_name="fitness", savename=N
 def plot_all_properties_single_experiment(df, experiment_id):
     """Plot fitness/symmetry/balance over generations for a single experiment."""
     df = df[df["experiment_id"] == experiment_id]
-    plot_float_property_over_generations(df, "fitness", f"fitness_exp{experiment_id}.png")
-    plot_float_property_over_generations(df, "symmetry", f"symmetry_exp{experiment_id}.png")
-    plot_float_property_over_generations(df, "balance", f"balance_exp{experiment_id}.png")
+    plot_float_property_over_generations(df, "fitness", f"plots/fitness_exp{experiment_id}.png")
+    plot_float_property_over_generations(df, "symmetry", f"plots/symmetry_exp{experiment_id}.png")
+    plot_float_property_over_generations(df, "balance", f"plots/balance_exp{experiment_id}.png")
 
 def preprocess_df(df):
     """Preprocess the dataframe."""
-    df = df[df["experiment_id"] >= 11]
-    print("*"*80)
-    print("Warning: only using experiments with id >= 11. Change this if you want to use other experiments.")
-    print("*"*80)
+    # df = df[df["experiment_id"] >= 11]
+    # print("*"*80)
+    # print("Warning: only using experiments with id >= 11. Change this if you want to use other experiments.")
+    # print("*"*80)
     df["balance"] = compute_balance_from_str_list(df["xy_positions"])
     return df
 
@@ -93,6 +93,7 @@ def main() -> None:
     """Run the program."""
     df = preprocess_df(open_experiment_table())
     print(df)
+    print(str(list(df["xy_positions"])[-1]))
     for experiment_id in df["experiment_id"].unique():
         plot_all_properties_single_experiment(df, experiment_id)
 

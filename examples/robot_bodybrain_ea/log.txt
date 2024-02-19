@@ -2663,3 +2663,315 @@ Environment 1
 Environment 2
 Environment 3
 Environment 4
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1708363669841617
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Environment 0
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1708364953520241
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 2
+Environment 0
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 2
+Environment 0
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Environment 0
+Finished batch.
