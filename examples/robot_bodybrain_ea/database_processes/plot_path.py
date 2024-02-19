@@ -37,12 +37,13 @@ def plot_core_path_single_generation(body_states, exp, gen):
     plt.plot([5], 5, "rx")
     # plt.legend()
     plt.grid(True)
-    plt.ylim(-1,5)
-    plt.xlim(-1,5)
+    plt.ylim(-1,6)
+    plt.xlim(-1,6)
     plt.xlabel("x")
     plt.ylabel("y")
     plt.title("Core path for experiment " + str(exp) + " generation " + str(gen))
     plt.savefig(f"plots/paths/core_path_exp_{exp}_gen_{gen}.png", bbox_inches="tight")
+    plt.clf()
 
 def main() -> None:
     """Run the program."""
@@ -50,8 +51,8 @@ def main() -> None:
     # column names: experiment_id, generation_index, fitness, symmetry, xy_positions
     for experiment_id in df["experiment_id"].unique():
         for generation_index in df["generation_index"].unique():
-            print(f"Experiment {experiment_id}, generation {generation_index}")
             body_states = df[(df["experiment_id"] == experiment_id) & (df["generation_index"] == generation_index)]["xy_positions"]
+            print(f"Experiment {experiment_id}, generation {generation_index}, number of individuals: {len(body_states)}")
             plot_core_path_single_generation(body_states, experiment_id, generation_index)
 
 if __name__ == "__main__":
