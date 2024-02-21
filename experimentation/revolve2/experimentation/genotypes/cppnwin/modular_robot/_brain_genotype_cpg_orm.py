@@ -79,6 +79,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
         cls,
         innov_db: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        multineat_params: multineat.Parameters,
     ) -> BrainGenotypeCpgOrm:
         """
         Create a random genotype.
@@ -92,7 +93,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
         brain = random_multineat_genotype(
             innov_db=innov_db,
             rng=multineat_rng,
-            multineat_params=_MULTINEAT_PARAMS,
+            multineat_params=multineat_params,
             output_activation_func=multineat.ActivationFunction.SIGNED_SINE,
             num_inputs=7,  # bias(always 1), x1, y1, z1, x2, y2, z2
             num_outputs=1,  # weight
@@ -105,6 +106,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
         self,
         innov_db: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        multinea_params: multineat.Parameters,
     ) -> BrainGenotypeCpgOrm:
         """
         Mutate this genotype.
@@ -122,7 +124,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
                 False,
                 multineat.SearchMode.BLENDED,
                 innov_db,
-                _MULTINEAT_PARAMS,
+                multinea_params,
                 multineat_rng,
             )
         )
@@ -133,6 +135,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
         parent1: Self,
         parent2: Self,
         rng: np.random.Generator,
+        multineat_params: multineat.Parameters,
     ) -> BrainGenotypeCpgOrm:
         """
         Perform crossover between two genotypes.
@@ -150,7 +153,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
                 False,
                 False,
                 multineat_rng,
-                _MULTINEAT_PARAMS,
+                multineat_params,
             )
         )
 

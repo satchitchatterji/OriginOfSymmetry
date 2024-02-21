@@ -23,7 +23,7 @@ import pickle
 from revolve2.modular_robot import ModularRobot
 
 
-import config
+#import config 
 import multineat
 import numpy as np
 import numpy.typing as npt
@@ -50,6 +50,7 @@ import matplotlib.pyplot as plt
 import datetime
 from revolve2.simulation.running import RecordSettings
 
+from parameters import ExperimentParameters, EvolutionParameters, make_multineat_params
 
 def select_parents(
     rng: np.random.Generator,
@@ -171,7 +172,7 @@ def plot_fitnesses(max_fitness_values, mean_fitness_values, exp_name = ''):
     print("graph saved in "+ file_name)
     plt.close()
 
-def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_settings = RecordSettings()) -> Individual:
+def run_experiment(dbengine: Engine, exp_num: int, experiment_parameters: ExperimentParameters, steer = False, record_settings = RecordSettings()) -> Individual:
     """
     Run the experiment to optimize the body and brain of a robot using an evolutionary algorithm.
 
@@ -189,7 +190,9 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
     rng = make_rng(rng_seed)
 
     # Create and save the experiment instance.
-    experiment = Experiment(rng_seed=rng_seed, steer = steer)
+
+    experiment = Experiment(rng_seed=rng_seed, steer = steer, parameters=experiment_parameters)
+
     logging.info("Saving experiment configuration.")
     with Session(dbengine) as session:
         session.add(experiment)
@@ -200,7 +203,7 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
      #TODO add fps value and size of view usage
 
 
-    evaluator = Evaluator(headless=True, num_simulators=config.NUM_SIMULATORS, record_settings=record_settings)
+    evaluator = Evaluator(headless=True, num_simulators=experiment_parameters.evolution_parameters.num_simulators, record_settings=record_settings)
 
     # CPPN innovation databases.
     # If you don't understand CPPN, just know that a single database is shared in the whole evolutionary process.
@@ -215,15 +218,19 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
             innov_db_body=innov_db_body,
             innov_db_brain=innov_db_brain,
             rng=rng,
+            body_params=experiment_parameters.body_multineat_parameters,
+            brain_params=experiment_parameters.brain_multineat_parameters,
+
         )
-        for _ in range(config.POPULATION_SIZE)
+        for _ in range(experiment_parameters.evolution_parameters.population_size)
     ]
 
     # Evaluate the initial population.
     logging.info("Evaluating initial population.")
     initial_fitnesses, initial_sym, initial_xy = evaluator.evaluate(
         [genotype.develop() for genotype in initial_genotypes], generation_index=0,
-        steer=steer
+        steer=steer,
+        simulation_time=experiment_parameters.evolution_parameters.sim_time
     )
 
     # Create a population of individuals, combining genotype with fitness.
@@ -257,23 +264,28 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
 
     # Start the actual optimization process.
     logging.info("Start optimization process.")
-    while generation_index < config.NUM_GENERATIONS:
-        logging.info(f"Generation {generation_index } / {config.NUM_GENERATIONS}.")
+    while generation_index < experiment_parameters.evolution_parameters.num_generations:
+        logging.info(f"Generation {generation_index } / {experiment_parameters.evolution_parameters.num_generations}.")
 
         # Create offspring.
-        parents = select_parents(rng, population, config.OFFSPRING_SIZE)
+        parents = select_parents(rng, population, experiment_parameters.evolution_parameters.offspring_size)
         offspring_genotypes = [
             Genotype.crossover(
                 population.individuals[parent1_i].genotype,
                 population.individuals[parent2_i].genotype,
                 rng,
-            ).mutate(innov_db_body, innov_db_brain, rng)
+                experiment_parameters.body_multineat_parameters,
+                experiment_parameters.brain_multineat_parameters,
+            ).mutate(innov_db_body, innov_db_brain, rng, experiment_parameters.body_multineat_parameters, experiment_parameters.brain_multineat_parameters)
             for parent1_i, parent2_i in parents
         ]
 
         # Evaluate the offspring.
         offspring_fitnesses, offspring_symmetries, offspring_xy = evaluator.evaluate(
-            [genotype.develop() for genotype in offspring_genotypes], generation_index=generation_index
+            [genotype.develop() for genotype in offspring_genotypes], generation_index=generation_index,
+            steer=steer,
+            simulation_time=experiment_parameters.evolution_parameters.sim_time
+
         )
 
         # Make an intermediate offspring population.
@@ -293,7 +305,7 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
             rng,
             population,
             offspring_population,
-            config.TOURNAMENT_SIZE,
+            experiment_parameters.evolution_parameters.tournament_size,
             
         )
 
@@ -327,7 +339,7 @@ def run_experiment(dbengine: Engine, exp_num: int, steer = False, record_setting
     return best_robot
 
 
-def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSettings(save_robot_view=False)) -> None:
+def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_videos_dir = 'best_robots_videos',  exp_rs = RecordSettings(save_robot_view=False)) -> None:
     """
     Run multiple experiments and save the video of the best robot for each one of them.
 
@@ -337,32 +349,63 @@ def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSe
     :param best_videos_dir: The directory to save the best robot videos.
     :param exp_rc: The record settings for the experiment.
     """
-    # Set up standard logging.
-    setup_logging(file_name="log.txt")
+
+    for experiment_parameters in exp_parameters_array:
+        dbengine = open_database_sqlite(
+            experiment_parameters.evolution_parameters.database_file, open_method=OpenMethod.OPEN_OR_CREATE
+        )
+        # Create the structure of the database.
+        Base.metadata.create_all(dbengine)
+
+        # Save the experiment parameters to the database.
+        with Session(dbengine) as session:
+            # check if the same instanse of ExperimentParameters is already in the database
+            experiment_parameters_copy = session.query(ExperimentParameters).filter_by(evolution_parameters=experiment_parameters.evolution_parameters, brain_multineat_parameters=experiment_parameters.brain_multineat_parameters, body_multineat_parameters=experiment_parameters.body_multineat_parameters).first()
+
+            if experiment_parameters_copy:
+                experiment_parameters = experiment_parameters_copy
+            else:
+
+                session.add(experiment_parameters)
+                session.commit()
+
+        # Set up standard logging.
+        setup_logging(file_name="log.txt")
+    
+    
+
+        # Run the experiment several times.
+        best_robots = []
+        for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
+            best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
+            best_robots.append(best_robot)
+
+    
+        
+
+        for best_robot in best_robots:
+            video_name = f"{best_robot.id}_{'steer' if steer else 'nosteer'}"
+            developed_robot = best_robot.genotype.develop()
+            record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
+            evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
+
+            fitness = evaluator.evaluate([developed_robot], generation_index= int(steer), steer=steer, simulation_time=experiment_parameters.evolution_parameters.sim_time)[0]
 
 
 
-    # Open the database, only if it does not already exists.
-    # dbengine = open_database_sqlite(
-    #     config.DATABASE_FILE, open_method=OpenMethod.NOT_EXISTS_AND_CREATE
-    # )
-    # dbengine = open_database_sqlite(
-    #     config.DATABASE_FILE, open_method='TRUNCATE_AND_CREATE'
-    # )
-    # Changed because the above was not using the correct argument type for open_method
-    dbengine = open_database_sqlite(
-        config.DATABASE_FILE, open_method=OpenMethod.OPEN_OR_CREATE
-    )
-    # Create the structure of the database.
-    Base.metadata.create_all(dbengine)
 
-    # Run the experiment several times.
-    best_robots = []
-    for rep in range(config.NUM_REPETITIONS):
-        best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rs)
-        best_robots.append(best_robot)
+if __name__ == "__main__":
+    #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
+    exp_parameters_array = [ExperimentParameters()]
 
-    # GETTING THE BEST ROBOT FROM DATABASE, not needed if we get it from run_experiment
+    
+    #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)
+    main(steer=False, experiment_parameters=exp_parameters_array, best_videos_dir = 'best_robots_videos')
+
+
+
+
+ # GETTING THE BEST ROBOT FROM DATABASE, not needed if we get it from run_experiment
         
     # get the best robot from the last experiment (the last experiment is the one with the highest id)
     # with Session(dbengine) as session:
@@ -380,20 +423,3 @@ def main(steer: bool, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSe
     #     best_robot = best_genotype.develop()
 
     # get all the files from the the best robots videos directory
-    
-
-    for best_robot in best_robots:
-        video_name = f"{best_robot.id}_{'steer' if steer else 'nosteer'}"
-        developed_robot = best_robot.genotype.develop()
-        record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
-        evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
-
-        fitness = evaluator.evaluate([developed_robot], generation_index= int(steer), steer=steer)[0]
-
-
-
-
-if __name__ == "__main__":
-    #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
-    #main(steer=True, best_videos_dir = 'best_robots_videos')
-    main(steer=False, best_videos_dir = 'best_robots_videos')

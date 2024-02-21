@@ -96,7 +96,8 @@ class Evaluator:
         self,
         robots: list[ModularRobot],
         generation_index: int,
-        steer: bool = False
+        steer: bool = False,
+        simulation_time: float = 30
     ) -> list[float]:
         """
         Evaluate multiple robots.
@@ -112,7 +113,7 @@ class Evaluator:
 
         # Simulate the robots and process the results.
         batch = create_batch_multiple_isolated_robots_standard(
-            robots, [self._terrain for _ in robots], targets, simulation_time=config.SIM_TIME,  sampling_frequency = 3
+            robots, [self._terrain for _ in robots], targets, simulation_time=simulation_time,  sampling_frequency = 3
         )
 
         results = asyncio.run(self._runner.run_batch(batch, record_settings=self._record_settings, generation_index=generation_index, steer = steer))

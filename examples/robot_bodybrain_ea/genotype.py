@@ -24,6 +24,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         innov_db_body: multineat.InnovationDatabase,
         innov_db_brain: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        body_params: multineat.Parameters,
+        brain_params: multineat.Parameters,
     ) -> Genotype:
         """
         Create a random genotype.
@@ -33,8 +35,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         :param rng: Random number generator.
         :returns: The created genotype.
         """
-        body = cls.random_body(innov_db_body, rng)
-        brain = cls.random_brain(innov_db_brain, rng)
+        body = cls.random_body(innov_db_body, rng, multineat_params=body_params)
+        brain = cls.random_brain(innov_db_brain, rng, multineat_params=brain_params)
 
         return Genotype(body=body.body, brain=brain.brain)
 
@@ -43,6 +45,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         innov_db_body: multineat.InnovationDatabase,
         innov_db_brain: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        body_params: multineat.Parameters,
+        brain_params: multineat.Parameters,
     ) -> Genotype:
         """
         Mutate this genotype.
@@ -54,8 +58,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         :param rng: Random number generator.
         :returns: A mutated copy of the provided genotype.
         """
-        body = self.mutate_body(innov_db_body, rng)
-        brain = self.mutate_brain(innov_db_brain, rng)
+        body = self.mutate_body(innov_db_body, rng, multineat_params=body_params)
+        brain = self.mutate_brain(innov_db_brain, rng, multineat_params=brain_params)
 
         return Genotype(body=body.body, brain=brain.brain)
 
@@ -65,6 +69,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         parent1: Genotype,
         parent2: Genotype,
         rng: np.random.Generator,
+        body_params: multineat.Parameters,
+        brain_params: multineat.Parameters,
     ) -> Genotype:
         """
         Perform crossover between two genotypes.
@@ -74,8 +80,8 @@ class Genotype(Base, HasId, BodyGenotypeOrm, BrainGenotypeCpgOrm):
         :param rng: Random number generator.
         :returns: A newly created genotype.
         """
-        body = cls.crossover_body(parent1, parent2, rng)
-        brain = cls.crossover_brain(parent1, parent2, rng)
+        body = cls.crossover_body(parent1, parent2, rng, multineat_params=body_params)
+        brain = cls.crossover_brain(parent1, parent2, rng, multineat_params=brain_params)
 
         return Genotype(body=body.body, brain=brain.brain)
 

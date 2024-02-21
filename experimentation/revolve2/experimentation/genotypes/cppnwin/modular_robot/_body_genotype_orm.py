@@ -80,6 +80,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
         cls,
         innov_db: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        multineat_params: multineat.Parameters,
     ) -> BodyGenotypeOrm:
         """
         Create a random genotype.
@@ -93,7 +94,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
         body = random_multineat_genotype(
             innov_db=innov_db,
             rng=multineat_rng,
-            multineat_params=_MULTINEAT_PARAMS,
+            multineat_params=multineat_params,
             output_activation_func=multineat.ActivationFunction.LINEAR,# changed from multineat.ActivationFunction.TANH
             num_inputs=5,  # bias(always 1), pos_x, pos_y, pos_z, chain_length
             num_outputs=5,  # empty, brick, activehinge, rot0, rot90
@@ -106,6 +107,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
         self,
         innov_db: multineat.InnovationDatabase,
         rng: np.random.Generator,
+        multineat_params: multineat.Parameters,
     ) -> BodyGenotypeOrm:
         """
         Mutate this genotype.
@@ -123,7 +125,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
                 False,
                 multineat.SearchMode.BLENDED,
                 innov_db,
-                _MULTINEAT_PARAMS,
+                multineat_params,
                 multineat_rng,
             )
         )
@@ -134,6 +136,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
         parent1: Self,
         parent2: Self,
         rng: np.random.Generator,
+        multineat_params: multineat.Parameters,
     ) -> BodyGenotypeOrm:
         """
         Perform crossover between two genotypes.
@@ -151,7 +154,7 @@ class BodyGenotypeOrm(orm.MappedAsDataclass, kw_only=True):
                 False,
                 False,
                 multineat_rng,
-                _MULTINEAT_PARAMS,
+                multineat_params,
             )
         )
 
