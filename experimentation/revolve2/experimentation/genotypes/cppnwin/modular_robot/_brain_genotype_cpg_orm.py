@@ -60,7 +60,6 @@ def _make_multineat_params() -> multineat.Parameters:
     return multineat_params
 
 
-_MULTINEAT_PARAMS = _make_multineat_params()
 
 
 class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
@@ -106,7 +105,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
         self,
         innov_db: multineat.InnovationDatabase,
         rng: np.random.Generator,
-        multinea_params: multineat.Parameters,
+        multineat_params: multineat.Parameters,
     ) -> BrainGenotypeCpgOrm:
         """
         Mutate this genotype.
@@ -124,7 +123,7 @@ class BrainGenotypeCpgOrm(orm.MappedAsDataclass, kw_only=True):
                 False,
                 multineat.SearchMode.BLENDED,
                 innov_db,
-                multinea_params,
+                multineat_params,
                 multineat_rng,
             )
         )

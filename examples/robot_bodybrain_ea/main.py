@@ -172,7 +172,7 @@ def plot_fitnesses(max_fitness_values, mean_fitness_values, exp_name = ''):
     print("graph saved in "+ file_name)
     plt.close()
 
-def run_experiment(dbengine: Engine, exp_num: int, experiment_parameters: ExperimentParameters, steer = False, record_settings = RecordSettings()) -> Individual:
+def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParameters, steer = False, record_settings = RecordSettings()) -> Individual:
     """
     Run the experiment to optimize the body and brain of a robot using an evolutionary algorithm.
 
@@ -194,9 +194,9 @@ def run_experiment(dbengine: Engine, exp_num: int, experiment_parameters: Experi
     experiment = Experiment(rng_seed=rng_seed, steer = steer, parameters=experiment_parameters)
 
     logging.info("Saving experiment configuration.")
-    with Session(dbengine) as session:
-        session.add(experiment)
-        session.commit()
+    
+    session.add(experiment)
+    session.commit()
 
     # Intialize the evaluator that will be used to evaluate robots. TODO fitness function as parameter
 
@@ -248,9 +248,8 @@ def run_experiment(dbengine: Engine, exp_num: int, experiment_parameters: Experi
         experiment=experiment, generation_index=0, population=population
     )
     logging.info("Saving generation.")
-    with Session(dbengine, expire_on_commit=False) as session:
-        session.add(generation)
-        session.commit()
+    session.add(generation)
+    session.commit()
 
     # # Save the best robot
     best_robot = find_best_robot(None, population)
@@ -316,9 +315,8 @@ def run_experiment(dbengine: Engine, exp_num: int, experiment_parameters: Experi
             population=population,
         )
         logging.info("Saving generation.")
-        with Session(dbengine, expire_on_commit=False) as session:
-            session.add(generation)
-            session.commit()
+        session.add(generation)
+        session.commit()
 
 
         
@@ -369,6 +367,8 @@ def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_v
                 session.add(experiment_parameters)
                 session.commit()
 
+            
+
         # Set up standard logging.
         setup_logging(file_name="log.txt")
     
@@ -377,7 +377,8 @@ def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_v
         # Run the experiment several times.
         best_robots = []
         for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
-            best_robot = run_experiment(dbengine, rep, steer = steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
+            with Session(dbengine, expire_on_commit=False) as session:
+                best_robot = run_experiment(session, rep, steer = steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
             best_robots.append(best_robot)
 
     
@@ -400,7 +401,7 @@ if __name__ == "__main__":
 
     
     #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)
-    main(steer=False, experiment_parameters=exp_parameters_array, best_videos_dir = 'best_robots_videos')
+    main(steer=False, exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos')
 
 
 

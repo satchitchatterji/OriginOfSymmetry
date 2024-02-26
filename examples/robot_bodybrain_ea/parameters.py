@@ -1,10 +1,125 @@
-"""Experiment class."""
+from sqlalchemy.types import TypeDecorator, VARCHAR
+import json
+
+
 
 import sqlalchemy.orm as orm
 from base import Base
 from revolve2.experimentation.database import HasId
 import config
 import multineat
+
+def serialize_multineat_parameters(params):
+    # Convert a multineat.Parameters object to a dictionary
+    data = {
+        "PopulationSize": params.PopulationSize,
+        "TournamentSize": params.TournamentSize,
+        "MutateRemLinkProb": params.MutateRemLinkProb,
+        "RecurrentProb": params.RecurrentProb,
+        "OverallMutationRate": params.OverallMutationRate,
+        "MutateAddLinkProb": params.MutateAddLinkProb,
+        "MutateAddNeuronProb": params.MutateAddNeuronProb,
+        "MutateRemSimpleNeuronProb": params.MutateRemSimpleNeuronProb,
+        "MutateNeuronBiasesProb": params.MutateNeuronBiasesProb,
+        "MutateWeightsProb": params.MutateWeightsProb,
+        "MaxWeight": params.MaxWeight,
+        "WeightMutationMaxPower": params.WeightMutationMaxPower,
+        "WeightReplacementMaxPower": params.WeightReplacementMaxPower,
+        "MutateActivationAProb": params.MutateActivationAProb,
+        "ActivationAMutationMaxPower": params.ActivationAMutationMaxPower,
+        "MinActivationA": params.MinActivationA,
+        "MaxActivationA": params.MaxActivationA,
+        "MutateNeuronActivationTypeProb": params.MutateNeuronActivationTypeProb,
+        "MutateOutputActivationFunction": params.MutateOutputActivationFunction,
+        "ActivationFunction_SignedSigmoid_Prob": params.ActivationFunction_SignedSigmoid_Prob,
+        "ActivationFunction_UnsignedSigmoid_Prob": params.ActivationFunction_UnsignedSigmoid_Prob,
+        "ActivationFunction_Tanh_Prob": params.ActivationFunction_Tanh_Prob,
+        "ActivationFunction_TanhCubic_Prob": params.ActivationFunction_TanhCubic_Prob,
+        "ActivationFunction_SignedStep_Prob": params.ActivationFunction_SignedStep_Prob,
+        "ActivationFunction_UnsignedStep_Prob": params.ActivationFunction_UnsignedStep_Prob,
+        "ActivationFunction_SignedGauss_Prob": params.ActivationFunction_SignedGauss_Prob,
+        "ActivationFunction_UnsignedGauss_Prob": params.ActivationFunction_UnsignedGauss_Prob,
+        "ActivationFunction_Abs_Prob": params.ActivationFunction_Abs_Prob,
+        "ActivationFunction_SignedSine_Prob": params.ActivationFunction_SignedSine_Prob,
+        "ActivationFunction_UnsignedSine_Prob": params.ActivationFunction_UnsignedSine_Prob,
+        "ActivationFunction_Linear_Prob": params.ActivationFunction_Linear_Prob,
+        "MutateNeuronTraitsProb": params.MutateNeuronTraitsProb,
+        "MutateLinkTraitsProb": params.MutateLinkTraitsProb,
+        "AllowLoops": params.AllowLoops,
+    }
+    return data
+
+def deserialize_multineat_parameters(data):
+    # Create a multineat.Parameters object from a dictionary
+    params = multineat.Parameters()
+
+    params.PopulationSize = data["PopulationSize"]
+    params.TournamentSize = data["TournamentSize"]
+    params.MutateRemLinkProb = data["MutateRemLinkProb"]
+    params.RecurrentProb = data["RecurrentProb"]
+    params.OverallMutationRate = data["OverallMutationRate"]
+    params.MutateAddLinkProb = data["MutateAddLinkProb"]
+    params.MutateAddNeuronProb = data["MutateAddNeuronProb"]
+    params.MutateRemSimpleNeuronProb = data["MutateRemSimpleNeuronProb"]
+    params.MutateNeuronBiasesProb = data["MutateNeuronBiasesProb"]
+    params.MutateWeightsProb = data["MutateWeightsProb"]
+    params.MaxWeight = data["MaxWeight"]
+    params.WeightMutationMaxPower = data["WeightMutationMaxPower"]
+    params.WeightReplacementMaxPower = data["WeightReplacementMaxPower"]
+    params.MutateActivationAProb = data["MutateActivationAProb"]
+    params.ActivationAMutationMaxPower = data["ActivationAMutationMaxPower"]
+    params.MinActivationA = data["MinActivationA"]
+    params.MaxActivationA = data["MaxActivationA"]
+    params.MutateNeuronActivationTypeProb = data["MutateNeuronActivationTypeProb"]
+    params.MutateOutputActivationFunction = data["MutateOutputActivationFunction"]
+    params.ActivationFunction_SignedSigmoid_Prob = data["ActivationFunction_SignedSigmoid_Prob"]
+    params.ActivationFunction_UnsignedSigmoid_Prob = data["ActivationFunction_UnsignedSigmoid_Prob"]
+    params.ActivationFunction_Tanh_Prob = data["ActivationFunction_Tanh_Prob"]
+    params.ActivationFunction_TanhCubic_Prob = data["ActivationFunction_TanhCubic_Prob"]
+    params.ActivationFunction_SignedStep_Prob = data["ActivationFunction_SignedStep_Prob"]
+    params.ActivationFunction_UnsignedStep_Prob = data["ActivationFunction_UnsignedStep_Prob"]
+    params.ActivationFunction_SignedGauss_Prob = data["ActivationFunction_SignedGauss_Prob"]
+    params.ActivationFunction_UnsignedGauss_Prob = data["ActivationFunction_UnsignedGauss_Prob"]
+    params.ActivationFunction_Abs_Prob = data["ActivationFunction_Abs_Prob"]
+    params.ActivationFunction_SignedSine_Prob = data["ActivationFunction_SignedSine_Prob"]
+    params.ActivationFunction_UnsignedSine_Prob = data["ActivationFunction_UnsignedSine_Prob"]
+    params.ActivationFunction_Linear_Prob = data["ActivationFunction_Linear_Prob"]
+    params.MutateNeuronTraitsProb = data["MutateNeuronTraitsProb"]
+    params.MutateLinkTraitsProb = data["MutateLinkTraitsProb"]
+    params.AllowLoops = data["AllowLoops"]
+
+    return params
+
+class JSONEncodedDict(TypeDecorator):
+    """Enables JSON storage by encoding and decoding on the fly."""
+    impl = VARCHAR
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            value = json.dumps(value, default=lambda o: o.__dict__)
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = json.loads(value)
+            value = EvolutionParameters(**value)
+        return value
+    
+
+class JSONEncodedMultineatParameters(TypeDecorator):
+    """Enables JSON storage by encoding and decoding on the fly."""
+    impl = VARCHAR
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            value = json.dumps(serialize_multineat_parameters(value))
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = deserialize_multineat_parameters(json.loads(value))
+        return value
+
 
 
 # the optimal multineat parameters for both the body and brain
@@ -55,6 +170,9 @@ def make_multineat_params() -> multineat.Parameters:
 
     return multineat_params
 
+
+
+
 class EvolutionParameters:
     def __init__(
             self, database_file = config.DATABASE_FILE, num_repetitions = config.NUM_REPETITIONS, num_simulators = config.NUM_SIMULATORS, population_size = config.POPULATION_SIZE, offspring_size = config.OFFSPRING_SIZE, num_generations = config.NUM_GENERATIONS, tournament_size = config.TOURNAMENT_SIZE, sim_time = config.SIM_TIME
@@ -81,14 +199,11 @@ class ExperimentParameters(Base, HasId):
     """Experiment description."""
 
     __tablename__ = "parameters"
+    # Assuming EvolutionParameters and multineat.Parameters can be serialized to JSON
+    evolution_parameters: orm.Mapped[EvolutionParameters] = orm.mapped_column(JSONEncodedDict, nullable=False)
+    brain_multineat_parameters: orm.Mapped["multineat.Parameters"] = orm.mapped_column(JSONEncodedMultineatParameters, nullable=False)
+    body_multineat_parameters: orm.Mapped["multineat.Parameters"] = orm.mapped_column(JSONEncodedMultineatParameters, nullable=False)
 
-    # Evolution parameters
-    evolution_parameters: orm.Mapped[EvolutionParameters] = orm.mapped_column(nullable=False)
-
-    # multiNEAT parameters
-    brain_multineat_parameters: orm.Mapped[multineat.Parameters] = orm.mapped_column(nullable=False)
-
-    body_multineat_parameters: orm.Mapped[multineat.Parameters] = orm.mapped_column(nullable=False)
 
     def __init__(self):
         # Directly assign default values to instance attributes
