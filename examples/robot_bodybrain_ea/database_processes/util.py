@@ -35,7 +35,8 @@ def open_experiment_table(dbengine=None):
             Generation.generation_index,
             Individual.fitness,
             Individual.symmetry,
-            Individual.xy_positions
+            Individual.xy_positions,
+            Individual.population_index
         )
         .join_from(Experiment, Generation, Experiment.id == Generation.experiment_id)
         .join_from(Generation, Population, Generation.population_id == Population.id)
