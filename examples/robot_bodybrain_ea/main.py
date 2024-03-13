@@ -428,22 +428,22 @@ if __name__ == "__main__":
         }
         
     }
-    parameters_to_test = {
-        "brain_multineat_parameters": {
-            "OverallMutationRate": 0.15,
-        },
-        "body_multineat_parameters": {
-            "OverallMutationRate": 0.09,
-        },
-        "evolution_parameters": {
-            "steer" : [True, False],
-            "population_size": 8,
-            "num_generations": 2,
-            "offspring_size": 8,
-            "tournament_size": [3,6],
-            "database_file" : "./database_sym.sqlite"
-        }
-    }
+    # parameters_to_test = {
+    #     "brain_multineat_parameters": {
+    #         "OverallMutationRate": 0.15,
+    #     },
+    #     "body_multineat_parameters": {
+    #         "OverallMutationRate": 0.09,
+    #     },
+    #     "evolution_parameters": {
+    #         "steer" : [True, False],
+    #         "population_size": 8,
+    #         "num_generations": 2,
+    #         "offspring_size": 8,
+    #         "tournament_size": [3,6],
+    #         "database_file" : "./database_sym.sqlite"
+    #     }
+    # }
 
 
     if same_for_brain_and_body:
