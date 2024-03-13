@@ -23,15 +23,15 @@ def plot_core_path(single_robot_body_state_str):
     plt.savefig("plots/paths/core_path.png", bbox_inches="tight")
 
 def plot_core_path_single_generation(body_states, exp, gen):
-    for single_robot_body_state_str in body_states:
+    for i, single_robot_body_state_str in enumerate(body_states):
         single_robot_states = get_body_states_from_str(single_robot_body_state_str)
         core_positions = [body_state.core_position for body_state in single_robot_states]
         x = [core_position.x for core_position in core_positions]
         y = [core_position.y for core_position in core_positions]
         # mark the start and end
-        plt.plot(x[0], y[0], "go")
+        # plt.plot(x[0], y[0], "go")
         plt.plot(x[-1], y[-1], "ro")
-        plt.plot(x, y)
+        plt.plot(x, y, color="green")
 
     # plot objective
     plt.plot([5], 5, "rx")
@@ -43,7 +43,7 @@ def plot_core_path_single_generation(body_states, exp, gen):
     plt.ylabel("y")
     plt.title("Core path for experiment " + str(exp) + " generation " + str(gen))
     plt.savefig(f"plots/paths/core_path_exp_{exp}_gen_{gen}.png", bbox_inches="tight")
-    plt.clf()
+    # plt.show()
 
 def main() -> None:
     """Run the program."""
