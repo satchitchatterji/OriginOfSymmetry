@@ -39,9 +39,9 @@ def distance_to_target(end_state: BodyState, target: tuple[float, float]) -> flo
     :returns: The calculated fitness.
     """
 
-    return -(
+    return -math.sqrt((
         (end_state.core_position[0] - target[0]) ** 2
-        + (end_state.core_position[1] - target[1]) ** 2
+        + (end_state.core_position[1] - target[1]) ** 2)
     )# removed sqrt for higher push towards target
 
 # same as xy_displacement but with a penality if a certain height is exceeded

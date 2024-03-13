@@ -19,6 +19,8 @@ You learn:
 
 import logging
 import pickle
+import itertools
+
 
 from revolve2.modular_robot import ModularRobot
 
@@ -337,7 +339,7 @@ def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParam
     return best_robot
 
 
-def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_videos_dir = 'best_robots_videos',  exp_rs = RecordSettings(save_robot_view=False)) -> None:
+def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = False, best_videos_dir = 'best_robots_videos',  exp_rs = RecordSettings(save_robot_view=False)) -> None:
     """
     Run multiple experiments and save the video of the best robot for each one of them.
 
@@ -361,7 +363,11 @@ def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_v
             experiment_parameters_copy = session.query(ExperimentParameters).filter_by(evolution_parameters=experiment_parameters.evolution_parameters, brain_multineat_parameters=experiment_parameters.brain_multineat_parameters, body_multineat_parameters=experiment_parameters.body_multineat_parameters).first()
 
             if experiment_parameters_copy:
-                experiment_parameters = experiment_parameters_copy
+                if repeated_params:
+                    experiment_parameters = experiment_parameters_copy
+                else:
+                    print("Experiment with the same parameters already exists in the database. If you want to run the experiment with the same parameters again, set repeated_params to True")
+                    continue
             else:
 
                 session.add(experiment_parameters)
@@ -369,39 +375,123 @@ def main(steer: bool, exp_parameters_array: list[ExperimentParameters]  , best_v
 
             
 
-        # Set up standard logging.
-        setup_logging(file_name="log.txt")
+            # Set up standard logging.
+            setup_logging(file_name="log.txt")
     
     
-
-        # Run the experiment several times.
-        best_robots = []
-        for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
-            with Session(dbengine, expire_on_commit=False) as session:
-                best_robot = run_experiment(session, rep, steer = steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
-            best_robots.append(best_robot)
+        
+            # Run the experiment several times.
+            best_robots = []
+            for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
+            
+                best_robot = run_experiment(session, rep, steer = experiment_parameters.evolution_parameters.steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
+                best_robots.append(best_robot)
 
     
         
 
-        for best_robot in best_robots:
-            video_name = f"{best_robot.id}_{'steer' if steer else 'nosteer'}"
-            developed_robot = best_robot.genotype.develop()
-            record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
-            evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
+            for best_robot in best_robots:
+                # get the experiment id
+                population_id = best_robot.population_id
+                experiment_id = session.query(Generation).filter_by(population_id=population_id).first().experiment_id
 
-            fitness = evaluator.evaluate([developed_robot], generation_index= int(steer), steer=steer, simulation_time=experiment_parameters.evolution_parameters.sim_time)[0]
+                video_name = f"{experiment_id}_{best_robot.id}_{'steer' if experiment_parameters.evolution_parameters.steer else 'nosteer'}"
+                developed_robot = best_robot.genotype.develop()
+                record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
+                evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
+
+                fitness = evaluator.evaluate([developed_robot], generation_index= int(experiment_parameters.evolution_parameters.steer), steer=experiment_parameters.evolution_parameters.steer, simulation_time=experiment_parameters.evolution_parameters.sim_time)[0]
 
 
 
 
 if __name__ == "__main__":
     #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
-    exp_parameters_array = [ExperimentParameters()]
+
+    same_for_brain_and_body = False
+    
+    
+    parameters_to_test = {
+        "brain_multineat_parameters": {
+            "OverallMutationRate": [0.09,0.15,0.2],
+        },
+        "body_multineat_parameters": {
+            "OverallMutationRate": [0.09,0.15,0.2],
+        },
+        "evolution_parameters": {
+            "steer" : [False, True],
+            "population_size": 200, 
+            "num_generations": 200,
+            "offspring_size": 200,
+            "tournament_size": [3,6],
+            "database_file" : "./database_sym.sqlite"
+        }
+        
+    }
+    parameters_to_test = {
+        "brain_multineat_parameters": {
+            "OverallMutationRate": 0.15,
+        },
+        "body_multineat_parameters": {
+            "OverallMutationRate": 0.09,
+        },
+        "evolution_parameters": {
+            "steer" : [True, False],
+            "population_size": 8,
+            "num_generations": 2,
+            "offspring_size": 8,
+            "tournament_size": [3,6],
+            "database_file" : "./database_sym.sqlite"
+        }
+    }
+
+
+    if same_for_brain_and_body:
+        parameters_to_test["brain_multineat_parameters"] = parameters_to_test["body_multineat_parameters"]
+
+    # create an array of ExperimentParameters all the possible combinations of the parameters to test
+    exp_parameters_array = []
+
+    # create dynamically all the possible combinations of the parameters to test
+
+    # Extracting the keys and values, separating lists from single values
+    # Reformatting approach to ensure consistency in parameter formatting
+    keys, values = [], []
+    for param_group, params in parameters_to_test.items():
+        for param, value in params.items():
+            
+
+            keys.append((param_group, param)) 
+            if isinstance(value, list):
+                values.append(value)
+            else:
+                values.append([value])
+    # Generate all combinations of variable parameters
+    combinations = list(itertools.product(*tuple(values)))
+    
+
+    # Creating an ExperimentParameters instance for each combination
+    for combination in combinations:
+        exp_params = ExperimentParameters()
+        for (param_group, param), value in zip(keys, combination):
+            if param_group == "evolution_parameters" and param == "population_size":
+                exp_params.body_multineat_parameters.PopulationSize = value
+                exp_params.brain_multineat_parameters.PopulationSize = value
+            elif param_group == "evolution_parameters" and param == "tournament_size":
+                exp_params.body_multineat_parameters.TournamentSize = value
+                exp_params.brain_multineat_parameters.TournamentSize = value
+            
+            setattr(getattr(exp_params, param_group), param, value)
+        
+        exp_parameters_array.append(exp_params)
+
+    
+
+    #exp_parameters_array = [ExperimentParameters()]
 
     
     #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)
-    main(steer=False, exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos')
+    main( exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos', repeated_params=False)
 
 
 
