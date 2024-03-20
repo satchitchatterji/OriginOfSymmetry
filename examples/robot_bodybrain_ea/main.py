@@ -54,6 +54,10 @@ from revolve2.simulation.running import RecordSettings
 
 from parameters import ExperimentParameters, EvolutionParameters, make_multineat_params
 
+import wandb
+import time
+CUR_TIME = time.strftime("%Y-%m-%dT%H:%M:%S")
+
 def select_parents(
     rng: np.random.Generator,
     population: list[Individual],
@@ -329,6 +333,7 @@ def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParam
 
         max_fitness_values.append(best_robot.fitness)
 
+        wandb.log({"max_fitness": max_fitness_values[-1], "mean_fitness": mean_fitness_values[-1]})
         # logging.info(f"Best robot until now: {best_robot.fitness}")
         #logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
@@ -379,15 +384,18 @@ def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = Fa
             setup_logging(file_name="log.txt")
     
     
-        
+
             # Run the experiment several times.
             best_robots = []
             for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
-            
+                config_dict = vars(experiment_parameters.evolution_parameters)
+                config_dict.update({"brain_overall":experiment_parameters.brain_multineat_parameters.OverallMutationRate, "body_overall":experiment_parameters.body_multineat_parameters.OverallMutationRate})                
+                wandb.init(project="integration test", config=config_dict, name=f"{CUR_TIME}_rep_{rep}")
+                
                 best_robot = run_experiment(session, rep, steer = experiment_parameters.evolution_parameters.steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
                 best_robots.append(best_robot)
 
-    
+                wandb.finish()
         
 
             for best_robot in best_robots:
@@ -397,7 +405,7 @@ def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = Fa
 
                 video_name = f"{experiment_id}_{best_robot.id}_{'steer' if experiment_parameters.evolution_parameters.steer else 'nosteer'}"
                 developed_robot = best_robot.genotype.develop()
-                record_settings = RecordSettings( video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
+                record_settings = RecordSettings(video_directory=best_videos_dir, generation_step=1, save_robot_view=True, video_name=video_name, fps=24, delete_at_init=False)
                 evaluator = Evaluator(headless= True, num_simulators=1, record_settings=record_settings)
 
                 fitness = evaluator.evaluate([developed_robot], generation_index= int(experiment_parameters.evolution_parameters.steer), steer=experiment_parameters.evolution_parameters.steer, simulation_time=experiment_parameters.evolution_parameters.sim_time)[0]
@@ -413,17 +421,17 @@ if __name__ == "__main__":
     
     parameters_to_test = {
         "brain_multineat_parameters": {
-            "OverallMutationRate": [0.09,0.15,0.2],
+            "OverallMutationRate": [0.09],
         },
         "body_multineat_parameters": {
-            "OverallMutationRate": [0.09,0.15,0.2],
+            "OverallMutationRate": [0.09],
         },
         "evolution_parameters": {
-            "steer" : [False, True],
-            "population_size": 200, 
-            "num_generations": 200,
-            "offspring_size": 200,
-            "tournament_size": [3,6],
+            "steer" : [False],
+            "population_size": 20, 
+            "num_generations": 10,
+            "offspring_size": 20,
+            "tournament_size": [3],
             "database_file" : "./database_sym.sqlite"
         }
         
@@ -491,7 +499,7 @@ if __name__ == "__main__":
 
     
     #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)
-    main( exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos', repeated_params=False)
+    main(exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos', repeated_params=True)
 
 
 

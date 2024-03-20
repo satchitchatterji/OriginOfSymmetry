@@ -1,7 +1,7 @@
 """Configuration parameters for this example."""
 
-DATABASE_FILE = "./big_exp001.sqlite"
-NUM_REPETITIONS = 1
+DATABASE_FILE = "./database_sym.sqlite"
+NUM_REPETITIONS = 3
 NUM_SIMULATORS = 8
 POPULATION_SIZE = 10
 OFFSPRING_SIZE = 10
