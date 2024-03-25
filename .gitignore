@@ -9,6 +9,7 @@
 
 # database files
 *.sqlite
+*/database_sym.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
