@@ -11,8 +11,8 @@ from numpy.typing import NDArray
 from pyrr import Vector3
 
 from revolve2.modular_robot import ModularRobot
-from revolve2.modular_robot.body import Module
-from revolve2.modular_robot.body.base import ActiveHinge, Body, Brick, Core
+from revolve2.modular_robot import Module
+from revolve2.modular_robot import ActiveHinge, Body, Brick, Core
 
 
 def __mk_path() -> str:
@@ -64,7 +64,7 @@ def draw_robot(
     body = robot if isinstance(robot, Body) else robot.body
     tpl: tuple[NDArray[Any], Vector3[np.int_]] = body.to_grid()
     body_grid, core_position = tpl
-    x, y, _ = body_grid.shape
+    x, y, _ = np.array(body_grid).shape
 
     image = cairo.ImageSurface(cairo.FORMAT_ARGB32, x * scale, y * scale)
     context = cairo.Context(image)
@@ -123,7 +123,7 @@ def _draw_module(
     context.stroke()
     context.set_source_rgb(0, 0, 0)
 
-    if module.parent is not None:
+    if type(module) == Core or module.parent is not None:
         # draw the connection to the parent module
         x_offset, y_offset = (
             previous_position[0] - position[0],
@@ -152,7 +152,7 @@ def _draw_module(
         context.show_text(str(module.uuid))
         context.stroke()
 
-    for key, child in module.children.items():
+    for key, child in enumerate(module.children):
         angle = module.attachment_points[key].orientation.angle
         mapo = _make_rot_mat(angle)
         target_orientation = orientation @ mapo
