@@ -8,6 +8,7 @@ def create_batch_multiple_isolated_robots(
     robots: list[ModularRobot],
     terrains: list[Terrain],
     target_points: list[tuple[float]],
+    steer: bool,
     simulation_time: int | None,
     sampling_frequency: float,
     simulation_timestep: float,
@@ -27,7 +28,7 @@ def create_batch_multiple_isolated_robots(
     """
     actor_controllers = [robot.make_actor_and_controller() for robot in robots]
     envs = [
-        create_environment_single_actor(actor, controller, terrain, target_point)
+        create_environment_single_actor(actor, controller, terrain, steer, target_point)
         for (actor, controller), terrain, target_point in zip(actor_controllers, terrains, target_points)
     ]
 
@@ -35,7 +36,7 @@ def create_batch_multiple_isolated_robots(
         simulation_time=simulation_time,
         sampling_frequency=sampling_frequency,
         simulation_timestep=simulation_timestep,
-        control_frequency=control_frequency,
+        control_frequency=control_frequency
     )
 
     batch.environments.extend(envs)

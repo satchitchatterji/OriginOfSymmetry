@@ -46,10 +46,12 @@ def create_batch_multiple_isolated_robots_standard(
     robots: list[ModularRobot],
     terrains: list[Terrain],
     target_points: list[tuple[float, float]],
+    steer: bool,
     simulation_time: int | None = STANDARD_SIMULATION_TIME,
     sampling_frequency: float = STANDARD_SAMPLING_FREQUENCY,
     simulation_timestep: float = STANDARD_SIMULATION_TIMESTEP,
-    control_frequency: float = STANDARD_CONTROL_FREQUENCY
+    control_frequency: float = STANDARD_CONTROL_FREQUENCY,
+
 ) -> Batch:
     """
     Create a simulation batch for multiple robots that do not interact using standard parameters.
@@ -66,6 +68,7 @@ def create_batch_multiple_isolated_robots_standard(
         robots=robots,
         terrains=terrains,
         target_points=target_points,
+        steer=steer,
         simulation_time=simulation_time,
         sampling_frequency=sampling_frequency,
         simulation_timestep=simulation_timestep,

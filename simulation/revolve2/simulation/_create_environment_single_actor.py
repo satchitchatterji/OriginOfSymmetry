@@ -69,11 +69,12 @@ class EnvironmentActorController(EnvironmentController):
 
         # vision
         # vision_img = np.flip(vision_img) # flip the image because its axis are inverted #we are already doing it before passing the image to the controller
-        if vision_img is None:
+        if vision_img is None or not self.steer or not save_pos:
             self.actor_controller.step(dt)
             targets = self.actor_controller.get_dof_targets()
             actor_control.set_dof_targets(0, targets)
             return
+        
 
         self.picture_w = vision_img.shape[1]
         # / vision
@@ -98,7 +99,7 @@ class EnvironmentActorController(EnvironmentController):
 
         # print("Test print")
         # print("targets: ", targets)
-        if self.steer and target_in_sight and save_pos:
+        if target_in_sight:
             core_position = current_pos[:2]
 
             self.is_left = []
@@ -167,7 +168,7 @@ class EnvironmentActorController(EnvironmentController):
 
 
 def create_environment_single_actor(
-    actor: Actor, controller: ActorController, terrain: Terrain, target_point: tuple[float, float] = (0.0, 0.0)
+    actor: Actor, controller: ActorController, terrain: Terrain, steer: bool, target_point: tuple[float, float] = (0.0, 0.0),
 ) -> Environment:
     """
     Create an environment for simulating a single actor.
@@ -180,7 +181,7 @@ def create_environment_single_actor(
     bounding_box = actor.calc_aabb()
     # vision
     # env = Environment(EnvironmentActorController(controller, steer=True, target_points=[(LocalRunner.sphere_pos.x, LocalRunner.sphere_pos.y)]))
-    env = Environment(EnvironmentActorController(controller, steer=True))
+    env = Environment(EnvironmentActorController(controller, steer=steer))
     # / vision
     env.static_geometries.extend(terrain.static_geometry)
     env.actors.append(

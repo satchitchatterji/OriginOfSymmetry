@@ -39,26 +39,31 @@ def get_body_states_multiple_isolated_robots_intermediate(
     :returns: The body states
     """
     # get the number of simulation steps
-    num_steps = len(batch_results.environment_results[0].environment_states)
-    print("num_steps: ", num_steps)
+    num_total_states = len(batch_results.environment_results[0].environment_states)
+    print("num_total_states: ", num_total_states)
 
     # get the number of intermediate states to be returned
-    num_intermediate = min(max_intermediate, num_steps)
+    num_intermediate = min(max_intermediate, num_total_states)
     # get the step size
-    step_size = num_steps // num_intermediate
+    step_size = num_total_states // num_intermediate
     print("step_size: ", step_size)
 
     # get the intermediate states
     intermediate_states = []
     for body, environment_results in zip(bodies, batch_results.environment_results):
-        single_intermediate_states = []
-        for i in range(0, num_steps, step_size):
-            # print("i: ", i)
-            single_intermediate_states.append(
-                    body.body_state_from_actor_state(
-                        environment_results.environment_states[i].actor_states[0]
-                    )
-            )
+        single_intermediate_states = [env_state.actor_states[0] for env_state in environment_results.environment_states[::step_size]]
+        
+        # for i in range(0, num_steps, step_size):
+        #     # print("i: ", i)
+        #     single_intermediate_states.append(
+        #             body.body_state_from_actor_state(
+        #                 environment_results.environment_states[i].actor_states[0]
+        #             )
+        #     )
+            # do the same above but without using i
+            
+
+
         intermediate_states.append(single_intermediate_states)
     return intermediate_states
     

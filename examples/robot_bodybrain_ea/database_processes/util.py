@@ -22,11 +22,21 @@ from population import Population
 from revolve2.experimentation.database import OpenMethod, open_database_sqlite
 from sqlalchemy import select
 
+def create_engine(filepath=None):
+    if filepath is None:
+        filepath = "../"+config.DATABASE_FILE
 
-def open_experiment_table(dbengine=None):
+    return open_database_sqlite(
+        filepath, open_method=OpenMethod.OPEN_IF_EXISTS
+    )
+
+def open_experiment_table(filepath=None, dbengine=None):
+    if filepath is None:
+        filepath = "../"+config.DATABASE_FILE
+
     if dbengine is None:
         dbengine = open_database_sqlite(
-            "../"+config.DATABASE_FILE, open_method=OpenMethod.OPEN_IF_EXISTS
+            filepath, open_method=OpenMethod.OPEN_IF_EXISTS
         )
 
     df = pandas.read_sql(

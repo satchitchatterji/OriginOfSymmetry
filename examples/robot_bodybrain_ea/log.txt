@@ -7372,3 +7372,2998 @@ Saving generation.
 Starting simulation batch with mujoco.
 Environment 0
 Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1710947941702925
+Saving experiment configuration.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1710948035829497
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 20.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 10 / 20.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 11 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 12 / 20.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 13 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 14 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 15 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 7
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 16 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 3
+Environment 1
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 17 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 5
+Environment 4
+Environment 3
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 18 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 6
+Environment 4
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 19 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710948214525397
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 4
+Environment 3
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 7
+Environment 6
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 10
+Environment 9
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 20.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 10 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 11 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 12 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 13 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 14 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 15 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 16 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 7
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 17 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 18 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 19 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710948389194796
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 20.
+Starting simulation batch with mujoco.
+Environment 2
+Environment 1
+Environment 0
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 10 / 20.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 11 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 12 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 13 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 14 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 15 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 16 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 17 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 18 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 19 / 20.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Environment 0
+Finished batch.
+Starting simulation batch with mujoco.
+Environment 0
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1710948820683311
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 3
+Environment 2
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 7
+Environment 3
+Environment 5
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 2
+Environment 0
+Environment 1
+Environment 3
+Environment 4
+Environment 6
+Environment 7
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710948924440217
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 7
+Environment 5
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 4
+Environment 5
+Environment 3
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 5
+Environment 3
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 7
+Environment 5
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710949029675614
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 5
+Environment 4
+Environment 3
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 5
+Environment 4
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 7
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Environment 0
+Finished batch.
+Starting simulation batch with mujoco.
+Environment 0
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1710949235765842
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 4
+Environment 3
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 3
+Environment 1
+Environment 2
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 3
+Environment 1
+Environment 2
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 6
+Environment 4
+Environment 7
+Environment 5
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710949329550084
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 0
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 2
+Environment 0
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 1
+Environment 2
+Environment 0
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 7
+Environment 6
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1710949418905493
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 6
+Environment 5
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 3
+Environment 2
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 2 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 3 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 6
+Environment 7
+Environment 5
+Environment 4
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 4 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 5 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 2
+Environment 1
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 6 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 7 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 8 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Generation 9 / 10.
+Starting simulation batch with mujoco.
+Environment 0
+Environment 1
+Environment 2
+Environment 3
+Environment 4
+Environment 5
+Environment 6
+Environment 7
+Environment 8
+Environment 9
+Environment 10
+Environment 11
+Environment 12
+Environment 13
+Environment 14
+Environment 15
+Environment 16
+Environment 17
+Environment 18
+Environment 19
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Environment 0
+Finished batch.
+Starting simulation batch with mujoco.
+Environment 0

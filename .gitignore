@@ -1,12 +1,15 @@
 # Visual Studio Code
 .vscode/
 
+*wandb*
+
 # camera outputs
 *.png
 *.mp4
 
 # database files
 *.sqlite
+*/database_sym.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

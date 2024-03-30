@@ -11,9 +11,13 @@ import numpy as np
 import numpy.typing as npt
 
 from .environment_steering_controller import EnvironmentActorController
+from revolve2.ci_group import fitness_functions
+from revolve2.modular_robot import BodyState
 
 #vision
 from .OpenGLCamera import OpenGLVision
+
+
 
 # cv2.namedWindow("Robot Environment", cv2.WINDOW_NORMAL)
 # cv2.resizeWindow("Robot Environment", 100, 100)
@@ -60,6 +64,7 @@ class LocalRunner(Runner):
     _start_paused: bool
     _num_simulators: int
     sphere_pos: Vector3 = Vector3([10, 10, 1])
+    min_speed: float = 0.001
     # vision
     #_repetition = 0
     # /vision
@@ -309,11 +314,31 @@ class LocalRunner(Runner):
             # sample state if it is time
             if time >= last_sample_time + sample_step:
                 last_sample_time = int(time / sample_step) * sample_step
-                results.environment_states.append(
-                    EnvironmentState(
+                env_state = EnvironmentState(
                         time, cls._get_actor_states(env_descr, data, model)
                     )
+                results.environment_states.append(env_state)
+                target_point = env_descr.target_point
+                 # units per second
+                body_state = BodyState(
+                    core_position=env_state.actor_states[0].position, core_orientation=env_state.actor_states[0].orientation
                 )
+                current_fitness = fitness_functions.distance_to_target(body_state, target_point)
+                distance_of_target_from_origin = math.sqrt(target_point[0]**2 + target_point[1]**2)
+                distance_run = distance_of_target_from_origin + current_fitness #current_fitness is negative
+                treshold = LocalRunner.min_speed*time*math.sqrt(generation_index)
+                
+                if time > 5 and distance_run < treshold:
+                    #print("Robot is stuck")
+                    #print(f"breaking early at time: {time}")
+                    #print("distance_run: ", distance_run)
+                    #print("treshold: ", treshold)
+                    #print(f"Generation: {generation_index}, Environment: {env_index}")
+
+                    
+                    break
+
+            
 
             # step simulation
             mujoco.mj_step(model, data)
