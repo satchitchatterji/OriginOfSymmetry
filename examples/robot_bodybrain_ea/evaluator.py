@@ -133,7 +133,7 @@ class Evaluator:
         ]
 
         symmetries = [
-            MorphologicalMeasures(robot.body).symmetry2d
+            MorphologicalMeasures(robot.body).symmetry
             for robot in robots
         ]
 

@@ -223,7 +223,6 @@ class MorphologicalMeasures:
         return num_symmetrical / (self.num_modules - num_along_plane)
 
     def __calculate_yz_symmetry(self) -> float:
-        return -1 # not used, causes bugs
         num_along_plane = 0
         for y, z in product(
             range(self.bounding_box_width), range(self.bounding_box_height)
@@ -233,12 +232,14 @@ class MorphologicalMeasures:
 
         if num_along_plane == self.num_modules:
             return 0.0
+        
+        min_distance_to_edge = min(self.core_grid_position[0], self.bounding_box_depth - self.core_grid_position[0]-1)
 
         num_symmetrical = 0
         for y, z, x in product(
             range(self.bounding_box_width),
             range(self.bounding_box_height),
-            range(1, (self.bounding_box_depth - 1) // 2),
+            range(1, min_distance_to_edge+1),
         ):
             if self.grid[self.core_grid_position[0] + x, y, z] is not None and type(
                 self.grid[self.core_grid_position[0] + x, y, z]
