@@ -236,7 +236,8 @@ def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParam
     initial_fitnesses, initial_sym, initial_xy = evaluator.evaluate(
         [genotype.develop() for genotype in initial_genotypes], generation_index=0,
         steer=steer,
-        simulation_time=experiment_parameters.evolution_parameters.sim_time
+        simulation_time=experiment_parameters.evolution_parameters.sim_time,
+        target_list= experiment_parameters.evolution_parameters.target_list
     )
 
     # Create a population of individuals, combining genotype with fitness.
@@ -289,7 +290,8 @@ def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParam
         offspring_fitnesses, offspring_symmetries, offspring_xy = evaluator.evaluate(
             [genotype.develop() for genotype in offspring_genotypes], generation_index=generation_index,
             steer=steer,
-            simulation_time=experiment_parameters.evolution_parameters.sim_time
+            simulation_time=experiment_parameters.evolution_parameters.sim_time,
+            target_list= experiment_parameters.evolution_parameters.target_list
 
         )
 
@@ -453,6 +455,25 @@ if __name__ == "__main__":
     #     }
     # }
 
+    parameters_to_test = {
+        "brain_multineat_parameters": {
+            "OverallMutationRate": 0.15,
+        },
+        "body_multineat_parameters": {
+            "OverallMutationRate": 0.15,
+        },
+        "evolution_parameters": {
+            "steer" : [True, False],
+            "population_size": 100,
+            "num_generations": 200,
+            "num_repetitions": 5,
+            "offspring_size": 100,
+            "tournament_size": 6,
+            "database_file" : "./big_exp.sqlite",
+            "target_list": [[(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
+        }
+    }
+
 
     if same_for_brain_and_body:
         parameters_to_test["brain_multineat_parameters"] = parameters_to_test["body_multineat_parameters"]
@@ -495,7 +516,7 @@ if __name__ == "__main__":
 
     
 
-    exp_parameters_array = [ExperimentParameters()]
+    #exp_parameters_array = [ExperimentParameters()]
 
     
     #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)

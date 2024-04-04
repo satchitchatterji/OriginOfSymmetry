@@ -97,7 +97,8 @@ class Evaluator:
         robots: list[ModularRobot],
         generation_index: int,
         steer: bool = False,
-        simulation_time: float = 30
+        simulation_time: float = 30,
+        target_list: list[tuple[float, float]] = [(5,5)]
     ) -> list[float]:
         """
         Evaluate multiple robots.
@@ -107,7 +108,11 @@ class Evaluator:
         :param robots: The robots to simulate.
         :returns: Fitnesses of the robots.
         """
-        targets = [(5,5) for  _ in robots]
+
+        target_for_generation = target_list[generation_index % len(target_list)]
+
+
+        targets = [target_for_generation for  _ in robots]
         # TODO repeat k target for each generation
         
 

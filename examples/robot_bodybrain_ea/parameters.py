@@ -175,7 +175,7 @@ def make_multineat_params() -> multineat.Parameters:
 
 class EvolutionParameters:
     def __init__(
-            self, database_file = config.DATABASE_FILE, num_repetitions = config.NUM_REPETITIONS, num_simulators = config.NUM_SIMULATORS, population_size = config.POPULATION_SIZE, offspring_size = config.OFFSPRING_SIZE, num_generations = config.NUM_GENERATIONS, tournament_size = config.TOURNAMENT_SIZE, sim_time = config.SIM_TIME,steer = False
+            self, database_file = config.DATABASE_FILE, num_repetitions = config.NUM_REPETITIONS, num_simulators = config.NUM_SIMULATORS, population_size = config.POPULATION_SIZE, offspring_size = config.OFFSPRING_SIZE, num_generations = config.NUM_GENERATIONS, tournament_size = config.TOURNAMENT_SIZE, sim_time = config.SIM_TIME,steer = False, target_list = [(5,5)]
             ):
         self.database_file = database_file
         self.num_repetitions = num_repetitions
@@ -186,12 +186,13 @@ class EvolutionParameters:
         self.tournament_size = tournament_size
         self.sim_time = sim_time
         self.steer = steer
+        self.target_list = target_list
+
 
     def __str__(self):
-        return f"EvolutionParameters(database_file={self.database_file}, num_repetitions={self.num_repetitions}, num_simulators={self.num_simulators}, population_size={self.population_size}, offspring_size={self.offspring_size}, num_generations={self.num_generations}, tournament_size={self.tournament_size}, sim_time={self.sim_time}), steer={self.steer})"
-
+        return f"EvolutionParameters(database_file={self.database_file}, num_repetitions={self.num_repetitions}, num_simulators={self.num_simulators}, population_size={self.population_size}, offspring_size={self.offspring_size}, num_generations={self.num_generations}, tournament_size={self.tournament_size}, sim_time={self.sim_time}), steer={self.steer}, target_list={self.target_list})"
     def __repr__(self):
-        return f"EvolutionParameters(database_file={self.database_file}, num_repetitions={self.num_repetitions}, num_simulators={self.num_simulators}, population_size={self.population_size}, offspring_size={self.offspring_size}, num_generations={self.num_generations}, tournament_size={self.tournament_size}, sim_time={self.sim_time}), steer={self.steer})"
+        return f"EvolutionParameters(database_file={self.database_file}, num_repetitions={self.num_repetitions}, num_simulators={self.num_simulators}, population_size={self.population_size}, offspring_size={self.offspring_size}, num_generations={self.num_generations}, tournament_size={self.tournament_size}, sim_time={self.sim_time}), steer={self.steer}), target_list={self.target_list})"
     
 
 

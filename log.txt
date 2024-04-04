@@ -9892,3 +9892,661 @@ Finished batch.
 Saving generation.
 Starting simulation batch with mujoco.
 Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1711826406053997
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 2 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 3 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 4 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1711826457050970
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 2 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 3 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 4 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+----------------
+Start experiment
+Rng seed: 1711826504545279
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 2 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 3 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 4 / 5.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Finished batch.
+Starting simulation batch with mujoco.
+Finished batch.
+Starting simulation batch with mujoco.
+Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1712220220556304
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Starting simulation batch with mujoco.
+Finished batch.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+----------------
+----------------
+Start experiment
+Start experiment
+Rng seed: 1712220250495338
+Rng seed: 1712220250495338
+Saving experiment configuration.
+Saving experiment configuration.
+Generating initial population.
+Generating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Start optimization process.
+Start optimization process.
+Generation 1 / 3.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Generation 2 / 3.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+New log starts here.
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+----------------
+----------------
+----------------
+Start experiment
+Start experiment
+Start experiment
+Rng seed: 1712220281509764
+Rng seed: 1712220281509764
+Rng seed: 1712220281509764
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+----------------
+----------------
+----------------
+----------------
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Rng seed: 1712220309548564
+Rng seed: 1712220309548564
+Rng seed: 1712220309548564
+Rng seed: 1712220309548564
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+----------------
+----------------
+----------------
+----------------
+----------------
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Rng seed: 1712220331993262
+Rng seed: 1712220331993262
+Rng seed: 1712220331993262
+Rng seed: 1712220331993262
+Rng seed: 1712220331993262
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+New log starts here.
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+=======================================
+----------------
+----------------
+----------------
+----------------
+----------------
+----------------
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Start experiment
+Rng seed: 1712220592681035
+Rng seed: 1712220592681035
+Rng seed: 1712220592681035
+Rng seed: 1712220592681035
+Rng seed: 1712220592681035
+Rng seed: 1712220592681035
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Saving experiment configuration.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Generating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Start optimization process.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Generation 1 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Generation 2 / 3.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Saving generation.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Starting simulation batch with mujoco.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
+Finished batch.
