@@ -159,6 +159,30 @@ def find_mean_fitness(
     fitnesses = [individual.fitness for individual in population.individuals]
     return mean(fitnesses)
 
+def find_mean_symmetry(
+        population: Population
+) -> Individual:
+    """
+    Return the mean symmetry of the population.
+
+    :param population: The population.
+    :returns: The mean.
+    """
+    symmetry = [individual.symmetry for individual in population.individuals]
+    return mean(symmetry)
+
+def find_max_symmetry(
+        population: Population
+) -> Individual:
+    """
+    Return the mean symmetry of the population.
+
+    :param population: The population.
+    :returns: The mean.
+    """
+    symmetry = [individual.symmetry for individual in population.individuals]
+    return max(symmetry)
+
 def plot_fitnesses(max_fitness_values, mean_fitness_values, exp_name = ''):
     # plot the fitness values
     plt.plot(max_fitness_values, label='max fitness')
@@ -335,7 +359,11 @@ def run_experiment(session, exp_num: int, experiment_parameters: ExperimentParam
 
         max_fitness_values.append(best_robot.fitness)
 
-        wandb.log({"max_fitness": max_fitness_values[-1], "mean_fitness": mean_fitness_values[-1]})
+        wandb.log({"max_fitness": max_fitness_values[-1], 
+                   "mean_fitness": mean_fitness_values[-1],
+                   "max_symmetry": find_max_symmetry(population),
+                   "mean_symmetry": find_mean_symmetry(population),
+                   })
         # logging.info(f"Best robot until now: {best_robot.fitness}")
         #logging.info(f"Genotype pickle: {pickle.dumps(best_robot)!r}")
 
