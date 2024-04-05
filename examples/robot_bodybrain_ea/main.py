@@ -423,7 +423,7 @@ def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = Fa
                 _target = str(experiment_parameters.evolution_parameters.target_list)
                 _steer = "steer" if experiment_parameters.evolution_parameters.steer else "nosteer"
 
-                wandb.init(project="integration test", config=config_dict, name=f"{_target}_{_steer}_{CUR_TIME}_rep_{rep}")
+                wandb.init(project="experiment_20240405s", config=config_dict, name=f"{_target}_{_steer}_{CUR_TIME}_rep_{rep}")
                 
                 best_robot = run_experiment(session, rep, steer = experiment_parameters.evolution_parameters.steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
                 best_robots.append(best_robot)
@@ -452,23 +452,23 @@ if __name__ == "__main__":
     same_for_brain_and_body = False
     
     
-    parameters_to_test = {
-        "brain_multineat_parameters": {
-            "OverallMutationRate": [0.09],
-        },
-        "body_multineat_parameters": {
-            "OverallMutationRate": [0.09],
-        },
-        "evolution_parameters": {
-            "steer" : [False],
-            "population_size": 20, 
-            "num_generations": 10,
-            "offspring_size": 20,
-            "tournament_size": [3],
-            "database_file" : "./database_sym.sqlite"
-        }
+    # parameters_to_test = {
+    #     "brain_multineat_parameters": {
+    #         "OverallMutationRate": [0.09],
+    #     },
+    #     "body_multineat_parameters": {
+    #         "OverallMutationRate": [0.09],
+    #     },
+    #     "evolution_parameters": {
+    #         "steer" : [False],
+    #         "population_size": 20, 
+    #         "num_generations": 10,
+    #         "offspring_size": 20,
+    #         "tournament_size": [3],
+    #         "database_file" : "./database_sym.sqlite"
+    #     }
         
-    }
+    # }
     # parameters_to_test = {
     #     "brain_multineat_parameters": {
     #         "OverallMutationRate": 0.15,
@@ -500,7 +500,7 @@ if __name__ == "__main__":
             "num_repetitions": 5,
             "offspring_size": 100,
             "tournament_size": 6,
-            "database_file" : "./big_exp.sqlite",
+            "database_file" : "./big_exp_final.sqlite",
             "target_list": [[(5,5)], [(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
         }
     }
