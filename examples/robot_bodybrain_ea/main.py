@@ -498,7 +498,7 @@ if __name__ == "__main__":
             "offspring_size": 100,
             "tournament_size": 6,
             "database_file" : "./big_exp.sqlite",
-            "target_list": [[(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
+            "target_list": [[(5,5)], [(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
         }
     }
 
