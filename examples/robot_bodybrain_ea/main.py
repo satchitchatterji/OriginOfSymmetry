@@ -419,10 +419,11 @@ def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = Fa
             best_robots = []
             for rep in range(experiment_parameters.evolution_parameters.num_repetitions):
                 config_dict = vars(experiment_parameters.evolution_parameters)
-                _target = str(experiment_parameters.evolution_parameters.target_list)
-                _steer = str(experiment_parameters.evolution_parameters.steer)
                 config_dict.update({"brain_overall":experiment_parameters.brain_multineat_parameters.OverallMutationRate, "body_overall":experiment_parameters.body_multineat_parameters.OverallMutationRate})                
-                wandb.init(project="final_run, config=config_dict, name=f"{_target}_steer_{_steer}_{CUR_TIME}_rep_{rep}")
+                _target = str(experiment_parameters.evolution_parameters.target_list)
+                _steer = "steer" if experiment_parameters.evolution_parameters.steer else "nosteer"
+
+                wandb.init(project="integration test", config=config_dict, name=f"{_target}_{_steer}_{CUR_TIME}_rep_{rep}")
                 
                 best_robot = run_experiment(session, rep, steer = experiment_parameters.evolution_parameters.steer, record_settings=exp_rs, experiment_parameters=experiment_parameters)
                 best_robots.append(best_robot)
