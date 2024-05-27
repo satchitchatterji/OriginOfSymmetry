@@ -10550,3 +10550,34 @@ Finished batch.
 Finished batch.
 Finished batch.
 Finished batch.
+=======================================
+=======================================
+=======================================
+New log starts here.
+=======================================
+=======================================
+=======================================
+----------------
+Start experiment
+Rng seed: 1712317628785130
+Saving experiment configuration.
+Generating initial population.
+Evaluating initial population.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Start optimization process.
+Generation 1 / 200.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 2 / 200.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 3 / 200.
+Starting simulation batch with mujoco.
+Finished batch.
+Saving generation.
+Generation 4 / 200.
+Starting simulation batch with mujoco.
