@@ -8,12 +8,16 @@ from typing import Any
 import cairo
 import numpy as np
 from numpy.typing import NDArray
-from pyrr import Vector3
+from pyrr import Vector3, Quaternion
 
 from revolve2.modular_robot import ModularRobot
 from revolve2.modular_robot import Module
 from revolve2.modular_robot import ActiveHinge, Body, Brick, Core
 
+from _attachement_point import AttachmentPoint
+import math
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 def __mk_path() -> str:
     path = f"planar_robot_representations_{time.time()}"
@@ -77,9 +81,36 @@ def draw_robot(
         previous_position=(cx, cy),
         orientation=_make_rot_mat(0),
         context=context,
+        print_id=True,
     )
     _save_png(image, path)
+    img = mpimg.imread(f"{path}/robot_2d_{str(hash(image))}.png")
+    plt.imshow(img)
+    plt.show()
+    
 
+def get_attachment_points():
+    # Front right back left 
+    child_offset=0.4#https://github.com/ci-group/revolve2/blob/master/modular_robot/revolve2/modular_robot/body/v1/_core_v1.py
+    attachment_points = {
+        0: AttachmentPoint(
+            offset=Vector3([child_offset, 0.0, 0.0]),
+            orientation=Quaternion.from_eulers([0.0, 0.0, 0.0]),
+        ),
+        1: AttachmentPoint(
+            offset=Vector3([child_offset, 0.0, 0.0]),
+            orientation=Quaternion.from_eulers([0.0, 0.0, math.pi / 2.0 * 3]),
+        ),
+        2: AttachmentPoint(
+            offset=Vector3([child_offset, 0.0, 0.0]),
+            orientation=Quaternion.from_eulers([0.0, 0.0, math.pi]),
+        ),
+        3: AttachmentPoint(
+            offset=Vector3([child_offset, 0.0, 0.0]),
+            orientation=Quaternion.from_eulers([0.0, 0.0, math.pi / 2.0]),
+        ),
+    }
+    return attachment_points
 
 def _draw_module(
     module: Module,
@@ -88,6 +119,7 @@ def _draw_module(
     orientation: NDArray[np.int_],
     context: "cairo.Context[cairo.ImageSurface]",
     print_id: bool = False,
+    indent: int = 0,
 ) -> None:
     """
     Draw a module onto the canvas.
@@ -123,7 +155,7 @@ def _draw_module(
     context.stroke()
     context.set_source_rgb(0, 0, 0)
 
-    if type(module) == Core or module.parent is not None:
+    if type(module) == Core:
         # draw the connection to the parent module
         x_offset, y_offset = (
             previous_position[0] - position[0],
@@ -147,25 +179,34 @@ def _draw_module(
 
     if print_id:
         # print module id onto canvas
-        context.set_font_size(0.3)
+        context.set_font_size(0.2)
         context.move_to(x, y + 0.4)
-        context.show_text(str(module.uuid))
+        context.show_text(module.__class__.__name__)
         context.stroke()
 
+    print("\t"*indent, module.__class__.__name__, [child.__class__.__name__ for child in module.children])
     for key, child in enumerate(module.children):
-        angle = module.attachment_points[key].orientation.angle
+        if str(type(child)) == "<class 'NoneType'>":
+            break
+
+
+        angle = get_attachment_points()[key].orientation.angle
         mapo = _make_rot_mat(angle)
         target_orientation = orientation @ mapo
 
         x, y = target_orientation.dot(np.array([1, 0]))
 
         new_pos = position[0] + x, position[1] + y
+
+
         _draw_module(
             module=child,
             position=new_pos,
             previous_position=position,
             context=context,
             orientation=target_orientation,
+            print_id=print_id,
+            indent=indent+1,
         )
 
 
