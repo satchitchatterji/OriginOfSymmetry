@@ -19,6 +19,7 @@ from experiment import Experiment
 from generation import Generation
 from individual import Individual
 from population import Population
+from parameters import ExperimentParameters
 from revolve2.experimentation.database import OpenMethod, open_database_sqlite
 from sqlalchemy import select
 
@@ -39,14 +40,22 @@ def open_experiment_table(filepath=None, dbengine=None):
             filepath, open_method=OpenMethod.OPEN_IF_EXISTS
         )
 
+    # get the parameters table
+    df_params = pandas.read_sql(
+        select(ExperimentParameters.id, ExperimentParameters.body_multineat_parameters, ExperimentParameters.brain_multineat_parameters, ExperimentParameters.evolution_parameters),
+        dbengine,
+    )
+
     df = pandas.read_sql(
         select(
             Experiment.id.label("experiment_id"),
+            Experiment.parameters_id,
             Generation.generation_index,
             Individual.fitness,
             Individual.symmetry,
             Individual.xy_positions,
-            Individual.population_index
+            Individual.population_index,
+
         )
         .join_from(Experiment, Generation, Experiment.id == Generation.experiment_id)
         .join_from(Generation, Population, Generation.population_id == Population.id)
@@ -54,7 +63,9 @@ def open_experiment_table(filepath=None, dbengine=None):
         dbengine,
     )
 
-    return df
+    
+
+    return df, df_params
 
 
 if __name__ == "__main__":

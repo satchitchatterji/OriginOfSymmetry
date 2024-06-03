@@ -9,7 +9,7 @@ def get_body_states_from_str(single_robot_body_state_str):
     try:
         body_states = eval(single_robot_body_state_str) # eval() converts string to list of BodyState objects
     except Exception as e:
-        print("Error: could not convert string to list of BodyState objects.")
+        print(f"Error: could not convert {single_robot_body_state_str} to list of BodyState objects.")
         return None
     
     return body_states
