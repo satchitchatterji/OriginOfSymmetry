@@ -25,10 +25,9 @@ Also install W&B using ```pip install wandb``` and login as normal. As per testi
 
 ## Execution
 
-The main experimental body can be found in the folder [examples/robot_bodybrain_ea](https://github.com/satchitchatterji/OriginOfSymmetry/tree/main/examples/robot_bodybrain_ea). Several additions have been made elsewhere in the code for stability, data saving and adding in the camera -- the last one is the most critical. The camera class can be found in ```OriginOfSymmetry/simulators/mujoco/revolve2/simulators/mujoco/OpenGLCamera.py```, and has been implemented in ```OriginOfSymmetry/simulators/mujoco/revolve2/simulators/mujoco/_local_runner.py``
+The main experimental body can be found in the folder [examples/robot_bodybrain_ea](https://github.com/satchitchatterji/OriginOfSymmetry/tree/main/examples/robot_bodybrain_ea). Several additions have been made elsewhere in the code for stability, data saving and adding in the camera -- the last one is the most critical. The camera class can be found in ```OriginOfSymmetry/simulators/mujoco/revolve2/simulators/mujoco/OpenGLCamera.py```, and has been implemented in ```OriginOfSymmetry/simulators/mujoco/revolve2/simulators/mujoco/_local_runner.py```
 
 The body of ```OriginOfSymmetry/examples/robot_bodybrain_ea/main.py``` contains the list of parameters that are tested. Specifically, you may want to change the following body of code around line ~450 (*csv/json config support yet to be added*):
-
 
     parameters_to_test = {
         "brain_multineat_parameters": {
