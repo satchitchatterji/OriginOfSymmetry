@@ -12,6 +12,9 @@
 */database_sym.sqlite
 database_sym.sqlite
 
+# camera output folders
+*/camera_*/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
