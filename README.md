@@ -1,10 +1,11 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8355870.svg)](https://doi.org/10.5281/zenodo.8355870)
-<img  align="right" width="150" height="150"  src="/docs/source/logo.png">
+# Testing Emergent Bilateral Symmetry in Evolvable Robots with Vision
+***Michele Vanucci $^1$, Satchit Chatterji** $^2$, and Babak H. Kargar $^1$*
 
-# Revolve2
-Revolve2 is a Python package for optimization, geared towards modular robots and evolutionary computing.
-Its primary features are a modular robot framework, wrappers around physics simulators, and evolutionary optimizers.
-It consists of multiple smaller python packages and optional supplementary packages that contain varying functionality that is not always required.
+$^1$ Vrij Universiteit Amsterdam, $^2$ University of Amsterdam
 
-## Documentation
-[ci-group.github.io/revolve2](https://ci-group.github.io/revolve2/)
+Within this repository is the code that is needed to reproduce and build on the results of the paper ***Testing Emergent Bilateral Symmetry in Evolvable Robots with Vision***, accepted to ECTA 2024. The code is heavily build upon *Revolve2*, (repository at [github.com/ci-group/revolve2](https://github.com/ci-group/revolve2), documentation at [ci-group.github.io/revolve2](https://ci-group.github.io/revolve2/)), specifically pre-release version v0.4.0-beta2. Due to this, it is not as readable as we'd have hoped, and is a working repository.
+
+## Code Description
+
+## Installation and Execution
+
