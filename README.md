@@ -21,7 +21,11 @@ Officially, conda is not supported by Revolve, but has shown some initial succes
 
     sh student_install.sh
 
-Also install W&B using ```pip install wandb``` and login as normal. As per testing this should install necessary libraries. If not, please start a pull request.
+Additionally, you will need to install the following libraries:
+
+    pip install wandb matplotlib
+
+Do not forget to log in with W&B. As per testing this should install all necessary libraries. If not, please start a pull request.
 
 ## Execution
 
@@ -44,7 +48,7 @@ The body of ```OriginOfSymmetry/examples/robot_bodybrain_ea/main.py``` contains 
             "offspring_size": 100,
             "tournament_size": 6,
             "database_file" : "./exp.sqlite",
-            "target_list": [[(5,5)], [(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
+            "target_list": [[(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
         }
     }
 

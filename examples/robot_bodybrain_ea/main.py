@@ -449,42 +449,10 @@ def main(exp_parameters_array: list[ExperimentParameters] , repeated_params = Fa
 if __name__ == "__main__":
     #main(steer=True, best_videos_dir = 'best_robots_videos', exp_rs=RecordSettings(save_robot_view=True, generation_step=1, delete_at_init=True ))
 
-    same_for_brain_and_body = False
-    
-    
-    # parameters_to_test = {
-    #     "brain_multineat_parameters": {
-    #         "OverallMutationRate": [0.09],
-    #     },
-    #     "body_multineat_parameters": {
-    #         "OverallMutationRate": [0.09],
-    #     },
-    #     "evolution_parameters": {
-    #         "steer" : [False],
-    #         "population_size": 20, 
-    #         "num_generations": 10,
-    #         "offspring_size": 20,
-    #         "tournament_size": [3],
-    #         "database_file" : "./database_sym.sqlite"
-    #     }
-        
-    # }
-    # parameters_to_test = {
-    #     "brain_multineat_parameters": {
-    #         "OverallMutationRate": 0.15,
-    #     },
-    #     "body_multineat_parameters": {
-    #         "OverallMutationRate": 0.15,
-    #     },
-    #     "evolution_parameters": {
-    #         "steer" : [True, False],
-    #         "population_size": 8,
-    #         "num_generations": 2,
-    #         "offspring_size": 8,
-    #         "tournament_size": [3,6],
-    #         "database_file" : "./database_sym.sqlite"
-    #     }
-    # }
+    same_for_brain_and_body = False # whther to use the same parameters for brain and body
+
+    ############################## PARAMETERS TO TEST ##############################
+    # the following parameters were tested in the paper
 
     parameters_to_test = {
         "brain_multineat_parameters": {
@@ -500,11 +468,12 @@ if __name__ == "__main__":
             "num_repetitions": 5,
             "offspring_size": 100,
             "tournament_size": 6,
-            "database_file" : "./big_exp_final.sqlite",
-            "target_list": [[(5,5)], [(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
+            "database_file" : "./exp.sqlite",
+            "target_list": [[(5,5)], [(0,math.sqrt(50))], [(0,math.sqrt(50)), (5,5),(-5,5)]]
         }
     }
 
+    ###############################################################################
 
     if same_for_brain_and_body:
         parameters_to_test["brain_multineat_parameters"] = parameters_to_test["body_multineat_parameters"]
@@ -549,12 +518,8 @@ if __name__ == "__main__":
 
     #exp_parameters_array = [ExperimentParameters()]
 
-    
     #main(steer=True, best_videos_dir = 'best_robots_videos', experiment_parameters = experiment_parameters)
     main(exp_parameters_array=exp_parameters_array, best_videos_dir = 'best_robots_videos', repeated_params=True)
-
-
-
 
  # GETTING THE BEST ROBOT FROM DATABASE, not needed if we get it from run_experiment
         
