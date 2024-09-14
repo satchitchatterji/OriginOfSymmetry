@@ -1,7 +1,9 @@
 # Visual Studio Code
 .vscode/
-
 *wandb*
+
+# logs
+*.log
 
 # camera outputs
 *.png
