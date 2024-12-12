@@ -66,5 +66,22 @@ Plots ready for analysis may be attained by running the notebooks in ```OriginOf
 
 
 ## Citation
+Please cite this repository's paper if you use it in your research:
 
-*To be updated post publication*...
+APA:
+Michele Vannucci, Satchit Chatterji, & Babak Kargar (2024). Testing Emergent Bilateral Symmetry in Evolvable Robots with Vision. In *Proceedings of the 16th International Joint Conference on Computational Intelligence - Volume 1: ECTA* (pp. 96-107). SciTePress.
+
+BibTeX:
+```
+@inproceedings{vannucci2024testing,
+    author={Michele Vannucci and Satchit Chatterji and Babak Kargar},
+    title={Testing Emergent Bilateral Symmetry in Evolvable Robots with Vision},
+    booktitle={Proceedings of the 16th International Joint Conference on Computational Intelligence - Volume 1: ECTA},
+    year={2024},
+    pages={96-107},
+    publisher={SciTePress},
+    organization={INSTICC},
+    doi={10.5220/0012947400003837},
+    isbn={978-989-758-721-4},
+}
+```
